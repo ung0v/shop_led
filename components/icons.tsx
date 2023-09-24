@@ -1,6 +1,13 @@
 import {
+  Bookmark,
+  ChevronLeft,
+  ChevronRight,
+  Heart,
+  Instagram,
   LucideProps,
   Moon,
+  Search,
+  ShoppingCart,
   SunMedium,
   Twitter,
   type Icon as LucideIcon,
@@ -45,4 +52,11 @@ export const Icons = {
       ></path>
     </svg>
   ),
+  Search: Search,
+  Bookmark: Bookmark,
+  Instagram: Instagram,
+  ChevronLeft: ChevronLeft,
+  ChevronRight: ChevronRight,
+  Cart: ShoppingCart,
+  Heart: Heart,
 }

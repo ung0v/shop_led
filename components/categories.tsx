@@ -51,32 +51,36 @@ const categoriesList = [
 export function Categories() {
   const cateRef = React.useRef<any>()
 
-  React.useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([e]) => {
-        console.log(e.intersectionRect)
-        e.target.classList.toggle("shadow-lg", e.intersectionRatio < 1)
-        e.target.classList.toggle("pt-20", e.intersectionRatio < 1)
-      },
-      { threshold: [1] }
-    )
+  // React.useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     ([e]) => {
+  //       console.log(e.intersectionRect)
+  //       // e.target.classList.toggle("shadow-lg", e.intersectionRatio === 1)
+  //       // e.target.classList.toggle("pt-20", e.intersectionRatio < 1)
+  //       // e.target.classList.toggle("pl-4", e.intersectionRatio < 1)
+  //       // e.target.classList.toggle("fixed", e.intersectionRatio > 1)
+  //     },
+  //     { threshold: [1] }
+  //   )
 
-    observer.observe(cateRef.current)
-  }, [])
+  //   observer.observe(cateRef.current)
+  // }, [])
 
   return (
     <div
       ref={cateRef}
-      className="mt-4 flex flex-wrap items-center p-4 sticky top-[-1px] bg-white"
+      className="mt-4 flex flex-wrap items-center pl-0 p-4 bg-white"
     >
       <div className="mr-4">
         <Icons.Menu style={{ cursor: "pointer" }} />
       </div>
-      <NavigationMenu>
-        <NavigationMenuList className="gap-4 flex-wrap">
+      <NavigationMenu className="px-8">
+        <NavigationMenuList className="gap-[50px] flex-wrap">
           {categoriesList.map((category) => (
             <NavigationMenuItem className="cursor-pointer">
-              <NavigationMenuLink>{category.title}</NavigationMenuLink>
+              <NavigationMenuLink className="text-sm font-bold">
+                {category.title}
+              </NavigationMenuLink>
             </NavigationMenuItem>
           ))}
         </NavigationMenuList>
