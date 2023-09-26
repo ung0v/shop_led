@@ -1,7 +1,9 @@
 import {
   Bookmark,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Heart,
   Instagram,
   LucideProps,
@@ -57,6 +59,8 @@ export const Icons = {
   Instagram: Instagram,
   ChevronLeft: ChevronLeft,
   ChevronRight: ChevronRight,
+  ChevronUp: ChevronUp,
+  ChevronDown: ChevronDown,
   Cart: ShoppingCart,
   Heart: Heart,
 }

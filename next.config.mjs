@@ -5,7 +5,7 @@ const nextConfig = {
     appDir: true,
   },
   images: {
-    domains: ["www.smgstore.co.kr", "cdn-pro-web-152-50.cdn-nhncommerce.com"]
+    domains: ["www.smgstore.co.kr", "cdn-pro-web-152-50.cdn-nhncommerce.com", "smgstore00.hgodo.com"]
   }
 }
 

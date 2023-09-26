@@ -71,21 +71,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
                         <div className="flex">
                           <div className="flex gap-3">
                             <div className="flex flex-col items-center text-xs gap-y-1 font-semibold">
-                              <Icons.Bookmark />
-                              Bookmark
-                            </div>
-                            <div className="flex flex-col items-center text-xs gap-y-1 font-semibold">
                               <Icons.Search />
                               Search
                             </div>
                           </div>
-                          <h2 className="flex-1 text-center">Logo</h2>
-                          <Link
-                            href="/"
-                            className="flex items-center justify-center bg-gray-400 rounded-full w-8 h-8"
-                          >
-                            <Icons.Instagram size={16} />
-                          </Link>
+                          <h2 className="flex-1 text-center text-xl font-bold">
+                            삼성사
+                          </h2>
                         </div>
 
                         <Categories />

@@ -1,4 +1,6 @@
+import { useMemo } from "react"
 import Image from "next/image"
+import Link from "next/link"
 
 import { cn } from "@/lib/utils"
 
@@ -12,54 +14,50 @@ type ProductType = {
   imageSrc: any
 }
 
+const productList: ProductType[] = [
+  {
+    id: 1,
+    title: "[사은품] zippo 270 high Polish",
+    price: "53,000원",
+    imageSrc: require("public/images/product_1.svg"),
+  },
+  {
+    title: "[사은품] zippo 270 high Polish",
+    price: "53,000원",
+    imageSrc: require("public/images/product_2.svg"),
+  },
+  {
+    title: "[사은품] zippo 270 high Polish",
+    price: "53,000원",
+    imageSrc: require("public/images/product_2.svg"),
+  },
+  {
+    title: "[사은품] zippo 270 high Polish",
+    price: "53,000원",
+    imageSrc: require("public/images/product_2.svg"),
+  },
+  {
+    title: "[사은품] zippo 270 high Polish",
+    price: "53,000원",
+    imageSrc: require("public/images/product_2.svg"),
+  },
+]
+
 export default function Products({
   itemsPerRow = 4,
+  size = 1,
 }: {
   itemsPerRow?: number
+  size?: number
 }) {
-  const productList: ProductType[] = [
-    {
-      id: 1,
-      title: "[사은품] zippo 270 high Polish",
-      price: "53,000원",
-      imageSrc: require("public/images/product_1.svg"),
-    },
-    {
-      title: "[사은품] zippo 270 high Polish",
-      price: "53,000원",
-      imageSrc: require("public/images/product_2.svg"),
-    },
-    {
-      title: "[사은품] zippo 270 high Polish",
-      price: "53,000원",
-      imageSrc: require("public/images/product_2.svg"),
-    },
-    {
-      title: "[사은품] zippo 270 high Polish",
-      price: "53,000원",
-      imageSrc: require("public/images/product_2.svg"),
-    },
-    {
-      title: "[사은품] zippo 270 high Polish",
-      price: "53,000원",
-      imageSrc: require("public/images/product_2.svg"),
-    },
-    {
-      title: "[사은품] zippo 270 high Polish",
-      price: "53,000원",
-      imageSrc: require("public/images/product_2.svg"),
-    },
-    {
-      title: "[사은품] zippo 270 high Polish",
-      price: "53,000원",
-      imageSrc: require("public/images/product_2.svg"),
-    },
-    {
-      title: "[사은품] zippo 270 high Polish",
-      price: "53,000원",
-      imageSrc: require("public/images/product_2.svg"),
-    },
-  ]
+  const productData = useMemo(() => {
+    let data: Array<ProductType> = []
+    for (let i = 0; i < size; i++) {
+      data = [...data, ...productList]
+    }
+    return data
+  }, [size])
+
   return (
     <div
       className={cn(
@@ -67,7 +65,7 @@ export default function Products({
         itemsPerRow ? `grid-cols-5` : ""
       )}
     >
-      {productList.map((product) => (
+      {productData.map((product) => (
         <ProductItem data={product} />
       ))}
     </div>
@@ -77,12 +75,14 @@ export default function Products({
 const ProductItem = ({ data }: { data: ProductType }) => (
   <div className="flex flex-col items-center gap-2">
     <div className="group relative w-full overflow-hidden">
-      <Image
-        className="scale-1 cursor-pointer transition-all duration-300 hover:scale-110"
-        layout="responsive"
-        src={data.imageSrc}
-        alt={data.title}
-      />
+      <Link href="/product">
+        <Image
+          className="scale-1 cursor-pointer transition-all duration-300 hover:scale-110"
+          layout="responsive"
+          src={data.imageSrc}
+          alt={data.title}
+        />
+      </Link>
       <div className="0 absolute bottom-[-24px] left-0 hidden w-full justify-center transition-all duration-300 group-hover:bottom-0 group-hover:flex">
         <button className="border-[1px] border-r-0 bg-white p-1">
           <Icons.Heart size={16} />
@@ -90,6 +90,7 @@ const ProductItem = ({ data }: { data: ProductType }) => (
         <button className="border-[1px] bg-white p-1">
           <Icons.Cart size={16} />
         </button>
+        L
       </div>
     </div>
     <h3 className="cursor-pointer text-xs">{data.title}</h3>
