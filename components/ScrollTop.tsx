@@ -31,7 +31,7 @@ export default function ScrollTop() {
       ref={btnRef}
       variant="outline"
       size="icon"
-      className="fixed right-20 bottom-12 rounded-full"
+      className="fixed right-20 bottom-12 rounded-full bg-white"
     >
       <Icons.ChevronUp />
     </Button>

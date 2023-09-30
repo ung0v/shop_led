@@ -78,8 +78,8 @@ export function Categories() {
         <NavigationMenuList className="gap-[50px] flex-wrap">
           {categoriesList.map((category) => (
             <NavigationMenuItem className="cursor-pointer">
-              <NavigationMenuLink className="text-sm font-bold">
-                {category.title}
+              <NavigationMenuLink className="text-sm font-bold" asChild>
+                <Link href="/categories">{category.title}</Link>
               </NavigationMenuLink>
             </NavigationMenuItem>
           ))}

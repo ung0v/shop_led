@@ -11,19 +11,16 @@ export const siteConfig = {
     },
     {
       title: "회원가입",
-      href: "/",
+      href: "/join",
     },
     {
       title: "장바구니",
-      href: "/",
+      href: "/login",
     },
-    {
-      title: "주문조회",
-      href: "/",
-    },
+
     {
       title: "마이페이지",
-      href: "/",
+      href: "/login",
     },
   ],
   rightNav: [

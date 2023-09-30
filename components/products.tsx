@@ -90,7 +90,6 @@ const ProductItem = ({ data }: { data: ProductType }) => (
         <button className="border-[1px] bg-white p-1">
           <Icons.Cart size={16} />
         </button>
-        L
       </div>
     </div>
     <h3 className="cursor-pointer text-xs">{data.title}</h3>

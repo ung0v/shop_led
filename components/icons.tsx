@@ -1,4 +1,5 @@
 import {
+  Asterisk,
   Bookmark,
   ChevronDown,
   ChevronLeft,
@@ -10,6 +11,7 @@ import {
   Moon,
   Search,
   ShoppingCart,
+  Square,
   SunMedium,
   Twitter,
   type Icon as LucideIcon,
@@ -63,4 +65,6 @@ export const Icons = {
   ChevronDown: ChevronDown,
   Cart: ShoppingCart,
   Heart: Heart,
+  Square: Square,
+  Aterisk: Asterisk,
 }
