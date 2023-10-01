@@ -5,16 +5,20 @@ import {
   ChevronLeft,
   ChevronRight,
   ChevronUp,
+  CircleEqual,
+  EqualIcon,
   Heart,
   Instagram,
+  LucideIcon,
   LucideProps,
+  MinusCircle,
   Moon,
+  PlusCircle,
   Search,
   ShoppingCart,
   Square,
   SunMedium,
   Twitter,
-  type Icon as LucideIcon,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -67,4 +71,7 @@ export const Icons = {
   Heart: Heart,
   Square: Square,
   Aterisk: Asterisk,
+  MinusCircle: MinusCircle,
+  PlusCircle: PlusCircle,
+  EqualCircle: CircleEqual,
 }

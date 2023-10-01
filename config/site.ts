@@ -15,7 +15,7 @@ export const siteConfig = {
     },
     {
       title: "장바구니",
-      href: "/login",
+      href: "/cart",
     },
 
     {
