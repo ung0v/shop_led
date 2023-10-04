@@ -1,14 +1,14 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
+import Image from "next/image"
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
-import { fontNanumGothic, fontSans } from "@/lib/fonts"
+import { fontNanumGothic } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
-import ScrollTop from "@/components/ScrollTop"
 import { Categories } from "@/components/categories"
-import { Icons } from "@/components/icons"
+import InputSearch from "@/components/input-search"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
@@ -69,16 +69,25 @@ export default function RootLayout({ children }: RootLayoutProps) {
                   <section className="grid items-center pb-8 pt-6 md:py-10">
                     <div className="flex w-full flex-col">
                       <div className="container flex flex-col">
-                        <div className="flex">
-                          <div className="flex gap-3">
-                            <div className="flex flex-col items-center text-xs gap-y-1 font-semibold">
-                              <Icons.Search />
-                              Search
+                        <div className="flex relative h-[120px]">
+                          <div className="flex items-center gap-3">
+                            <div className="flex z-10 flex-col items-center justify-center text-xs gap-y-1 font-semibold">
+                              <InputSearch />
                             </div>
                           </div>
-                          <h2 className="flex-1 text-center text-xl font-bold">
-                            삼성사
-                          </h2>
+                          <div className="absolute w-full z-0 left-0 flex justify-center">
+                            <Link
+                              href="/"
+                              className="w-[300px] h-[120px] relative"
+                            >
+                              <Image
+                                alt="logo"
+                                src={require("public/images/logo.svg")}
+                                fill
+                                objectFit="cover"
+                              />
+                            </Link>
+                          </div>
                         </div>
 
                         <Categories />
@@ -107,7 +116,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
                       </div>
                     </div>
                   </div>
-                  )
                 </main>
               </div>
             </div>

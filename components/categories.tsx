@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
@@ -20,10 +21,10 @@ const categoriesList = [
     title: "지프라이터",
   },
   {
-    title: "클린켄틴틴",
+    title: "클린켄틴",
   },
   {
-    title: "레더맨맨",
+    title: "레더맨",
   },
   {
     title: "레드렌서",
@@ -35,7 +36,7 @@ const categoriesList = [
     title: "날진",
   },
   {
-    title: "타톤카카",
+    title: "타톤카",
   },
   {
     title: "아트카",
@@ -69,18 +70,46 @@ export function Categories() {
   return (
     <div
       ref={cateRef}
-      className="mt-4 flex flex-wrap items-center pl-0 p-4 bg-white"
+      className="flex flex-wrap items-center pl-0 p-4 bg-white"
     >
-      <div className="mr-4">
+      {/* remove menubar icon temporary */}
+      {/* <div className="mr-4">
         <Icons.Menu style={{ cursor: "pointer" }} />
-      </div>
+      </div> */}
       <NavigationMenu className="px-8">
-        <NavigationMenuList className="gap-[50px] flex-wrap">
+        <NavigationMenuList className="gap-x-1 gap-y-1 md:gap-x-3 flex-wrap justify-start">
           {categoriesList.map((category) => (
-            <NavigationMenuItem className="cursor-pointer">
-              <NavigationMenuLink className="text-sm font-bold" asChild>
-                <Link href="/categories">{category.title}</Link>
-              </NavigationMenuLink>
+            <NavigationMenuItem>
+              <NavigationMenuTrigger>
+                <NavigationMenuLink className="text-sm font-bold" asChild>
+                  <Link href="/categories">{category.title}</Link>
+                </NavigationMenuLink>
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className="absolute left-auto top-full w-auto bg-white">
+                <ul className="grid gap-3 p-4 md:w-[400px] lg:grid-cols-[.75fr_1fr]">
+                  <li>
+                    <ListItem href="/categories" title="Example 1" />
+                    <ListItem href="/categories" title="Example 2" />
+                    <ListItem href="/categories" title="Example 3" />
+                    <ListItem href="/categories" title="Example 4" />
+                    <ListItem href="/categories" title="Example 5" />
+                  </li>
+                  <li className="cursor-pointer">
+                    <NavigationMenuLink asChild>
+                      <Link href="/categories">
+                        <div className="w-[200px] h-[200px] relative">
+                          <Image
+                            src="https://cdn-pro-web-152-50.cdn-nhncommerce.com/smg5581818_godomall_com/data/skin/front/mplshop/img/banner/ffe4850078abf483667095eb4bf786ed_75373.jpg"
+                            fill
+                            alt=""
+                            objectFit="cover"
+                          />
+                        </div>
+                      </Link>
+                    </NavigationMenuLink>
+                  </li>
+                </ul>
+              </NavigationMenuContent>
             </NavigationMenuItem>
           ))}
         </NavigationMenuList>
@@ -104,10 +133,7 @@ const ListItem = React.forwardRef<
           )}
           {...props}
         >
-          <div className="text-sm font-medium leading-none">{title}</div>
-          <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-            {children}
-          </p>
+          <div className="text-xs font-medium leading-none">{title}</div>
         </a>
       </NavigationMenuLink>
     </li>
