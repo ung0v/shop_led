@@ -1,7 +1,16 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { ControllerRenderProps, useForm } from "react-hook-form"
+
+import {
+  DEFAULT_FORM_VALUE_REGISTER,
+  RegisterSchema,
+  RegisterSchemaType,
+} from "@/config/form"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -21,35 +30,39 @@ export default function JoinAgreement() {
   const fields = [
     {
       label: "아이디",
-      name: "아이디",
-      render: <Input />,
+      name: "username",
+      render: (props: ControllerRenderProps) => <Input {...props} />,
       required: true,
     },
     {
       label: "비밀번호",
-      name: "비밀번호",
-      render: <Input className="w-[150px]" />,
+      name: "password",
+      render: (props: ControllerRenderProps) => (
+        <Input className="w-[150px]" {...props} />
+      ),
       required: true,
     },
     {
       label: "비밀번호 확인",
-      name: "비밀번호 확인",
-      render: <Input className="w-[150px]" />,
+      name: "confirmPassword",
+      render: (props: ControllerRenderProps) => (
+        <Input className="w-[150px]" {...props} />
+      ),
       required: true,
     },
     {
       label: "이름",
-      name: "이름",
-      render: <Input />,
+      name: "name",
+      render: (props: ControllerRenderProps) => <Input {...props} />,
       required: true,
     },
     {
       label: "이메일",
-      name: "이메일",
-      render: (
+      name: "email",
+      render: (props: ControllerRenderProps) => (
         <div className="flex flex-col">
           <div className="flex items-center gap-4">
-            <Input className="basis-[70%]" />
+            <Input className="basis-[70%]" {...props} />
             <Select>
               <SelectTrigger className="basis-[30%] max-h-8 rounded-none text-xs">
                 <SelectValue placeholder="직접입력" />
@@ -81,11 +94,15 @@ export default function JoinAgreement() {
     },
     {
       label: "휴대폰번호",
-      name: "휴대폰번호",
-      render: (
+      name: "phoneNumber",
+      render: (props: ControllerRenderProps) => (
         <div className="flex flex-col">
           <div className="flex items-center gap-4">
-            <Input className="basis-[190px]" placeholder="- 없이 입력하세요." />
+            <Input
+              className="basis-[190px]"
+              placeholder="- 없이 입력하세요."
+              {...props}
+            />
           </div>
           <div className="mt-3 flex items-center gap-2">
             <Checkbox id="2" />
@@ -102,16 +119,18 @@ export default function JoinAgreement() {
     },
     {
       label: "전화번호",
-      name: "전화번호",
-      render: <Input placeholder="- 없이 입력하세요." />,
+      name: "phoneNumber",
+      render: (props: ControllerRenderProps) => (
+        <Input placeholder="- 없이 입력하세요." {...props} />
+      ),
     },
     {
       label: "주소",
-      name: "주소",
-      render: (
+      name: "address",
+      render: (props: ControllerRenderProps) => (
         <div className="flex flex-col gap-4">
           <div className="flex gap-1">
-            <Input className="basis-[190px]" />
+            <Input className="basis-[190px]" {...props} />
             <Button variant="outline" className="max-h-8 rounded-none text-xs">
               우편번호검색
             </Button>
@@ -123,6 +142,19 @@ export default function JoinAgreement() {
       required: true,
     },
   ]
+
+  const methods = useForm<RegisterSchemaType>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: DEFAULT_FORM_VALUE_REGISTER,
+  })
+
+  const onSubmit = (formValue: RegisterSchemaType) => {
+    console.log(formValue)
+  }
+
+  const onError = (err: object) => {
+    console.log(err)
+  }
 
   return (
     <div className="container mt-5">
@@ -171,37 +203,51 @@ export default function JoinAgreement() {
             </div>
             <Separator className="bg-stone-600" />
           </div>
-          <Table className="border-t-0">
-            <TableBody>
-              {fields.map((field) => (
-                <TableRow
-                  key={field.label}
-                  className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs [&>td>*]:max-w-[80%]"
+          <Form {...methods}>
+            <form onSubmit={methods.handleSubmit(onSubmit, onError)}>
+              <Table className="border-t-0">
+                <TableBody>
+                  {fields.map((field) => (
+                    <TableRow
+                      key={field.label}
+                      className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs [&>td>*]:max-w-[80%]"
+                    >
+                      <TableCell
+                        width="20%"
+                        className="bg-gray-100 text-xs font-bold border"
+                      >
+                        <div className="flex items-center gap-1">
+                          {field.required && <Icons.Aterisk size={12} />}
+                          {field.label}
+                        </div>
+                      </TableCell>
+                      <TableCell className=" border text-xs text-gray-600">
+                        <FormField
+                          name={field.name}
+                          render={({ field: input }) => (
+                            <FormItem>
+                              <FormControl>{field.render(input)}</FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </TableCell>
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+              <div className="mt-9 flex gap-2 justify-center [&>button]:w-[150px] [&>button]:h-[45px]">
+                <Button variant="outline" className="rounded-none font-bold">
+                  취소
+                </Button>
+                <Button
+                  type="submit"
+                  className="rounded-none font-bold bg-stone-800"
                 >
-                  <TableCell
-                    width="20%"
-                    className="bg-gray-100 text-xs font-bold border"
-                  >
-                    <div className="flex items-center gap-1">
-                      {field.required && <Icons.Aterisk size={12} />}
-                      {field.label}
-                    </div>
-                  </TableCell>
-                  <TableCell className=" border text-xs text-gray-600">
-                    {field.render}
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-          <div className="mt-9 flex gap-2 justify-center [&>button]:w-[150px] [&>button]:h-[45px]">
-            <Button variant="outline" className="rounded-none font-bold">
-              취소
-            </Button>
-            <Button className="rounded-none font-bold bg-stone-800">
-              회원가입
-            </Button>
-          </div>
+                  회원가입
+                </Button>
+              </div>
+            </form>
+          </Form>
         </div>
       </div>
     </div>
