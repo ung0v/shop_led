@@ -1,6 +1,9 @@
 "use client"
 
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { omit } from "lodash"
 import { ControllerRenderProps, useForm } from "react-hook-form"
 
 import {
@@ -10,7 +13,13 @@ import {
 } from "@/config/form"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormMessage,
+} from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
@@ -38,7 +47,7 @@ export default function JoinAgreement() {
       label: "비밀번호",
       name: "password",
       render: (props: ControllerRenderProps) => (
-        <Input className="w-[150px]" {...props} />
+        <Input type="password" className="w-[150px]" {...props} />
       ),
       required: true,
     },
@@ -46,7 +55,7 @@ export default function JoinAgreement() {
       label: "비밀번호 확인",
       name: "confirmPassword",
       render: (props: ControllerRenderProps) => (
-        <Input className="w-[150px]" {...props} />
+        <Input type="password" className="w-[150px]" {...props} />
       ),
       required: true,
     },
@@ -63,7 +72,7 @@ export default function JoinAgreement() {
         <div className="flex flex-col">
           <div className="flex items-center gap-4">
             <Input className="basis-[70%]" {...props} />
-            <Select>
+            <Select defaultValue="naver.com">
               <SelectTrigger className="basis-[30%] max-h-8 rounded-none text-xs">
                 <SelectValue placeholder="직접입력" />
               </SelectTrigger>
@@ -131,7 +140,11 @@ export default function JoinAgreement() {
         <div className="flex flex-col gap-4">
           <div className="flex gap-1">
             <Input className="basis-[190px]" {...props} />
-            <Button variant="outline" className="max-h-8 rounded-none text-xs">
+            <Button
+              type="button"
+              variant="outline"
+              className="max-h-8 rounded-none text-xs"
+            >
               우편번호검색
             </Button>
           </div>
@@ -147,9 +160,25 @@ export default function JoinAgreement() {
     resolver: zodResolver(RegisterSchema),
     defaultValues: DEFAULT_FORM_VALUE_REGISTER,
   })
+  const router = useRouter()
 
-  const onSubmit = (formValue: RegisterSchemaType) => {
-    console.log(formValue)
+  const [isSuccess, setIsSuccess] = useState<boolean>(false)
+
+  const onSubmit = async (formValue: RegisterSchemaType) => {
+    const body = {
+      ...omit(formValue, ["confirmPassword", "emailDomain"]),
+      email: formValue.email + "@" + formValue.emailDomain,
+    }
+    try {
+      await fetch("/api/auth/sign-up", {
+        method: "POST",
+        body: JSON.stringify(body),
+      })
+      setIsSuccess(true)
+      router.push("/join-success")
+    } catch (error: any) {
+      console.log({ error })
+    }
   }
 
   const onError = (err: object) => {
@@ -227,6 +256,7 @@ export default function JoinAgreement() {
                           render={({ field: input }) => (
                             <FormItem>
                               <FormControl>{field.render(input)}</FormControl>
+                              <FormMessage className="text-xs" />
                             </FormItem>
                           )}
                         />
@@ -236,7 +266,11 @@ export default function JoinAgreement() {
                 </TableBody>
               </Table>
               <div className="mt-9 flex gap-2 justify-center [&>button]:w-[150px] [&>button]:h-[45px]">
-                <Button variant="outline" className="rounded-none font-bold">
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="rounded-none font-bold"
+                >
                   취소
                 </Button>
                 <Button

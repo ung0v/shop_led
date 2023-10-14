@@ -18,10 +18,29 @@ model User {
   email               String       @unique
   phoneNumber         String
   address             String
-  address2            String
-  address3            String
+  address2            String?
+  address3            String?
   isSubcribedEmail    Boolean      @default(false)
   isSubcribedPhone    Boolean      @default(false)
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  accounts      Account[]
+}
+
+model Account {
+  id                Int     @id @default(autoincrement())
+  userId            String
+  provider          String
+  providerAccountId String
+  type              String?
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
 }

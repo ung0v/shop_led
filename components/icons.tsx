@@ -1,6 +1,7 @@
 import {
   Asterisk,
   Bookmark,
+  CheckCircle,
   ChevronDown,
   ChevronLeft,
   ChevronRight,
@@ -74,4 +75,5 @@ export const Icons = {
   MinusCircle: MinusCircle,
   PlusCircle: PlusCircle,
   EqualCircle: CircleEqual,
+  CheckCircle: CheckCircle,
 }

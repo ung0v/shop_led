@@ -1,10 +1,12 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useLayoutEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { JOIN_TERM_1, JOIN_TERM_2 } from "@/constants"
 import { CheckedState } from "@radix-ui/react-checkbox"
+import { useSession } from "next-auth/react"
 
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
@@ -163,6 +165,8 @@ export default function Join() {
     },
   ]
 
+  const { status } = useSession()
+  const router = useRouter()
   const [checkedList, setCheckedList] = useState<Array<number>>([])
   const [cartList, setCartList] = useState<Array<(typeof cart)[0]>>(cart)
   const [isCheckedAll, setIsCheckedAll] = useState<boolean>(false)
@@ -223,6 +227,12 @@ export default function Join() {
     }
     setIsSubmit(true)
   }
+
+  useLayoutEffect(() => {
+    if (status !== "authenticated") {
+      router.push("/login")
+    }
+  }, [status])
 
   return (
     <div className="container mt-5">
