@@ -20,9 +20,8 @@ export function MainNav({ items }: MainNavProps) {
           {items?.map(
             (item, index) =>
               item.href && (
-                <div className="flex gap-2">
+                <div key={index} className="flex gap-2">
                   <Link
-                    key={index}
                     href={item.href}
                     className={cn(
                       "flex items-center text-xs font-medium text-gray-700",

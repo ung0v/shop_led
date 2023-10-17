@@ -79,7 +79,7 @@ export function Categories() {
       <NavigationMenu className="px-8">
         <NavigationMenuList className="gap-x-1 gap-y-1 md:gap-x-3 flex-wrap justify-start">
           {categoriesList.map((category) => (
-            <NavigationMenuItem>
+            <NavigationMenuItem key={category.title}>
               <NavigationMenuTrigger>
                 <NavigationMenuLink className="text-sm font-bold" asChild>
                   <Link href="/categories">{category.title}</Link>

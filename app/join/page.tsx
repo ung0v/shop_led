@@ -1,6 +1,8 @@
 "use client"
 
+import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { JOIN_TERM_1, JOIN_TERM_2 } from "@/constants"
 
 import { Button } from "@/components/ui/button"
@@ -10,6 +12,54 @@ import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons"
 
 export default function Join() {
+  const router = useRouter()
+  const [term, setTerm] = useState<boolean>(false)
+  const [term1, setTerm1] = useState<boolean>(false)
+  const [term2, setTerm2] = useState<boolean>(false)
+  const term1Ref = useRef<HTMLButtonElement>(null)
+  const term2Ref = useRef<HTMLButtonElement>(null)
+
+  const handleCheckTerm = () => {
+    setTerm((checked) => !checked)
+  }
+
+  const handleCheckTerm1 = () => {
+    setTerm1((checked) => !checked)
+  }
+  const handleCheckTerm2 = () => {
+    setTerm2((checked) => !checked)
+  }
+
+  const handleGoNext = () => {
+    if (term1 && term2) {
+      router.push("join-agreement")
+      return
+    }
+    if (!term1) {
+      term1Ref.current?.focus()
+    }
+    if (!term2) {
+      term2Ref.current?.focus()
+    }
+  }
+
+  useEffect(() => {
+    const handleCheck = () => {
+      setTerm1(term)
+      setTerm2(term)
+    }
+    handleCheck()
+  }, [term])
+
+  useEffect(() => {
+    const handleCheck = () => {
+      if (term1 && term2) {
+        setTerm(true)
+      }
+    }
+    handleCheck()
+  }, [term1, term2])
+
   return (
     <div className="container mt-5">
       <div className="py-5">
@@ -39,7 +89,11 @@ export default function Join() {
           <Separator className="bg-stone-600" />
           <div className="py-8">
             <div className="flex items-center space-x-2 mb-8">
-              <Checkbox id="terms" />
+              <Checkbox
+                id="terms"
+                checked={term && term1 && term2}
+                onCheckedChange={handleCheckTerm}
+              />
               <label
                 htmlFor="terms"
                 className="text-xs font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -51,7 +105,12 @@ export default function Join() {
               </label>
             </div>
             <div className="flex items-center space-x-2">
-              <Checkbox id="terms2" />
+              <Checkbox
+                id="terms2"
+                checked={term1}
+                onCheckedChange={handleCheckTerm1}
+                ref={term1Ref}
+              />
               <label
                 htmlFor="terms2"
                 className="text-xs font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -69,7 +128,12 @@ export default function Join() {
               <div dangerouslySetInnerHTML={{ __html: JOIN_TERM_1 }} />
             </ScrollArea>
             <div className="mt-8 flex items-center space-x-2">
-              <Checkbox id="terms3" />
+              <Checkbox
+                id="terms3"
+                checked={term2}
+                onCheckedChange={handleCheckTerm2}
+                ref={term2Ref}
+              />
               <label
                 htmlFor="terms3"
                 className="text-xs font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
@@ -90,9 +154,9 @@ export default function Join() {
             <div className="flex justify-center">
               <Button
                 className="text-sm font-bold mt-16 rounded-none w-[150px] h-[45px] mx-auto text-center bg-stone-800"
-                asChild
+                onClick={handleGoNext}
               >
-                <Link href="/join-agreement">다음단계</Link>
+                다음단계
               </Button>
             </div>
           </div>
