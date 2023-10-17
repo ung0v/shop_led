@@ -10,6 +10,7 @@ import {
   EqualIcon,
   Heart,
   Instagram,
+  LayoutDashboard,
   LucideIcon,
   LucideProps,
   MinusCircle,
@@ -20,6 +21,7 @@ import {
   Square,
   SunMedium,
   Twitter,
+  UserCircle,
 } from "lucide-react"
 
 export type Icon = LucideIcon
@@ -76,4 +78,6 @@ export const Icons = {
   PlusCircle: PlusCircle,
   EqualCircle: CircleEqual,
   CheckCircle: CheckCircle,
+  UserCircle: UserCircle,
+  Dashboard: LayoutDashboard,
 }

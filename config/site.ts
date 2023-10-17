@@ -3,7 +3,7 @@ export type SiteConfig = typeof siteConfig
 export const siteConfig = {
   name: "LED모아",
   description: "Shop LED by Mr Lee va Vuong",
-  leftNav: [
+  publicNav: [
     {
       title: "로그인",
       href: "/login",
@@ -22,18 +22,23 @@ export const siteConfig = {
       href: "/login",
     },
   ],
-  rightNav: [
+  privateNav: [
     {
-      title: "커뮤니티",
-      href: "/",
+      title: "로그인",
+      href: "/login",
     },
     {
-      title: "배송조회",
-      href: "/",
+      title: "로그아웃",
+      href: "/logout",
     },
     {
-      title: "즐겨찾기",
-      href: "/",
+      title: "장바구니",
+      href: "/cart",
+    },
+
+    {
+      title: "마이페이지",
+      href: "/my-page",
     },
   ],
   links: {

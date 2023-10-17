@@ -11,20 +11,22 @@ datasource db {
 }
 
 model User {
-  id                  String       @id @default(uuid())
-  username            String       @unique @db.VarChar(20)
-  password            String       @db.VarChar(50)
-  name                String       
-  email               String       @unique
-  phoneNumber         String
-  address             String
-  address2            String?
-  address3            String?
-  isSubcribedEmail    Boolean      @default(false)
-  isSubcribedPhone    Boolean      @default(false)
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
-  accounts      Account[]
+  id               String    @id @default(uuid())
+  roleId           Int       
+  username         String    @unique @db.VarChar(20)
+  password         String    @db.VarChar(50)
+  name             String
+  email            String    @unique
+  phoneNumber      String
+  address          String
+  address2         String?
+  address3         String?
+  isSubcribedEmail Boolean   @default(false)
+  isSubcribedPhone Boolean   @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  accounts         Account[]
+  role             Role      @relation(fields: [roleId], references: [id])
 }
 
 model Account {
@@ -43,4 +45,11 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+}
+
+model Role {
+  id          Int     @id @default(autoincrement())
+  name        String
+  description String?
+  User        User[]
 }

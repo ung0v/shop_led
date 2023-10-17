@@ -28,6 +28,8 @@ export async function POST(request: Request) {
         phoneNumber,
         isSubcribedEmail,
         isSubcribedPhone,
+        // USER ROLE
+        roleId: 2,
       },
     })
     return NextResponse.json(user)
