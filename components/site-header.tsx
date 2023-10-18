@@ -6,6 +6,7 @@ import { siteConfig } from "@/config/site"
 import { MainNav } from "@/components/main-nav"
 
 import MenubarAvatar from "./menu-bar"
+import { UserNav } from "./user-nav"
 
 export function SiteHeader() {
   const { status, data } = useSession()
@@ -24,7 +25,7 @@ export function SiteHeader() {
         {status === "authenticated" && (
           <div className="flex flex-1 items-center justify-end space-x-4">
             <div className="flex gap-1 text-xs items-center">
-              <MenubarAvatar />
+              <UserNav />
             </div>
             {/* <nav className="flex items-center space-x-1">
              <ThemeToggle />

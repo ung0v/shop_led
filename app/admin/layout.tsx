@@ -6,8 +6,8 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "./components/sidebar"
 
 export const metadata: Metadata = {
-  title: "Forms",
-  description: "Advanced form example using react-hook-form and Zod.",
+  title: "Admin Area",
+  description: "features for admin role",
 }
 
 const sidebarNavItems = [
@@ -18,6 +18,10 @@ const sidebarNavItems = [
   {
     title: "Product Management",
     href: "/admin/product-management",
+  },
+  {
+    title: "Tasks",
+    href: "/admin/tasks",
   },
 ]
 
@@ -54,7 +58,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
           <aside className="-mx-4 lg:w-1/5">
             <SidebarNav items={sidebarNavItems} />
           </aside>
-          <div className="flex-1 lg:max-w-2xl">{children}</div>
+          <div className="flex-1 lg:w-4/5">{children}</div>
         </div>
       </div>
     </div>

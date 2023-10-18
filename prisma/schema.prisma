@@ -12,7 +12,7 @@ datasource db {
 
 model User {
   id               String    @id @default(uuid())
-  roleId           Int       
+  roleId           Int
   username         String    @unique @db.VarChar(20)
   password         String    @db.VarChar(50)
   name             String
@@ -48,8 +48,45 @@ model Account {
 }
 
 model Role {
-  id          Int     @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   description String?
   User        User[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Product {
+  id          Int       @id @default(autoincrement())
+  name        String
+  shortDesc   String?
+  brand       String?
+  SKU         String?
+  price       Decimal
+  categoryId  Int
+  inventoryId Int
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime  @updatedAt
+  category    Category  @relation(fields: [categoryId], references: [id])
+  inventory   Inventory @relation(fields: [inventoryId], references: [id])
+}
+
+model Category {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  products    Product[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  deletedAt   DateTime  @updatedAt
+}
+
+model Inventory {
+  id        Int       @id @default(autoincrement())
+  quantity  Int
+  product   Product[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime  @updatedAt
 }

@@ -40,10 +40,10 @@ export default function MenubarAvatar() {
             </p>
           </MenubarItem>
           <MenubarSeparator />
-          <MenubarItem className="flex gap-2">
+          <MenubarItem className="flex gap-2 cursor-pointer">
             <Icons.UserCircle size={16} /> Account
           </MenubarItem>
-          <MenubarItem className="flex gap-2" asChild>
+          <MenubarItem className="flex gap-2 cursor-pointer" asChild>
             <Link href="/admin/dashboard">
               <Icons.Dashboard size={16} /> Dashboard
             </Link>

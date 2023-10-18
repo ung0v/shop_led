@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Role" ALTER COLUMN "createdAt" DROP NOT NULL,
+ALTER COLUMN "updatedAt" DROP NOT NULL;
