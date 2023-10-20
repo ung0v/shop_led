@@ -20,6 +20,10 @@ const sidebarNavItems = [
     href: "/admin/product-management",
   },
   {
+    title: "Category",
+    href: "/admin/category",
+  },
+  {
     title: "Tasks",
     href: "/admin/tasks",
   },
