@@ -17,7 +17,9 @@ export default function InputSearch() {
     const newPathname = inputRef.current?.value
       ? `${pathname}?${new URLSearchParams({ search: inputRef.current.value })}`
       : pathname
-    router.push(newPathname)
+    if (newPathname) {
+      router.push(newPathname)
+    }
   }
 
   const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
