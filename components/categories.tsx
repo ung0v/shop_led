@@ -85,7 +85,8 @@ export function Categories() {
                   <Link href="/categories">{category.title}</Link>
                 </NavigationMenuLink>
               </NavigationMenuTrigger>
-              <NavigationMenuContent className="absolute left-auto top-full w-auto bg-white">
+              {/* display sub category */}
+              {/* <NavigationMenuContent className="absolute left-auto top-full w-auto bg-white">
                 <ul className="grid gap-3 p-4 md:w-[400px] lg:grid-cols-[.75fr_1fr]">
                   <li>
                     <ListItem href="/categories" title="Example 1" />
@@ -109,7 +110,7 @@ export function Categories() {
                     </NavigationMenuLink>
                   </li>
                 </ul>
-              </NavigationMenuContent>
+              </NavigationMenuContent> */}
             </NavigationMenuItem>
           ))}
         </NavigationMenuList>

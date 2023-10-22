@@ -29,8 +29,15 @@ export default function IndexPage() {
 
   const handleLogin = async (formValue: LoginSchemaType) => {
     try {
-      await signIn("credentials", formValue)
-    } catch (error) {}
+      const res = await signIn("credentials", { ...formValue, redirect: false })
+      if (!res?.ok) {
+        methods.setError("password", {
+          message: "Wrong email or password!",
+        })
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
   const handleError = (err: object) => {
     console.log(err)

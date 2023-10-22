@@ -170,12 +170,14 @@ export default function JoinAgreement() {
       email: formValue.email + "@" + formValue.emailDomain,
     }
     try {
-      await fetch("/api/auth/sign-up", {
+      const res = await fetch("/api/auth/sign-up", {
         method: "POST",
         body: JSON.stringify(body),
       })
-      setIsSuccess(true)
-      router.push("/join-success")
+      if (res.ok) {
+        setIsSuccess(true)
+        router.push("/join-success")
+      }
     } catch (error: any) {
       console.log({ error })
     }

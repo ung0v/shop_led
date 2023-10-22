@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { deleteCategory } from "@/services"
+import { deleteCategory, deleteProduct } from "@/services"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
 
@@ -36,11 +36,11 @@ export function DataTableRowActions<TData>({
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[160px]">
         <DropdownMenuItem asChild>
-          <Link href={`/admin/category/${row.original.id}`}>Edit</Link>
+          <Link href={`/admin/product/${row.original.id}`}>Edit</Link>
         </DropdownMenuItem>
         <DropdownMenuItem
           onClick={() => {
-            deleteCategory({ id: row.original.id })
+            deleteProduct({ id: row.original.id })
             router.refresh()
           }}
         >

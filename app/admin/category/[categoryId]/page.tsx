@@ -6,11 +6,9 @@ import { Separator } from "@/components/ui/separator"
 import { CategoryForm } from "./CategoryForm"
 
 export const metadata: Metadata = {
-  title: "Tasks",
-  description: "A task and issue tracker build using Tanstack Table.",
+  title: "Category Edit",
+  description: "",
 }
-
-// Simulate a database read for tasks.
 
 export default async function EditCategory({
   params,
@@ -21,7 +19,7 @@ export default async function EditCategory({
   if (Number(params.categoryId)) {
     category = await getCategoryById(+params.categoryId)
   }
-  console.log(category)
+
   return (
     <>
       <div className="space-y-6 lg:max-w-2xl">

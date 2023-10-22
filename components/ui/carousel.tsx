@@ -11,7 +11,7 @@ export default function Carousel({
   autoSlide = false,
   autoSlideInterval = 3000,
   slides,
-  imgHeight
+  imgHeight,
 }: {
   autoSlide?: boolean
   autoSlideInterval?: number
@@ -41,7 +41,11 @@ export default function Carousel({
         }}
       >
         {slides.map((img) => (
-          <div style={{height: imgHeight}} className="basis-[100%] w-full relative">
+          <div
+            key={img}
+            style={{ height: imgHeight }}
+            className="basis-[100%] w-full relative"
+          >
             <Image
               className="relative w-full"
               fill

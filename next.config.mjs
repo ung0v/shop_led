@@ -6,7 +6,7 @@ const nextConfig = {
     serverActions: true,
   },
   images: {
-    domains: ["www.smgstore.co.kr", "cdn-pro-web-152-50.cdn-nhncommerce.com", "smgstore00.hgodo.com"]
+    domains: ["res.cloudinary.com","www.smgstore.co.kr", "cdn-pro-web-152-50.cdn-nhncommerce.com", "smgstore00.hgodo.com"]
   }
 }
 

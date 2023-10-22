@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         isSubcribedEmail,
         isSubcribedPhone,
         // USER ROLE
-        roleId: 2,
+        roleId: 3,
       },
     })
     return NextResponse.json(user)

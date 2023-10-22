@@ -64,7 +64,9 @@ model Product {
   SKU         String?
   price       Decimal
   categoryId  Int
-  inventoryId Int
+  inventoryId Int @unique
+  images      String[]
+  attributes  Json?
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime  @updatedAt
@@ -85,7 +87,7 @@ model Category {
 model Inventory {
   id        Int       @id @default(autoincrement())
   quantity  Int
-  product   Product[]
+  product   Product?
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
   deletedAt DateTime  @updatedAt
