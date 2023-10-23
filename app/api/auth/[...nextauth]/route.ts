@@ -33,17 +33,6 @@ const authOptions: AuthOptions = {
       },
     }),
   ],
-  callbacks: {
-    async signIn(params) {
-      console.log(params)
-      return true
-    },
-    // async session({ session, token, user }: any) {
-    //   // Send properties to the client, like an access_token and user id from a provider.
-    //   session.user.id = token.id
-    //   return session
-    // },
-  },
   debug: process.env.NODE_ENV === "development",
   session: { strategy: "jwt" },
   secret: "secret", // store this in a .env file
