@@ -1,5 +1,7 @@
 "use server"
 
+import prisma from "@/lib/prisma"
+
 export const getAllCategory = async () => {
   const item = await prisma.category.findMany()
   return item
