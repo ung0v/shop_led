@@ -60,11 +60,12 @@ model Product {
   id          Int       @id @default(autoincrement())
   name        String
   shortDesc   String?
+  desc        String?
   brand       String?
   SKU         String?
   price       Decimal
   categoryId  Int
-  inventoryId Int @unique
+  inventoryId Int       @unique
   images      String[]
   attributes  Json?
   createdAt   DateTime  @default(now())
@@ -85,10 +86,10 @@ model Category {
 }
 
 model Inventory {
-  id        Int       @id @default(autoincrement())
+  id        Int      @id @default(autoincrement())
   quantity  Int
   product   Product?
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
-  deletedAt DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime @updatedAt
 }

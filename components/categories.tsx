@@ -1,20 +1,17 @@
 "use client"
 
 import * as React from "react"
-import Image from "next/image"
 import Link from "next/link"
+import { Category } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 import {
   NavigationMenu,
-  NavigationMenuContent,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu"
-import { Icons } from "@/components/icons"
 
 const categoriesList = [
   {
@@ -49,7 +46,7 @@ const categoriesList = [
   },
 ]
 
-export function Categories() {
+export function Categories({ data }: { data: Category[] }) {
   const cateRef = React.useRef<any>()
 
   // React.useEffect(() => {
@@ -78,11 +75,14 @@ export function Categories() {
       </div> */}
       <NavigationMenu className="px-8">
         <NavigationMenuList className="gap-x-1 gap-y-1 md:gap-x-3 flex-wrap justify-start">
-          {categoriesList.map((category) => (
-            <NavigationMenuItem key={category.title}>
-              <NavigationMenuTrigger>
-                <NavigationMenuLink className="text-sm font-bold" asChild>
-                  <Link href="/categories">{category.title}</Link>
+          {data?.map((category) => (
+            <NavigationMenuItem key={category.name}>
+              <NavigationMenuTrigger className="p-0">
+                <NavigationMenuLink
+                  className="text-sm font-bold px-4 py-2"
+                  asChild
+                >
+                  <Link href={`/category/${category.id}`}>{category.name}</Link>
                 </NavigationMenuLink>
               </NavigationMenuTrigger>
               {/* display sub category */}

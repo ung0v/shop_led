@@ -27,6 +27,7 @@ import {
   SelectValue,
 } from "@/components/ui/select"
 import { toast } from "@/components/ui/use-toast"
+import Editor from "@/components/editor"
 import { Icons } from "@/components/icons"
 import { Zoom } from "@/components/zoom-image"
 
@@ -234,6 +235,20 @@ export function ProductForm({
                   {...field}
                   onBlur={(event) => field.onChange(+event.target.value)}
                 />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        <FormField
+          control={form.control}
+          name="desc"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Description</FormLabel>
+              <FormControl>
+                <Editor placeholder="Your description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>

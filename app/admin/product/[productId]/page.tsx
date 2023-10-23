@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator"
 import { ProductForm } from "./ProductForm"
 
 export const metadata: Metadata = {
-  title: "Category Edit",
+  title: "Product Edit",
   description: "",
 }
 

@@ -89,3 +89,11 @@
     @apply rounded-md lg:rounded-2xl;
   }
 }
+
+.ql-editor {
+  .ql-align-center {
+    & > img {
+      margin: 0 auto;
+    }
+  }
+}

@@ -1,7 +1,7 @@
 "use client"
 
-import { KeyboardEvent, useRef } from "react"
-import { usePathname, useRouter } from "next/navigation"
+import { KeyboardEvent, useEffect, useRef } from "react"
+import { usePathname, useRouter, useSearchParams } from "next/navigation"
 
 import { Icons } from "./icons"
 import { Button } from "./ui/button"
@@ -10,12 +10,13 @@ import { Input } from "./ui/input"
 export default function InputSearch() {
   const router = useRouter()
   const pathname = usePathname()
+  const query = useSearchParams()
 
   const inputRef = useRef<HTMLInputElement>(null)
 
   const handleSearch = () => {
     const newPathname = inputRef.current?.value
-      ? `${pathname}?${new URLSearchParams({ search: inputRef.current.value })}`
+      ? `/search?${new URLSearchParams({ key: inputRef.current.value })}`
       : pathname
     if (newPathname) {
       router.push(newPathname)
@@ -27,6 +28,12 @@ export default function InputSearch() {
       handleSearch()
     }
   }
+
+  useEffect(() => {
+    if (query.get("key") && inputRef.current) {
+      inputRef.current.value = query.get("key") || ""
+    }
+  }, [query])
 
   return (
     <div className="relative min-w-[250px] max-w-[300px] hidden lg:block">

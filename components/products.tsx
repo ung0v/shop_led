@@ -1,6 +1,7 @@
 import { useMemo } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { Product } from "@prisma/client"
 
 import { cn } from "@/lib/utils"
 
@@ -46,17 +47,15 @@ const productList: ProductType[] = [
 export default function Products({
   itemsPerRow = 4,
   size = 1,
+  data,
 }: {
   itemsPerRow?: number
   size?: number
+  data: Product[]
 }) {
-  const productData = useMemo(() => {
-    let data: Array<ProductType> = []
-    for (let i = 0; i < size; i++) {
-      data = [...data, ...productList]
-    }
-    return data
-  }, [size])
+  if (!data || data.length === 0) {
+    return <p className="text-center">No Result</p>
+  }
 
   return (
     <div
@@ -65,22 +64,23 @@ export default function Products({
         itemsPerRow ? `grid-cols-5` : ""
       )}
     >
-      {productData.map((product) => (
-        <ProductItem data={product} />
+      {data.map((product) => (
+        <ProductItem item={product} />
       ))}
     </div>
   )
 }
 
-const ProductItem = ({ data }: { data: ProductType }) => (
+const ProductItem = ({ item }: { item: Product }) => (
   <div className="flex flex-col items-center gap-2">
-    <div className="group relative w-full overflow-hidden">
-      <Link href="/product">
+    <div className="group relative w-full h-[247px] overflow-hidden">
+      <Link href={`/product/${item.id}`}>
         <Image
           className="scale-1 cursor-pointer transition-all duration-300 hover:scale-110"
-          layout="responsive"
-          src={data.imageSrc}
-          alt={data.title}
+          src={item.images?.[0]}
+          alt={item.name}
+          fill
+          objectFit="cover"
         />
       </Link>
       <div className="0 absolute bottom-[-24px] left-0 hidden w-full justify-center transition-all duration-300 group-hover:bottom-0 group-hover:flex">
@@ -92,12 +92,7 @@ const ProductItem = ({ data }: { data: ProductType }) => (
         </button>
       </div>
     </div>
-    <h3 className="cursor-pointer text-xs">{data.title}</h3>
-    <p className="text-xs">{data.price}</p>
-    {data.id && (
-      <Badge className="text-xs" variant="outline">
-        이니셜각인
-      </Badge>
-    )}
+    <h3 className="cursor-pointer text-xs">{item.name}</h3>
+    <p className="text-xs">{item.price?.toNumber().toLocaleString()}</p>
   </div>
 )

@@ -6,6 +6,25 @@ export const getAllProduct = async () => {
   return await prisma.product.findMany()
 }
 
+export const getProductByCategoryId = async (categoryId: number) => {
+  return await prisma.product.findMany({
+    where: {
+      categoryId,
+    },
+  })
+}
+
+export const getProductByName = async (name: string | null) => {
+  return await prisma.product.findMany({
+    where: {
+      name: {
+        contains: name ?? "",
+        mode: "insensitive",
+      },
+    },
+  })
+}
+
 export const getProductById = async (productId: number) => {
   const item = await prisma.product.findUnique({ where: { id: productId } })
   const inventory = await prisma.inventory.findUnique({
@@ -24,6 +43,7 @@ export const createProduct = async (data: any) => {
     data: {
       name: data.name,
       shortDesc: data.shortDesc,
+      desc: data.desc,
       brand: data.brand,
       SKU: data.SKU,
       price: data.price,
@@ -48,6 +68,7 @@ export const updateProduct = async (data: any) => {
     data: {
       name: data.name,
       shortDesc: data.shortDesc,
+      desc: data.desc,
       brand: data.brand,
       SKU: data.SKU,
       price: data.price,

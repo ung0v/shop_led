@@ -2,12 +2,15 @@ import "@/styles/globals.css"
 import { PropsWithChildren } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { getAllCategory } from "@/services"
 
 import { Separator } from "@/components/ui/separator"
 import { Categories } from "@/components/categories"
 import InputSearch from "@/components/input-search"
 
-export default function UserLayout({ children }: PropsWithChildren) {
+export default async function UserLayout({ children }: PropsWithChildren) {
+  const categories: any = await getAllCategory()
+
   return (
     <>
       <section className="grid items-center pb-8 pt-6 md:py-10">
@@ -31,7 +34,7 @@ export default function UserLayout({ children }: PropsWithChildren) {
               </div>
             </div>
 
-            <Categories />
+            <Categories data={categories} />
           </div>
         </div>
         <Separator />
