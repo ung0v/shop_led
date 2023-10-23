@@ -1,15 +1,11 @@
-import Image from "next/image"
-import Link from "next/link"
-import Banner from "public/images/banner.svg"
+import { getAllProduct } from "@/services"
 
 import Carousel from "@/components/ui/carousel"
-import { Categories } from "@/components/categories"
-import { HomeTab } from "@/components/home-tab"
-import { Icons } from "@/components/icons"
-import Pagination from "@/components/pagination"
 import Products from "@/components/products"
 
-export default function IndexPage() {
+export default async function IndexPage() {
+  const products: any = await getAllProduct()
+
   return (
     <div className="flex w-full flex-col">
       <div className="w-full h-[595px] relative">
@@ -22,8 +18,8 @@ export default function IndexPage() {
         />
       </div>
       <div className="container mt-[50px]">
-        <Products size={3} />
-        <Pagination />
+        <Products size={3} data={products} />
+        {/* <Pagination /> */}
       </div>
     </div>
   )

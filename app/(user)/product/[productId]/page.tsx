@@ -1,8 +1,11 @@
 "use client"
 
-import { ChangeEvent, useState } from "react"
+import { ChangeEvent, useEffect, useState } from "react"
 import Image from "next/image"
+import { getProductById } from "@/services"
+import { Product } from "@prisma/client"
 
+import { numberWithCommas } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
@@ -75,7 +78,12 @@ const productDetailsData = [
   },
 ]
 
-export default function Product() {
+export default function ProductPage({
+  params,
+}: {
+  params: { productId: string }
+}) {
+  const [product, setProduct] = useState<Product>()
   const [quantity, setQuantity] = useState<number>(1)
 
   const handleQuantity = (action: "ADD" | "SUBTRACT") => {
@@ -93,34 +101,39 @@ export default function Product() {
     setQuantity(quantity as number)
   }
 
+  useEffect(() => {
+    const getProduct = async () => {
+      const product = await getProductById(+params.productId)
+      setProduct(product as Product)
+      console.log(product)
+    }
+    getProduct()
+  }, [params.productId])
+
   return (
     <div className="container mt-5">
       <div className="">
         <div className="flex gap-20 h-[500px]">
           <div className="h-full w-[500px] relative">
-            <Image
-              alt=""
-              fill
-              src="https://cdn-pro-web-152-50.cdn-nhncommerce.com/smg5581818_godomall_com/data/goods/22/09/37/1000004106/register_detail_066.jpg"
-            />
+            <Image alt="" fill src={product?.images?.[0] as string} />
           </div>
           <div className="flex-1 flex flex-col">
-            <h2 className="font-bold text-xl mb-2">
-              [사은품 3종]ZIPPO ARMOR DIAMOND EDGE GD
-            </h2>
+            <h2 className="font-bold text-xl mb-2">{product?.name}</h2>
             <Separator />
             <div className="mt-2 py-2 flex flex-col gap-4">
               <div className="flex items-center gap-10 text-xs">
                 <h3 className="">짧은 설명</h3>
-                <p>사은품 3종 (오일133ml +심지 +돌) 증정</p>
+                <p>{product?.shortDesc}</p>
               </div>
               <div className="flex items-center gap-10 text-xs">
                 <h3 className="">판매가</h3>
-                <p className="font-bold text-base">103,000원</p>
+                <p className="font-bold text-base">
+                  {numberWithCommas(product?.price.toString())}원
+                </p>
               </div>
               <div className="flex items-center gap-10 text-xs">
                 <h3 className="">브랜드</h3>
-                <p>ZIPPO</p>
+                <p>{product?.brand}</p>
               </div>
             </div>
             <div className="mt-auto">
@@ -129,7 +142,7 @@ export default function Product() {
                 <div className="flex flex-col">
                   <div className="flex py-4 items-center gap-4">
                     <h3 className="basis-[60%] text-sm font-bold">
-                      [사은품 3종]ZIPPO ARMOR DIAMOND EDGE GD
+                      {product?.name}
                     </h3>
                     <span className="basis-[16%] flex">
                       <Input
@@ -154,19 +167,11 @@ export default function Product() {
                         </Button>
                       </span>
                     </span>
-                    <span className="basis-[20%] text-right">103,000원</span>
+                    <span className="basis-[20%] text-right">
+                      {numberWithCommas((+product?.price || 0) * quantity)}원
+                    </span>
                   </div>
                   <Separator className="bg-black" />
-                  <div className="flex py-4 items-center gap-4">
-                    <h3 className="basis-[60%] text-sm font-bold"></h3>
-                    <span className="basis-[20%] text-right text-xs">
-                      총 상품금액{" "}
-                    </span>
-                    <span className="basis-[20%] text-right text-base font-semibold">
-                      103,000원
-                    </span>
-                  </div>
-                  <Separator />
 
                   <div className="flex py-4 items-center gap-4">
                     <h3 className="basis-[60%] text-sm font-bold"></h3>
@@ -174,7 +179,7 @@ export default function Product() {
                       총 상품금액{" "}
                     </span>
                     <span className="basis-[20%] text-right text-lg font-bold">
-                      103,000원
+                      {numberWithCommas((+product?.price || 0) * quantity)}원
                     </span>
                   </div>
                   <div className="flex items-center justify-end gap-4">
@@ -196,13 +201,15 @@ export default function Product() {
         <div className="mt-8">
           <Separator className="my-4" />
           <h2 className="text-lg font-bold mb-4">상세정보</h2>
-          <div className="w-full min-h-[6200px] h-full relative">
+          {/* <div className="w-full min-h-[6200px] h-full relative">
             <Image
               src={require("public/images/product_detail.jpeg")}
               alt=""
               fill
             />
-          </div>
+            
+          </div> */}
+          ~~W.I.P~~
           <div className="flex flex-col">
             <h3 className="text-base font-bold text-center py-4">
               상품필수 정보

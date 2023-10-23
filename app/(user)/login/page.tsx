@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -26,9 +26,11 @@ export default function IndexPage() {
     resolver: zodResolver(LoginSchema),
     defaultValues: DEFAULT_FORM_VALUE_LOGIN,
   })
+  const [isLoading, setIsloading] = useState<boolean>(false)
 
   const handleLogin = async (formValue: LoginSchemaType) => {
     try {
+      setIsloading(true)
       const res = await signIn("credentials", { ...formValue, redirect: false })
       if (!res?.ok) {
         methods.setError("password", {
@@ -37,6 +39,8 @@ export default function IndexPage() {
       }
     } catch (error) {
       console.log(error)
+    } finally {
+      setIsloading(false)
     }
   }
   const handleError = (err: object) => {
@@ -96,6 +100,7 @@ export default function IndexPage() {
                     <Button
                       type="submit"
                       className="rounded-none h-full w-full font-bold bg-stone-800 text-base max-h-24"
+                      loading={isLoading}
                     >
                       로그인
                     </Button>

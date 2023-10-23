@@ -18,3 +18,7 @@ export function formatBytes(
     sizeType === "accurate" ? accurateSizes[i] ?? "Bytest" : sizes[i] ?? "Bytes"
   }`
 }
+
+export function numberWithCommas(x: number | string, type = ",") {
+  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, type)
+}
