@@ -250,5 +250,5 @@ export const DEFAULT_KEY_NAME_PRODUCT_ATTRIBUTES = [
   "종류",
   "제조연월",
   "KC안전인증 대상 유무",
-  "상품 가로_세로_높이",
+  "상품 가로/세로/높이",
 ]

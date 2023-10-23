@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { useRouter } from "next/navigation"
+import { DEFAULT_KEY_NAME_PRODUCT_ATTRIBUTES } from "@/constants"
 import { createProduct, updateProduct } from "@/services"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -110,6 +111,17 @@ export function ProductForm({
       )
     }
   }, [data?.images])
+
+  useEffect(() => {
+    if (!data) {
+      for (const attribute of DEFAULT_KEY_NAME_PRODUCT_ATTRIBUTES) {
+        append(
+          { attributeName: attribute, attributeValue: "" },
+          { shouldFocus: false }
+        )
+      }
+    }
+  }, [data])
 
   return (
     <Form {...form}>
