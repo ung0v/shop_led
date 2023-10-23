@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation"
 import { createProduct, updateProduct } from "@/services"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { Category, Product } from "@prisma/client"
 import { Cross1Icon } from "@radix-ui/react-icons"
 import { useFieldArray, useForm } from "react-hook-form"
 
@@ -37,8 +36,8 @@ export function ProductForm({
   data,
   listCategory,
 }: {
-  data?: Product & { id?: number }
-  listCategory: Category[]
+  data?: any & { id?: number }
+  listCategory: any[]
 }) {
   const router = useRouter()
   const form = useForm<ProductType>({
@@ -103,7 +102,7 @@ export function ProductForm({
     if (data?.images.length) {
       setFiles(
         data.images.map(
-          (image, i) =>
+          (image: any, i: number) =>
             ({ preview: image, name: `Product Image ${i + 1}` } as any)
         )
       )
