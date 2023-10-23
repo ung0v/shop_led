@@ -1,51 +1,24 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { revalidatePath } from "next/cache"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
-import {
-  createCategory,
-  createProduct,
-  updateCategory,
-  updateProduct,
-} from "@/services"
+import { createProduct, updateProduct } from "@/services"
 import { FileWithPreview } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Category, Product } from "@prisma/client"
-import {
-  CalendarIcon,
-  CaretSortIcon,
-  CheckIcon,
-  Cross1Icon,
-} from "@radix-ui/react-icons"
+import { Cross1Icon } from "@radix-ui/react-icons"
 import { useFieldArray, useForm } from "react-hook-form"
-import * as z from "zod"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-} from "@/components/ui/command"
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 import {
   Select,
   SelectContent,
