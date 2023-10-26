@@ -33,9 +33,24 @@ const authOptions: AuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
+  callbacks: {
+    // Ref: https://authjs.dev/guides/basics/role-based-access-control#persisting-the-role
+    async jwt({ token, user }) {
+      if (user) token.roleId = user.roleId
+      return token
+    },
+    // If you want to use the role in client components
+    async session({ session, token }) {
+      if (session?.user) session.user.roleId = token.roleId
+      return session
+    },
+  },
   debug: process.env.NODE_ENV === "development",
   session: { strategy: "jwt" },
-  secret: "secret", // store this in a .env file
+  secret: process.env.NEXTAUTH_URL, // store this in a .env file
 }
 
 const handler = NextAuth(authOptions)

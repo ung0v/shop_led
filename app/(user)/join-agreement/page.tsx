@@ -2,6 +2,7 @@
 
 import { useState } from "react"
 import { useRouter } from "next/navigation"
+import { createUser } from "@/services/user"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { omit } from "lodash"
 import { ControllerRenderProps, useForm } from "react-hook-form"
@@ -12,7 +13,6 @@ import {
   RegisterSchemaType,
 } from "@/config/form"
 import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
 import {
   Form,
   FormControl,
@@ -23,14 +23,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select"
 import { Separator } from "@/components/ui/separator"
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table"
 import { Icons } from "@/components/icons"
@@ -47,7 +39,7 @@ export default function JoinAgreement() {
       label: "비밀번호",
       name: "password",
       render: (props: ControllerRenderProps) => (
-        <Input type="password" className="w-[150px]" {...props} />
+        <Input type="password" className="w-[200px]" {...props} />
       ),
       required: true,
     },
@@ -55,7 +47,7 @@ export default function JoinAgreement() {
       label: "비밀번호 확인",
       name: "confirmPassword",
       render: (props: ControllerRenderProps) => (
-        <Input type="password" className="w-[150px]" {...props} />
+        <Input type="password" className="w-[200px]" {...props} />
       ),
       required: true,
     },
@@ -72,30 +64,6 @@ export default function JoinAgreement() {
         <div className="flex flex-col">
           <div className="flex items-center gap-4">
             <Input className="basis-[70%]" {...props} />
-            <Select defaultValue="naver.com">
-              <SelectTrigger className="basis-[30%] max-h-8 rounded-none text-xs">
-                <SelectValue placeholder="직접입력" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectItem value="naver.com">naver.com</SelectItem>
-                  <SelectItem value="hanmail.net">hanmail.net</SelectItem>
-                  <SelectItem value="daum.net">daum.net</SelectItem>
-                  <SelectItem value="hotmail.com">hotmail.com</SelectItem>
-                  <SelectItem value="gmail.com">gmail.com</SelectItem>
-                  <SelectItem value="icloud.com">icloud.com</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="mt-3 flex items-center gap-2">
-            <Checkbox id="1" />
-            <label
-              htmlFor="1"
-              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              정보/이벤트 메일 수신에 동의합니다.
-            </label>
           </div>
         </div>
       ),
@@ -112,15 +80,6 @@ export default function JoinAgreement() {
               placeholder="- 없이 입력하세요."
               {...props}
             />
-          </div>
-          <div className="mt-3 flex items-center gap-2">
-            <Checkbox id="2" />
-            <label
-              htmlFor="2"
-              className="text-xs font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-            >
-              정보/이벤트 SMS 수신에 동의합니다.
-            </label>
           </div>
         </div>
       ),
@@ -152,7 +111,6 @@ export default function JoinAgreement() {
           <Input />
         </div>
       ),
-      required: true,
     },
   ]
 
@@ -163,23 +121,21 @@ export default function JoinAgreement() {
   const router = useRouter()
 
   const [isSuccess, setIsSuccess] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const onSubmit = async (formValue: RegisterSchemaType) => {
     const body = {
-      ...omit(formValue, ["confirmPassword", "emailDomain"]),
-      email: formValue.email + "@" + formValue.emailDomain,
+      ...omit(formValue, ["confirmPassword"]),
     }
     try {
-      const res = await fetch("/api/auth/sign-up", {
-        method: "POST",
-        body: JSON.stringify(body),
-      })
-      if (res.ok) {
-        setIsSuccess(true)
-        router.push("/join-success")
-      }
+      setIsLoading(true)
+      await createUser(body)
+      setIsSuccess(true)
+      router.push("/join-success")
     } catch (error: any) {
       console.log({ error })
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -278,6 +234,7 @@ export default function JoinAgreement() {
                 <Button
                   type="submit"
                   className="rounded-none font-bold bg-stone-800"
+                  loading={isLoading}
                 >
                   회원가입
                 </Button>

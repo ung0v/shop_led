@@ -91,6 +91,7 @@
 }
 
 .ql-editor {
+  font-size: 14px;
   .ql-align-center {
     & > img {
       margin: 0 auto;

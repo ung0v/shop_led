@@ -1,11 +1,5 @@
-"use client"
-
 import Link from "next/link"
-import { JOIN_TERM_1, JOIN_TERM_2 } from "@/constants"
 
-import { Button } from "@/components/ui/button"
-import { Checkbox } from "@/components/ui/checkbox"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons"
 
@@ -38,11 +32,11 @@ export default function Join() {
           <div className="flex justify-center items-center">
             <Icons.CheckCircle color="green" />
             <div className="ml-2">
-              SUCESS!! Click{" "}
+              가입 완료되었습니다. 후 로그인 하세요.
               <Link className="underline" href="/login">
-                here
+                여기를 클릭
               </Link>{" "}
-              to login
+              후 로그인 하세요.
             </div>
           </div>
         </div>

@@ -4,7 +4,9 @@ import { useEffect, useRef, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { JOIN_TERM_1, JOIN_TERM_2 } from "@/constants"
+import { AlertCircle } from "lucide-react"
 
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -18,6 +20,7 @@ export default function Join() {
   const [term2, setTerm2] = useState<boolean>(false)
   const term1Ref = useRef<HTMLButtonElement>(null)
   const term2Ref = useRef<HTMLButtonElement>(null)
+  const [error, setError] = useState<boolean>(false)
 
   const handleCheckTerm = () => {
     setTerm((checked) => !checked)
@@ -31,6 +34,7 @@ export default function Join() {
   }
 
   const handleGoNext = () => {
+    if (error) setError(false)
     if (term1 && term2) {
       router.push("join-agreement")
       return
@@ -41,6 +45,7 @@ export default function Join() {
     if (!term2) {
       term2Ref.current?.focus()
     }
+    setError(true)
   }
 
   useEffect(() => {
@@ -98,7 +103,7 @@ export default function Join() {
                 htmlFor="terms"
                 className="text-xs font-bold leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
               >
-                smg스토어의 모든 약관을 확인하고 전체 동의합니다.{" "}
+                ledmoa스토어의 모든 약관을 확인하고 전체 동의합니다.{" "}
                 <span className="font-medium text-gray-600">
                   (전체동의, 선택항목도 포함됩니다.)
                 </span>
@@ -151,6 +156,15 @@ export default function Join() {
             <ScrollArea className="h-[130px] border mt-4 p-5 pb-0 text-xs border-t-stone-600">
               <div dangerouslySetInnerHTML={{ __html: JOIN_TERM_2 }} />
             </ScrollArea>
+            {error && (
+              <Alert variant="destructive" className="mt-4 rounded-none">
+                <AlertCircle className="h-4 w-4" />
+
+                <AlertDescription>
+                  모든 약관에 동의하여 주세요.
+                </AlertDescription>
+              </Alert>
+            )}
             <div className="flex justify-center">
               <Button
                 className="text-sm font-bold mt-16 rounded-none w-[150px] h-[45px] mx-auto text-center bg-stone-800"

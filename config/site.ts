@@ -24,10 +24,6 @@ export const siteConfig = {
   ],
   privateNav: [
     {
-      title: "로그인",
-      href: "/login",
-    },
-    {
       title: "로그아웃",
       href: "/logout",
     },

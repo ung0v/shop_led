@@ -228,11 +228,11 @@ export default function Join() {
     setIsSubmit(true)
   }
 
-  useLayoutEffect(() => {
-    if (status !== "authenticated") {
-      router.push("/login")
-    }
-  }, [status])
+  // useLayoutEffect(() => {
+  //   if (status !== "authenticated") {
+  //     router.push("/login")
+  //   }
+  // }, [status])
 
   return (
     <div className="container mt-5">
