@@ -108,7 +108,6 @@ export default function ProductPage({
     const getProduct = async () => {
       const product = await getProductById(+params.productId)
       setProduct(product as Product)
-      console.log(product)
     }
     getProduct()
   }, [params.productId])

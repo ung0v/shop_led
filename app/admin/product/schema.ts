@@ -16,6 +16,7 @@ export const productSchema = z.object({
     })
   ),
   images: z.any().array(),
+  isPublish: z.boolean().optional(),
 })
 
 export type ProductType = z.infer<typeof productSchema>
@@ -31,4 +32,5 @@ export const DEFAULT_VALUES_PRODUCT: ProductType = {
   quantity: 100,
   attributes: [],
   images: [],
+  isPublish: true,
 }

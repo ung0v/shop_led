@@ -68,7 +68,7 @@ model Product {
   inventoryId Int       @unique
   images      String[]
   attributes  Json?
-  isPublish   Boolean   @default(false)
+  isPublish   Boolean?  @default(true)
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
   deletedAt   DateTime  @updatedAt

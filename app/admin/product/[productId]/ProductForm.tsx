@@ -27,6 +27,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Switch } from "@/components/ui/switch"
 import { toast } from "@/components/ui/use-toast"
 import Editor from "@/components/editor"
 import { Icons } from "@/components/icons"
@@ -126,6 +127,26 @@ export function ProductForm({
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+        <div className="mb-3">
+          <FormField
+            control={form.control}
+            name="isPublish"
+            render={({ field }) => (
+              <FormItem>
+                <div className="flex space-x-4 items-center">
+                  <FormControl>
+                    <Switch
+                      checked={field.value}
+                      onCheckedChange={(checked) => field.onChange(checked)}
+                    />
+                  </FormControl>
+                  <FormLabel className="font-bold text-base">Publish</FormLabel>
+                </div>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
         <div className="space-y-8">
           <h3 className="font-bold text-xl -mb-5">1. 제품 카테고리</h3>
           <FormField

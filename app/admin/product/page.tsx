@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 
 export default async function TaskPage() {
   const products: any = await getAllProduct()
-  console.log(products)
   return (
     <>
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">

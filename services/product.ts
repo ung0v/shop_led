@@ -51,6 +51,7 @@ export const createProduct = async (data: any) => {
       inventoryId: inventory.id,
       images: data.images,
       attributes: JSON.stringify(data.attributes),
+      isPublish: data.isPublish,
     },
   })
 }
@@ -76,6 +77,7 @@ export const updateProduct = async (data: any) => {
       inventoryId: inventory.id,
       images: data.images,
       attributes: JSON.stringify(data.attributes),
+      // isPublish: data.isPublish,
     },
     where: {
       id: data.id,
