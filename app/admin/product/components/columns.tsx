@@ -1,6 +1,7 @@
 "use client"
 
 import { ColumnDef } from "@tanstack/react-table"
+import dayjs from "dayjs"
 
 import { Checkbox } from "@/components/ui/checkbox"
 
@@ -35,14 +36,26 @@ export const columns: ColumnDef<ProductType>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="ID" />
     ),
-    cell: ({ row }) => <div className="w-[80px]">{row.index + 1}</div>,
+    cell: ({ row }) => <div className="w-[10px]">{row.index + 1}</div>,
     enableSorting: false,
     enableHiding: false,
   },
   {
+    accessorKey: "createdAt",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="날짜" />
+    ),
+    cell: ({ row }) => (
+      <div className="w-[80px]">
+        {dayjs(row.getValue("createdAt")).format("YYYY-MM-DD HH:mm:ss")}
+      </div>
+    ),
+    enableSorting: false,
+  },
+  {
     accessorKey: "name",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Name" />
+      <DataTableColumnHeader column={column} title="제품명" />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("name")}</div>,
     enableSorting: false,
@@ -50,7 +63,7 @@ export const columns: ColumnDef<ProductType>[] = [
   {
     accessorKey: "shortDesc",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Short Description" />
+      <DataTableColumnHeader column={column} title="짧은 설명" />
     ),
     cell: ({ row }) => (
       <div className="w-[80px]">{row.getValue("shortDesc")}</div>
@@ -61,24 +74,16 @@ export const columns: ColumnDef<ProductType>[] = [
   {
     accessorKey: "brand",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Brand" />
+      <DataTableColumnHeader column={column} title="브랜드" />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("brand")}</div>,
     enableSorting: false,
   },
 
   {
-    accessorKey: "SKU",
-    header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="SKU" />
-    ),
-    cell: ({ row }) => <div className="w-[80px]">{row.getValue("SKU")}</div>,
-    enableSorting: false,
-  },
-  {
     accessorKey: "price",
     header: ({ column }) => (
-      <DataTableColumnHeader column={column} title="Price" />
+      <DataTableColumnHeader column={column} title="판매가" />
     ),
     cell: ({ row }) => <div className="w-[80px]">{row.getValue("price")}</div>,
     enableSorting: false,

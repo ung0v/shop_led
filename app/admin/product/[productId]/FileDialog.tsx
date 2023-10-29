@@ -117,7 +117,7 @@ export default function FileDialog<TFieldValues extends FieldValues>({
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" className="w-full h-8">
-          Upload Images
+          메인 사진 등록
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] lg:max-w-[560px]">

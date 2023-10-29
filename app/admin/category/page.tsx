@@ -9,8 +9,8 @@ import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
 
 export const metadata: Metadata = {
-  title: "Tasks",
-  description: "A task and issue tracker build using Tanstack Table.",
+  title: "Admin - Category",
+  description: "",
 }
 
 // Simulate a database read for tasks.

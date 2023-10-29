@@ -14,6 +14,7 @@ import ScrollTop from "@/components/ScrollTop"
 import { Icons } from "@/components/icons"
 
 import "quill/dist/quill.snow.css"
+import Link from "next/link"
 
 const productDetailsData = [
   {
@@ -193,11 +194,12 @@ export default function ProductPage({
                     <Button
                       variant="outline"
                       className="w-[150px] rounded-none"
+                      asChild
                     >
-                      장바구니
+                      <Link href="/cart">장바구니</Link>
                     </Button>
-                    <Button className="w-[208px] rounded-none">
-                      바로 구매
+                    <Button className="w-[208px] rounded-none" asChild>
+                      <Link href="/cart">바로 구매</Link>
                     </Button>
                   </div>
                 </div>

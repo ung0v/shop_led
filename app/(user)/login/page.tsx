@@ -34,7 +34,7 @@ export default function IndexPage() {
       const res = await signIn("credentials", { ...formValue, redirect: false })
       if (!res?.ok) {
         methods.setError("password", {
-          message: "Wrong email or password!",
+          message: "아이디 혹은 비밀번호를 확인해주세요.",
         })
       }
     } catch (error) {

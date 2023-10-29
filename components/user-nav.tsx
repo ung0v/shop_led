@@ -48,13 +48,15 @@ export function UserNav() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="flex gap-2 cursor-pointer">
-            <Icons.UserCircle size={16} /> Account
+            <Icons.UserCircle size={16} /> 마이페이지
           </DropdownMenuItem>
-          <DropdownMenuItem className="flex gap-2 cursor-pointer" asChild>
-            <Link href="/admin/dashboard">
-              <Icons.Dashboard size={16} /> Dashboard
-            </Link>
-          </DropdownMenuItem>
+          {data?.user.roleId === 2 && (
+            <DropdownMenuItem className="flex gap-2 cursor-pointer" asChild>
+              <Link href="/admin/dashboard">
+                <Icons.Dashboard size={16} /> Dashboard
+              </Link>
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>

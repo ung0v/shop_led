@@ -3,7 +3,11 @@
 import prisma from "@/lib/prisma"
 
 export const getAllCategory = async () => {
-  const item = await prisma.category.findMany()
+  const item = await prisma.category.findMany({
+    orderBy: {
+      createdAt: "asc",
+    },
+  })
   return item
 }
 

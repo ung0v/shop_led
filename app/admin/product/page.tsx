@@ -1,6 +1,8 @@
 import { Metadata } from "next"
 import { getAllProduct } from "@/services"
 
+import { DatePickerWithRange } from "@/components/date-picker"
+
 import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
 
@@ -11,7 +13,7 @@ export const metadata: Metadata = {
 
 export default async function TaskPage() {
   const products: any = await getAllProduct()
-
+  console.log(products)
   return (
     <>
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">
@@ -23,6 +25,7 @@ export default async function TaskPage() {
             </p> */}
           </div>
         </div>
+        <DatePickerWithRange />
         <DataTable data={products} columns={columns} />
       </div>
     </>

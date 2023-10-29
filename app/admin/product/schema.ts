@@ -2,17 +2,17 @@ import { z } from "zod"
 
 export const productSchema = z.object({
   categoryId: z.number(),
-  name: z.string().nonempty(),
-  shortDesc: z.string().nonempty(),
-  desc: z.string().nonempty(),
-  brand: z.string().nonempty(),
-  SKU: z.string().nonempty(),
+  name: z.string().nonempty("빈칸을 입력해주세요."),
+  shortDesc: z.string().nonempty("빈칸을 입력해주세요."),
+  desc: z.string().nonempty("빈칸을 입력해주세요."),
+  brand: z.string().nonempty("빈칸을 입력해주세요."),
+  // SKU: z.string().nonempty("빈칸을 입력해주세요."),
   price: z.number(),
   quantity: z.number(),
   attributes: z.array(
     z.object({
-      attributeName: z.string().nonempty(),
-      attributeValue: z.string().nonempty(),
+      attributeName: z.string().nonempty("빈칸을 입력해주세요."),
+      attributeValue: z.string().nonempty("빈칸을 입력해주세요."),
     })
   ),
   images: z.any().array(),
@@ -26,7 +26,7 @@ export const DEFAULT_VALUES_PRODUCT: ProductType = {
   shortDesc: "",
   desc: "",
   brand: "",
-  SKU: "",
+  // SKU: "",
   price: 0,
   quantity: 100,
   attributes: [],

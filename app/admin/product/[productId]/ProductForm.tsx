@@ -125,151 +125,172 @@ export function ProductForm({
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit, onError)}
-        className="space-y-8"
-      >
-        <FormField
-          control={form.control}
-          name="categoryId"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Category</FormLabel>
-              <Select
-                defaultValue={data?.categoryId?.toString()}
-                onValueChange={(value) => field.onChange(+value)}
-              >
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  {listCategory.map((cate) => (
-                    <SelectItem key={cate.id} value={String(cate.id)}>
-                      {cate.name}
-                    </SelectItem>
+      <form onSubmit={form.handleSubmit(onSubmit, onError)}>
+        <div className="space-y-8">
+          <h3 className="font-bold text-xl -mb-5">1. 제품 카테고리</h3>
+          <FormField
+            control={form.control}
+            name="categoryId"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>카테고리</FormLabel>
+                <Select
+                  defaultValue={data?.categoryId?.toString()}
+                  onValueChange={(value) => field.onChange(+value)}
+                >
+                  <FormControl>
+                    <SelectTrigger>
+                      <SelectValue placeholder="카테고리" />
+                    </SelectTrigger>
+                  </FormControl>
+                  <SelectContent>
+                    {listCategory.map((cate) => (
+                      <SelectItem key={cate.id} value={String(cate.id)}>
+                        {cate.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="mt-8 space-y-4">
+          <h3 className="font-bold text-xl">2. 제품정보</h3>
+          <div className="space-y-2">
+            <FormItem className="flex w-full flex-col gap-1.5">
+              <FormLabel>메인 사진</FormLabel>
+              {files?.length ? (
+                <div className="flex items-center gap-2">
+                  {files.map((file, i) => (
+                    <Zoom key={i}>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        loading="lazy"
+                        src={file.preview || (file as any)}
+                        alt={file.name || `Product Image ${i + 1}`}
+                        className="h-20 w-20 shrink-0 rounded-md object-cover object-center"
+                        width={80}
+                        height={80}
+                      />
+                    </Zoom>
                   ))}
-                </SelectContent>
-              </Select>
-
-              <FormMessage />
+                </div>
+              ) : null}
+              <FileDialog
+                name="images"
+                setValue={form.setValue}
+                files={files}
+                setFiles={setFiles}
+              />
             </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Product Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Your product name" {...field} />
-              </FormControl>
+          </div>
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>제품명</FormLabel>
+                <FormControl>
+                  <Input placeholder="제품명을 입력해주세요." {...field} />
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="shortDesc"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Short Description</FormLabel>
-              <FormControl>
-                <Input placeholder="Your short description" {...field} />
-              </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="shortDesc"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>짧은 설명</FormLabel>
+                <FormControl>
+                  <Input placeholder="짧은 설명을 입력해주세요." {...field} />
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="brand"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Brand</FormLabel>
-              <FormControl>
-                <Input placeholder="Your brand" {...field} />
-              </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="brand"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>브랜드</FormLabel>
+                <FormControl>
+                  <Input placeholder="브랜드를 입력해주세요." {...field} />
+                </FormControl>
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-        <FormField
-          control={form.control}
-          name="SKU"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>SKU</FormLabel>
-              <FormControl>
-                <Input placeholder="Your SKU" {...field} />
-              </FormControl>
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>판매가</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="판매가를 입력해주세요."
+                    {...field}
+                    onBlur={(event) => field.onChange(+event.target.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+          <FormField
+            control={form.control}
+            name="quantity"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Quantity</FormLabel>
+                <FormControl>
+                  <Input
+                    type="number"
+                    placeholder="Your quantity"
+                    {...field}
+                    onBlur={(event) => field.onChange(+event.target.value)}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
 
-        <FormField
-          control={form.control}
-          name="price"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Price</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Your price"
-                  {...field}
-                  onBlur={(event) => field.onChange(+event.target.value)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="quantity"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Quantity</FormLabel>
-              <FormControl>
-                <Input
-                  type="number"
-                  placeholder="Your quantity"
-                  {...field}
-                  onBlur={(event) => field.onChange(+event.target.value)}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormField
-          control={form.control}
-          name="desc"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Description</FormLabel>
-              <FormControl>
-                <Editor placeholder="Your description" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <div className="space-y-2">
+        <div className="mt-8">
+          <FormField
+            control={form.control}
+            name="desc"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="font-bold text-xl">
+                  3. 상세정보(이미지)
+                </FormLabel>
+                <FormControl>
+                  <Editor placeholder="상세정보(이미지)" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+        </div>
+        <div className="mt-8 space-y-2">
           <FormItem>
-            <FormLabel>Attributes</FormLabel>
+            <FormLabel className="font-bold text-xl">
+              4. 상세정보(이미지)
+            </FormLabel>
           </FormItem>
           {fields.map((attribute, index) => (
             <div key={attribute.id} className="flex space-x-4">
@@ -291,7 +312,7 @@ export function ProductForm({
                 render={({ field }) => (
                   <FormItem className="w-3/5">
                     <FormControl>
-                      <Input placeholder="Your attribute value" {...field} />
+                      <Input placeholder="빈칸을 입력해주세요." {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -317,42 +338,15 @@ export function ProductForm({
             Add new attributes
           </Button>
         </div>
-        <div className="space-y-2">
-          <FormItem className="flex w-full flex-col gap-1.5">
-            <FormLabel>Images</FormLabel>
-            {files?.length ? (
-              <div className="flex items-center gap-2">
-                {files.map((file, i) => (
-                  <Zoom key={i}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
-                      loading="lazy"
-                      src={file.preview || (file as any)}
-                      alt={file.name || `Product Image ${i + 1}`}
-                      className="h-20 w-20 shrink-0 rounded-md object-cover object-center"
-                      width={80}
-                      height={80}
-                    />
-                  </Zoom>
-                ))}
-              </div>
-            ) : null}
-            <FileDialog
-              name="images"
-              setValue={form.setValue}
-              files={files}
-              setFiles={setFiles}
-            />
-          </FormItem>
-        </div>
-        <Button type="submit" disabled={isLoading}>
+
+        <Button className="mt-8" type="submit" disabled={isLoading}>
           {isLoading && (
             <Icons.Spinner
               className="mr-2 h-4 w-4 animate-spin"
               aria-hidden="true"
             />
           )}
-          Submit
+          등록하기
         </Button>
       </form>
     </Form>

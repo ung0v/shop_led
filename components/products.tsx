@@ -93,6 +93,9 @@ const ProductItem = ({ item }: { item: Product }) => (
       </div>
     </div>
     <h3 className="cursor-pointer text-xs">{item.name}</h3>
-    <p className="text-xs">{item.price?.toNumber().toLocaleString()}</p>
+
+    <p className="font-bold text-xs">
+      {item.price?.toNumber().toLocaleString()}원
+    </p>
   </div>
 )
