@@ -16,15 +16,12 @@ export default withAuth(
     }
   },
   {
-    pages: {
-      signIn: "/login",
-    },
     callbacks: {
       authorized: ({ token }) => {
+        console.log(token)
         return !!token
       },
     },
-    secret: process.env.NEXTAUTH_SECRET,
   }
 )
 
