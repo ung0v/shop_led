@@ -54,7 +54,7 @@ const authOptions: AuthOptions = {
   },
   debug: process.env.NODE_ENV === "development",
   session: { strategy: "jwt" },
-  secret: process.env.NEXTAUTH_URL, // store this in a .env file
+  secret: process.env.NEXTAUTH_SECRET, // store this in a .env file
 }
 
 const handler = NextAuth(authOptions)
