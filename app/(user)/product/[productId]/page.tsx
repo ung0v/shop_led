@@ -2,7 +2,7 @@
 
 import { ChangeEvent, useEffect, useState } from "react"
 import Image from "next/image"
-import { getProductById } from "@/services"
+import { addToCart, getProductById } from "@/services"
 import { Product } from "@prisma/client"
 
 import { numberWithCommas } from "@/lib/utils"
@@ -15,6 +15,8 @@ import { Icons } from "@/components/icons"
 
 import "quill/dist/quill.snow.css"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
+import { useSession } from "next-auth/react"
 
 const productDetailsData = [
   {
@@ -86,8 +88,11 @@ export default function ProductPage({
 }: {
   params: { productId: string }
 }) {
+  const router = useRouter()
+  const { data } = useSession()
   const [product, setProduct] = useState<Product>()
   const [quantity, setQuantity] = useState<number>(1)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
   const handleQuantity = (action: "ADD" | "SUBTRACT") => {
     if (action === "ADD") {
@@ -111,6 +116,23 @@ export default function ProductPage({
     }
     getProduct()
   }, [params.productId])
+
+  const handleAddCart = async () => {
+    setIsLoading(true)
+    try {
+      console.log(data)
+      await addToCart({
+        userId: data?.user.id as string,
+        quantity,
+        productId: +params.productId,
+      })
+      router.push("/cart")
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <div className="container mt-5">
@@ -193,9 +215,10 @@ export default function ProductPage({
                     <Button
                       variant="outline"
                       className="w-[150px] rounded-none"
-                      asChild
+                      loading={isLoading}
+                      onClick={handleAddCart}
                     >
-                      <Link href="/cart">장바구니</Link>
+                      장바구니
                     </Button>
                     <Button className="w-[208px] rounded-none" asChild>
                       <Link href="/cart">바로 구매</Link>

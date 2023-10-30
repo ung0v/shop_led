@@ -8,7 +8,6 @@ export default withAuth(
   function middleware(request: NextRequestWithAuth) {
     // console.log(request.nextUrl.pathname)
     // console.log(request.nextauth.token)
-    console.log
     if (
       request.nextUrl.pathname.startsWith("/admin") &&
       request.nextauth.token?.roleId !== 2

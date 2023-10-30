@@ -40,11 +40,15 @@ const authOptions: AuthOptions = {
     // Ref: https://authjs.dev/guides/basics/role-based-access-control#persisting-the-role
     async jwt({ token, user }) {
       if (user) token.roleId = user.roleId
+      if (user) token.id = user.id
       return token
     },
     // If you want to use the role in client components
     async session({ session, token }) {
-      if (session?.user) session.user.roleId = token.roleId
+      if (session?.user) {
+        session.user.roleId = token.roleId
+        session.user.id = token.id
+      }
       return session
     },
   },
