@@ -24,8 +24,10 @@ export default async function EditCategory({
     <>
       <div className="space-y-6 lg:max-w-2xl">
         <div>
-          <h3 className="text-lg font-medium">Category Edit</h3>
-          <p className="text-sm text-muted-foreground">Update your category.</p>
+          <h3 className="text-lg font-medium">
+            {params.categoryId ? "카테고리 수정" : "카테고리 생성"}
+          </h3>
+          {/* <p className="text-sm text-muted-foreground">Update your category.</p> */}
         </div>
         <Separator />
         <CategoryForm data={category} />

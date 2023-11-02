@@ -82,7 +82,7 @@ export function CategoryForm({
           )}
         />
 
-        <Button type="submit">Submit</Button>
+        <Button type="submit">등록하기</Button>
       </form>
     </Form>
   )

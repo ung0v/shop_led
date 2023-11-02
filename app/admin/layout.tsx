@@ -16,11 +16,11 @@ const sidebarNavItems = [
   //   href: "/admin/dashboard",
   // },
   {
-    title: "Category",
+    title: "카테고리 관리",
     href: "/admin/category",
   },
   {
-    title: "Product",
+    title: "상품 관리",
     href: "/admin/product",
   },
 ]
@@ -50,8 +50,8 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
       </div>
       <div className="hidden space-y-6 py-10 pb-16 md:block">
         <div className="space-y-0.5">
-          <h2 className="text-2xl font-bold tracking-tight">Admin</h2>
-          <p className="text-muted-foreground">Admin area.</p>
+          <h2 className="text-2xl font-bold tracking-tight">Admin(어드민)</h2>
+          {/* <p className="text-muted-foreground">Admin area.</p> */}
         </div>
         <Separator className="my-6" />
         <div className="flex flex-col space-y-8 lg:flex-row lg:space-x-12 lg:space-y-0">

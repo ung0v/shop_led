@@ -7,7 +7,7 @@ import { Separator } from "@/components/ui/separator"
 import { ProductForm } from "./ProductForm"
 
 export const metadata: Metadata = {
-  title: "Product Edit",
+  title: "상품 생성",
   description: "",
 }
 
@@ -30,12 +30,9 @@ export default async function EditCategory({
     <>
       <div className="space-y-6 lg:max-w-2xl">
         <div>
-          <h3 className="text-lg font-medium">
-            {+params.productId ? "Product Edit" : "Product Create"}
+          <h3 className="text-xl font-medium">
+            {+params.productId ? "상품 수정" : "상품 생성"}
           </h3>
-          <p className="text-sm text-muted-foreground">
-            {+params.productId ? "Update your product" : "Create your product."}
-          </p>
         </div>
         <Separator />
         <ProductForm data={product} listCategory={categorys} />

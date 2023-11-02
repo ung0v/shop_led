@@ -32,11 +32,11 @@ export default function Join() {
           <div className="flex justify-center items-center">
             <Icons.CheckCircle color="green" />
             <div className="ml-2">
-              가입 완료되었습니다. 후 로그인 하세요.
+              가입 완료되었습니다.&nbsp;
               <Link className="underline" href="/login">
-                여기를 클릭
+                여기
               </Link>{" "}
-              후 로그인 하세요.
+              를 클릭 후 로그인 하세요.
             </div>
           </div>
         </div>

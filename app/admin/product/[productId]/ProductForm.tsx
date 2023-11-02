@@ -140,7 +140,9 @@ export function ProductForm({
                       onCheckedChange={(checked) => field.onChange(checked)}
                     />
                   </FormControl>
-                  <FormLabel className="font-bold text-base">Publish</FormLabel>
+                  <FormLabel className="font-bold text-base">
+                    공유하기
+                  </FormLabel>
                 </div>
                 <FormMessage />
               </FormItem>
@@ -154,7 +156,7 @@ export function ProductForm({
             name="categoryId"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>카테고리</FormLabel>
+                {/* <FormLabel>카테고리</FormLabel> */}
                 <Select
                   defaultValue={data?.categoryId?.toString()}
                   onValueChange={(value) => field.onChange(+value)}
@@ -309,9 +311,7 @@ export function ProductForm({
         </div>
         <div className="mt-8 space-y-2">
           <FormItem>
-            <FormLabel className="font-bold text-xl">
-              4. 상세정보(이미지)
-            </FormLabel>
+            <FormLabel className="font-bold text-xl">4. 상세정보</FormLabel>
           </FormItem>
           {fields.map((attribute, index) => (
             <div key={attribute.id} className="flex space-x-4">
@@ -321,7 +321,7 @@ export function ProductForm({
                 render={({ field }) => (
                   <FormItem>
                     <FormControl>
-                      <Input placeholder="Your attribute name" {...field} />
+                      <Input placeholder="상세정보 입력" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -342,11 +342,11 @@ export function ProductForm({
               <Button
                 type="button"
                 variant="outline"
-                className="h-8 self-end space-x-1"
+                className="w-[80px] h-8 self-end space-x-1 px-2"
                 onClick={() => remove(index)}
               >
                 <Cross1Icon />
-                <span>Remove</span>
+                <span>삭제</span>
               </Button>
             </div>
           ))}
@@ -356,7 +356,7 @@ export function ProductForm({
             className="!mt-4 h-8"
             onClick={() => append({ attributeName: "", attributeValue: "" })}
           >
-            Add new attributes
+            추가
           </Button>
         </div>
 

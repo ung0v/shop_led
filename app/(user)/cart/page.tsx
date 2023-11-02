@@ -206,7 +206,7 @@ export default function Cart() {
   useLayoutEffect(() => {
     const handleGetCurrentCart = async () => {
       const cart = await getCart()
-      setCartList(cart?.data)
+      setCartList(cart?.data || [])
       setCartTotal(Number(cart?.total || 0))
     }
     handleGetCurrentCart()
@@ -275,10 +275,10 @@ export default function Cart() {
                 </TableHead>
               </TableRow>
             </TableHeader>
-            <TableBody>
+            <TableBody className="text-center">
               {cartList.map((product) => (
                 <TableRow key={product.id} className="hover:bg-white">
-                  <TableCell>
+                  <TableCell align="left">
                     <Checkbox
                       id="terms"
                       onClick={() => handleCheck(product.id)}
@@ -296,12 +296,12 @@ export default function Cart() {
 
                   <TableCell className="text-center text-xs font-bold border-x">
                     {product.quantity} 개
-                    <Button
+                    {/* <Button
                       variant="outline"
                       className="block mt-1 mx-auto rounded-none h-6 text-xs py-0"
                     >
                       옵션/수량변경
-                    </Button>
+                    </Button> */}
                   </TableCell>
                   <TableCell className="text-center text-xs font-bold border-x">
                     {numberWithCommas(product.price)} 원
@@ -310,10 +310,15 @@ export default function Cart() {
                     {numberWithCommas(product.subtotal)} 원
                   </TableCell>
                   <TableCell className="text-center text-xs text-gray-500">
-                    기본 - 금액별배송비 0원 (택배-선결제)
+                    -
                   </TableCell>
                 </TableRow>
               ))}
+              {cartList.length === 0 && (
+                <TableRow className="text-center">
+                  장바구니에 담겨있는 상품이 없습니다.
+                </TableRow>
+              )}
             </TableBody>
           </Table>
           <div className="mt-2">

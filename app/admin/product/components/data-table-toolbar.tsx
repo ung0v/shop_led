@@ -51,7 +51,7 @@ export function DataTableToolbar<TData>({
         >
           <Link href="/admin/product/create">
             <PlusCircledIcon className="mr-2 h-4 w-4" />
-            New
+            생성
           </Link>
         </Button>
         <DataTableViewOptions table={table} />
