@@ -45,7 +45,7 @@ export function UserNav() {
             </p>
           </div>
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem className="flex gap-2 cursor-pointer">
             <Icons.UserCircle size={16} /> 마이페이지
@@ -57,7 +57,7 @@ export function UserNav() {
               </Link>
             </DropdownMenuItem>
           )}
-        </DropdownMenuGroup>
+        </DropdownMenuGroup> */}
       </DropdownMenuContent>
     </DropdownMenu>
   )

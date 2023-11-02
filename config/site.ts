@@ -16,11 +16,6 @@ export const siteConfig = {
       title: "장바구니",
       href: "/cart",
     },
-
-    {
-      title: "마이페이지",
-      href: "/login",
-    },
   ],
   privateNav: [
     {

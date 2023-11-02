@@ -8,7 +8,7 @@ import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
 
 export const metadata: Metadata = {
-  title: "Products",
+  title: "Admin(어드민)",
   description: "",
 }
 

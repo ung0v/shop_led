@@ -6,8 +6,8 @@ import { Separator } from "@/components/ui/separator"
 import { SidebarNav } from "./components/sidebar"
 
 export const metadata: Metadata = {
-  title: "Admin Area",
-  description: "features for admin role",
+  title: "Admin(어드민)",
+  description: "",
 }
 
 const sidebarNavItems = [

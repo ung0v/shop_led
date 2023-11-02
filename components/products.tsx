@@ -54,7 +54,7 @@ export default function Products({
   data: Product[]
 }) {
   if (!data || data.length === 0) {
-    return <p className="text-center">No Result</p>
+    return <p className="text-center">검색 결과가 없습니다</p>
   }
 
   return (

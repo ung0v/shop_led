@@ -6,7 +6,7 @@ import { Separator } from "@/components/ui/separator"
 import { CategoryForm } from "./CategoryForm"
 
 export const metadata: Metadata = {
-  title: "Category Edit",
+  title: "Admin(어드민)",
   description: "",
 }
 
