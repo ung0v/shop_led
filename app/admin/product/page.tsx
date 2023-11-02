@@ -1,5 +1,6 @@
 import { Metadata } from "next"
-import { getAllProduct } from "@/services"
+import { useSearchParams } from "next/navigation"
+import { getAllProduct, getProductByDate } from "@/services"
 
 import { DatePickerWithRange } from "@/components/date-picker"
 
@@ -11,8 +12,9 @@ export const metadata: Metadata = {
   description: "",
 }
 
-export default async function TaskPage() {
-  const products: any = await getAllProduct()
+export default async function TaskPage({ searchParams }) {
+  let products: any = await getProductByDate(searchParams || {})
+
   return (
     <>
       <div className="hidden h-full flex-1 flex-col space-y-8 p-8 md:flex">

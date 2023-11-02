@@ -20,7 +20,7 @@ import { Separator } from "@/components/ui/separator"
 
 export default function IndexPage() {
   const router = useRouter()
-  const { status } = useSession()
+  const { status, data } = useSession()
 
   const methods = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
@@ -49,9 +49,12 @@ export default function IndexPage() {
 
   useEffect(() => {
     if (status === "authenticated") {
+      if (data.user.roleId === 2) {
+        return router.push("admin/dashboard")
+      }
       router.push("/")
     }
-  }, [status])
+  }, [status, data])
 
   return (
     <Form {...methods}>

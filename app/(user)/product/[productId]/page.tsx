@@ -89,7 +89,7 @@ export default function ProductPage({
   params: { productId: string }
 }) {
   const router = useRouter()
-  const { data } = useSession()
+  const { data, status } = useSession()
   const [product, setProduct] = useState<Product>()
   const [quantity, setQuantity] = useState<number>(1)
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -118,20 +118,22 @@ export default function ProductPage({
   }, [params.productId])
 
   const handleAddCart = async () => {
-    setIsLoading(true)
-    try {
-      console.log(data)
-      await addToCart({
-        userId: data?.user.id as string,
-        quantity,
-        productId: +params.productId,
-      })
-      router.push("/cart")
-    } catch (error) {
-      console.log(error)
-    } finally {
-      setIsLoading(false)
+    if (status === "authenticated") {
+      setIsLoading(true)
+      try {
+        await addToCart({
+          userId: data?.user.id as string,
+          quantity,
+          productId: +params.productId,
+        })
+        router.push("/cart")
+      } catch (error) {
+        console.log(error)
+      } finally {
+        setIsLoading(false)
+      }
     }
+    router.push("/login")
   }
 
   return (
@@ -220,8 +222,11 @@ export default function ProductPage({
                     >
                       장바구니
                     </Button>
-                    <Button className="w-[208px] rounded-none" asChild>
-                      <Link href="/cart">바로 구매</Link>
+                    <Button
+                      className="w-[208px] rounded-none"
+                      onClick={handleAddCart}
+                    >
+                      바로 구매
                     </Button>
                   </div>
                 </div>

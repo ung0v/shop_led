@@ -3,10 +3,7 @@ import { z } from "zod"
 
 export const RegisterSchema = z
   .object({
-    username: z
-      .string()
-      .nonempty("빈칸을 채워주세요.")
-      .min(3, "3자리 이상 영문을 입력해주세요."),
+    username: z.string().min(3, "3자리 이상 영문을 입력해주세요."),
     password: z
       .string()
       .regex(PASSWORD_REGEX, "영문 숫자 조합 8자리 이상을 입력해주세요."),
@@ -19,9 +16,9 @@ export const RegisterSchema = z
       .nonempty("빈칸을 채워주세요.")
       .regex(EMAIL_REGEX, "이메일 주소를 다시 확인해주세요."),
     phoneNumber: z.string().nonempty("빈칸을 채워주세요."),
-    address: z.string(),
-    address2: z.string(),
-    address3: z.string(),
+    address: z.string().nonempty("빈칸을 채워주세요."),
+    address2: z.string().nonempty("빈칸을 채워주세요."),
+    address3: z.string().nonempty("빈칸을 채워주세요."),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "password don't match",

@@ -1,6 +1,9 @@
 "use server"
 
+import { getServerSession } from "next-auth"
+
 import prisma from "@/lib/prisma"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export const addToCart = async (data: {
   userId: string
@@ -33,10 +36,12 @@ export const addToCart = async (data: {
   const isExistProduct = (
     await prisma.cartItem.findUnique({
       where: {
+        sessionId,
         productId: data.productId,
       },
     })
   )?.id
+
   console.log("if true then only update the quantity")
   // if true then only update the quantity
   if (isExistProduct) {
@@ -79,12 +84,27 @@ export const addToCart = async (data: {
   })
 }
 
-export const getCart = async (data: { userId: string }) => {
-  const session = await prisma.shoppingSession.findUnique({
-    where: { userId: data.userId },
-  })
-  if (session) {
-    // TODO
+export const getCart = async () => {
+  const userSession: any = await getServerSession(authOptions)
+  if (userSession.user) {
+    const session = await prisma.shoppingSession.findUnique({
+      where: { userId: userSession.user.id },
+    })
+    if (session) {
+      // TODO
+      let cartItem: any = await prisma.cartItem.findMany({
+        where: { sessionId: session.id },
+      })
+      for (let index = 0; index < cartItem.length; index++) {
+        const product = await prisma.product.findUnique({
+          where: { id: cartItem[index].productId },
+        })
+        cartItem[index].name = product?.name
+        cartItem[index].price = product?.price
+      }
+      return cartItem
+    }
   }
+
   return null
 }

@@ -5,6 +5,7 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { JOIN_TERM_1, JOIN_TERM_2 } from "@/constants"
+import { getCart } from "@/services"
 import { CheckedState } from "@radix-ui/react-checkbox"
 import { useSession } from "next-auth/react"
 
@@ -31,7 +32,7 @@ import {
 } from "@/components/ui/table"
 import { Icons } from "@/components/icons"
 
-export default function Join() {
+export default function Cart() {
   const fields = [
     {
       label: "아이디",
@@ -228,11 +229,13 @@ export default function Join() {
     setIsSubmit(true)
   }
 
-  // useLayoutEffect(() => {
-  //   if (status !== "authenticated") {
-  //     router.push("/login")
-  //   }
-  // }, [status])
+  useLayoutEffect(() => {
+    const handleGetCurrentCart = async () => {
+      const cart = await getCart()
+      console.log(cart)
+    }
+    handleGetCurrentCart()
+  }, [])
 
   return (
     <div className="container mt-5">

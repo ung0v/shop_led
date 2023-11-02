@@ -1,22 +1,41 @@
 "use server"
 
-import { User } from "@prisma/client"
+import { NextResponse } from "next/server"
+import { Prisma } from "@prisma/client"
+
+import prisma from "@/lib/prisma"
 
 export const createUser = async (body: any) => {
   const { username, name, email, password, address, phoneNumber } = body
-  const user = await prisma.user.create({
-    data: {
-      username,
-      password,
-      email,
-      name,
-      address,
-      address2: "",
-      address3: "",
-      phoneNumber,
-      // USER ROLE
-      roleId: 3,
-    },
-  })
-  return user
+  try {
+    const user = await prisma.user.create({
+      data: {
+        username,
+        password,
+        email,
+        name,
+        address,
+        address2: "",
+        address3: "",
+        phoneNumber,
+        // USER ROLE
+        roleId: 3,
+      },
+    })
+    return user
+  } catch (error: any) {
+    if (error instanceof Prisma.PrismaClientKnownRequestError) {
+      // The .code property can be accessed in a type-safe manner
+      if (error.code === "P2002") {
+        if (error?.meta?.target?.length) {
+          return {
+            message: "Duplicated",
+            name: error?.meta?.target[0],
+            status: "ERROR",
+          }
+        }
+      }
+    }
+    throw error
+  }
 }

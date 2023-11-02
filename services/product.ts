@@ -1,9 +1,22 @@
 "use server"
 
+import { DateRange } from "react-day-picker"
+
 import prisma from "@/lib/prisma"
 
 export const getAllProduct = async () => {
   return await prisma.product.findMany()
+}
+
+export const getProductByDate = async ({ from, to }: DateRange) => {
+  return await prisma.product.findMany({
+    where: {
+      createdAt: {
+        lte: to,
+        gte: from,
+      },
+    },
+  })
 }
 
 export const getProductByCategoryId = async (categoryId: number) => {

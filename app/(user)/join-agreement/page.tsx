@@ -92,26 +92,6 @@ export default function JoinAgreement() {
         <Input placeholder="- 없이 입력하세요." {...props} />
       ),
     },
-    {
-      label: "주소",
-      name: "address",
-      render: (props: ControllerRenderProps) => (
-        <div className="flex flex-col gap-4">
-          <div className="flex gap-1">
-            <Input className="basis-[190px]" {...props} />
-            <Button
-              type="button"
-              variant="outline"
-              className="max-h-8 rounded-none text-xs"
-            >
-              우편번호검색
-            </Button>
-          </div>
-          <Input />
-          <Input />
-        </div>
-      ),
-    },
   ]
 
   const methods = useForm<RegisterSchemaType>({
@@ -128,12 +108,27 @@ export default function JoinAgreement() {
       ...omit(formValue, ["confirmPassword"]),
     }
     try {
+      methods.clearErrors()
       setIsLoading(true)
-      await createUser(body)
+      const res: any = await createUser(body)
+      if (res.status === "ERROR") {
+        if (res.name === "username") {
+          return methods.setError(res.name, {
+            type: "validate",
+            message: "Username has been registered!",
+          })
+        }
+        if (res.name === "email") {
+          return methods.setError(res.name, {
+            type: "validate",
+            message: "Email has been registered!",
+          })
+        }
+      }
       setIsSuccess(true)
       router.push("/join-success")
     } catch (error: any) {
-      console.log({ error })
+      alert("Something went wrong! Please try again.")
     } finally {
       setIsLoading(false)
     }
@@ -221,6 +216,64 @@ export default function JoinAgreement() {
                       </TableCell>
                     </TableRow>
                   ))}
+                  <TableRow className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs [&>td>*]:max-w-[80%]">
+                    <TableCell
+                      width="20%"
+                      className="bg-gray-100 text-xs font-bold border"
+                    >
+                      <div className="flex items-center gap-1">
+                        <Icons.Aterisk size={12} />
+                        주소
+                      </div>
+                    </TableCell>
+                    <TableCell className=" border text-xs text-gray-600">
+                      <div className="flex flex-col gap-4">
+                        <FormField
+                          name="address"
+                          render={({ field: input }) => (
+                            <FormItem>
+                              <FormControl>
+                                <div className="flex gap-1">
+                                  <Input className="basis-[190px]" {...input} />
+                                  <Button
+                                    type="button"
+                                    variant="outline"
+                                    className="max-h-8 rounded-none text-xs"
+                                  >
+                                    우편번호검색
+                                  </Button>
+                                </div>
+                              </FormControl>
+                              <FormMessage className="text-xs" />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          name="address2"
+                          render={({ field: input }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input {...input} />
+                              </FormControl>
+                              <FormMessage className="text-xs" />
+                            </FormItem>
+                          )}
+                        />
+                        <FormField
+                          name="address3"
+                          render={({ field: input }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Input {...input} />
+                              </FormControl>
+                              <FormMessage className="text-xs" />
+                            </FormItem>
+                          )}
+                        />
+                      </div>
+                    </TableCell>
+                  </TableRow>
                 </TableBody>
               </Table>
               <div className="mt-9 flex gap-2 justify-center [&>button]:w-[150px] [&>button]:h-[45px]">
