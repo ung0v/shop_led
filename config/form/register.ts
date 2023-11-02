@@ -16,12 +16,11 @@ export const RegisterSchema = z
       .nonempty("빈칸을 채워주세요.")
       .regex(EMAIL_REGEX, "이메일 주소를 다시 확인해주세요."),
     phoneNumber: z.string().nonempty("빈칸을 채워주세요."),
-    address: z.string().nonempty("빈칸을 채워주세요."),
+    address: z.string(),
     address2: z.string().nonempty("빈칸을 채워주세요."),
-    address3: z.string().nonempty("빈칸을 채워주세요."),
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "password don't match",
+    message: "비밀번호가 일치하지 않습니다",
     path: ["confirmPassword"],
   })
 
@@ -36,5 +35,4 @@ export const DEFAULT_FORM_VALUE_REGISTER: RegisterSchemaType = {
   phoneNumber: "",
   address: "",
   address2: "",
-  address3: "",
 }

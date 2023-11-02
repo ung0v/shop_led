@@ -17,7 +17,9 @@ export function SiteHeader() {
         <MainNav
           items={
             status === "authenticated"
-              ? siteConfig.privateNav
+              ? data.user.roleId === 2
+                ? siteConfig.adminNav
+                : siteConfig.privateNav
               : siteConfig.publicNav
           }
         />

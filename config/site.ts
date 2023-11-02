@@ -32,6 +32,12 @@ export const siteConfig = {
     //   href: "/my-page",
     // },
   ],
+  adminNav: [
+    {
+      title: "로그아웃",
+      href: "/logout",
+    },
+  ],
   links: {
     twitter: "https://twitter.com/shadcn",
     github: "https://github.com/shadcn/ui",
