@@ -3,16 +3,15 @@
 import { useEffect, useLayoutEffect, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { JOIN_TERM_1, JOIN_TERM_2 } from "@/constants"
+import { useRouter, useSearchParams } from "next/navigation"
 import { getCart } from "@/services"
 import { CheckedState } from "@radix-ui/react-checkbox"
 import { useSession } from "next-auth/react"
 
+import { numberWithCommas } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Input } from "@/components/ui/input"
-import { ScrollArea } from "@/components/ui/scroll-area"
 import {
   Select,
   SelectContent,
@@ -139,42 +138,17 @@ export default function Cart() {
     },
   ]
 
-  const cart = [
-    {
-      id: 1,
-      productInfo: {
-        name: "[사은품 3종] ZIPPO 라이터 48695 Bimetal Copper Lid 1",
-        image:
-          "https://cdn-pro-web-152-50.cdn-nhncommerce.com/smg5581818_godomall_com/data/goods/23/07/28/1000004851/register_list_08.jpg",
-      },
-      quantity: 1,
-      productAmount: 439000,
-      totalAmount: 439000,
-      deliveryFee: 0,
-    },
-    {
-      id: 2,
-      productInfo: {
-        name: "[사은품 3종] ZIPPO 라이터 48695 Bimetal Copper Lid 2",
-        image:
-          "https://cdn-pro-web-152-50.cdn-nhncommerce.com/smg5581818_godomall_com/data/goods/23/07/28/1000004851/register_list_08.jpg",
-      },
-      quantity: 1,
-      productAmount: 439000,
-      totalAmount: 439000,
-      deliveryFee: 0,
-    },
-  ]
-
   const { status } = useSession()
   const router = useRouter()
+  const searchParams = useSearchParams()
   const [checkedList, setCheckedList] = useState<Array<number>>([])
-  const [cartList, setCartList] = useState<Array<(typeof cart)[0]>>(cart)
+  const [cartList, setCartList] = useState<any[]>([])
+  const [cartTotal, setCartTotal] = useState<number>(0)
   const [isCheckedAll, setIsCheckedAll] = useState<boolean>(false)
   const [isSubmit, setIsSubmit] = useState<boolean>(false)
 
   const handleCheckAll = () => {
-    setCheckedList(cart.map((item) => item.id))
+    setCheckedList(cartList.map((item) => item.id))
     setIsCheckedAll(true)
   }
 
@@ -232,10 +206,17 @@ export default function Cart() {
   useLayoutEffect(() => {
     const handleGetCurrentCart = async () => {
       const cart = await getCart()
-      console.log(cart)
+      setCartList(cart?.data)
+      setCartTotal(Number(cart?.total || 0))
     }
     handleGetCurrentCart()
   }, [])
+
+  useEffect(() => {
+    if (!!searchParams.get("isCheck")) {
+      handleCheckAll()
+    }
+  }, [searchParams, cartList])
 
   return (
     <div className="container mt-5">
@@ -272,7 +253,7 @@ export default function Cart() {
                     checked={
                       checkedList.length > 0
                         ? JSON.stringify(checkedList) ===
-                          JSON.stringify(cart.map((item) => item.id))
+                          JSON.stringify(cartList.map((item) => item.id))
                         : false
                     }
                   />
@@ -307,15 +288,9 @@ export default function Cart() {
                   <TableCell width="40%" className="">
                     <div className="flex items-center gap-2">
                       <div className="h-10 w-10 relative">
-                        <Image
-                          src={product.productInfo.image}
-                          alt="product"
-                          fill
-                        />
+                        <Image src={product.image} alt="product" fill />
                       </div>
-                      <span className="text-xs font-bold">
-                        {product.productInfo.name}
-                      </span>
+                      <span className="text-xs font-bold">{product.name}</span>
                     </div>
                   </TableCell>
 
@@ -329,10 +304,10 @@ export default function Cart() {
                     </Button>
                   </TableCell>
                   <TableCell className="text-center text-xs font-bold border-x">
-                    {product.productAmount.toLocaleString()} 원
+                    {numberWithCommas(product.price)} 원
                   </TableCell>
                   <TableCell className="text-center text-xs font-bold border-x">
-                    {product.totalAmount.toLocaleString()} 원
+                    {numberWithCommas(product.subtotal)} 원
                   </TableCell>
                   <TableCell className="text-center text-xs text-gray-500">
                     기본 - 금액별배송비 0원 (택배-선결제)
@@ -352,12 +327,12 @@ export default function Cart() {
           <div className="mt-4 p-8 border">
             <div className="flex justify-end gap-4 text-sm">
               <div className="flex flex-col">
-                <span>총 1 개의 상품금액</span>
+                <span>총 {cartList.length} 개의 상품금액</span>
                 <span className="text-base">
-                  <b>439,000</b>원
+                  <b>{numberWithCommas(cartTotal)}</b>원
                 </span>
               </div>
-              <div>
+              {/* <div>
                 <Icons.MinusCircle />
               </div>
               <div className="flex flex-col text-right">
@@ -365,7 +340,7 @@ export default function Cart() {
                 <span className="text-base">
                   <b>439,000</b>원
                 </span>
-              </div>
+              </div> */}
               <div>
                 <Icons.PlusCircle />
               </div>
@@ -381,7 +356,7 @@ export default function Cart() {
               <div className="flex flex-col text-right">
                 <span>합계</span>
                 <span className="text-base">
-                  <b>395,100</b>원
+                  <b>{numberWithCommas(cartTotal)}</b>원
                 </span>
               </div>
             </div>

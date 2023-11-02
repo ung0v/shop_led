@@ -100,9 +100,12 @@ export const getCart = async () => {
           where: { id: cartItem[index].productId },
         })
         cartItem[index].name = product?.name
+        cartItem[index].image = product?.images[0]
         cartItem[index].price = product?.price
+        cartItem[index].subtotal =
+          cartItem[index].price * cartItem[index].quantity
       }
-      return cartItem
+      return { data: cartItem, total: session.total }
     }
   }
 

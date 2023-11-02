@@ -117,7 +117,7 @@ export default function ProductPage({
     getProduct()
   }, [params.productId])
 
-  const handleAddCart = async () => {
+  const handleAddCart = async (isCheck?: boolean) => {
     if (status === "authenticated") {
       setIsLoading(true)
       try {
@@ -126,14 +126,18 @@ export default function ProductPage({
           quantity,
           productId: +params.productId,
         })
+        if (isCheck) {
+          return router.push("/cart?isCheck=1")
+        }
         router.push("/cart")
       } catch (error) {
         console.log(error)
       } finally {
         setIsLoading(false)
       }
+    } else {
+      router.push("/login")
     }
-    router.push("/login")
   }
 
   return (
@@ -217,14 +221,13 @@ export default function ProductPage({
                     <Button
                       variant="outline"
                       className="w-[150px] rounded-none"
-                      loading={isLoading}
-                      onClick={handleAddCart}
+                      onClick={() => handleAddCart()}
                     >
                       장바구니
                     </Button>
                     <Button
                       className="w-[208px] rounded-none"
-                      onClick={handleAddCart}
+                      onClick={() => handleAddCart(true)}
                     >
                       바로 구매
                     </Button>
