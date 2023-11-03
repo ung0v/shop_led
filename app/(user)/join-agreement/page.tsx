@@ -165,14 +165,7 @@ export default function JoinAgreement() {
 
   return (
     <>
-      <Script
-        src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
-        onLoad={() => {
-          console.log("Script has loaded")
-        }}
-        strategy="beforeInteractive"
-      />
-      <Script async id="2">
+      <Script async id="getAddress">
         {`
           function getAddress() {
             new daum.Postcode({

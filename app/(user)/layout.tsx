@@ -2,6 +2,7 @@ import "@/styles/globals.css"
 import { PropsWithChildren } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import Script from "next/script"
 import { getAllCategory } from "@/services"
 
 import { Separator } from "@/components/ui/separator"
@@ -13,6 +14,10 @@ export default async function UserLayout({ children }: PropsWithChildren) {
 
   return (
     <>
+      <Script
+        src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
+        strategy="beforeInteractive"
+      />
       <section className="grid items-center pb-8 pt-6 md:py-10">
         <div className="flex w-full flex-col">
           <div className="container flex flex-col">
