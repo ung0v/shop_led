@@ -49,7 +49,7 @@ export default async function UserLayout({ children }: PropsWithChildren) {
         <div className="container flex gap-24 pb-8 pt-6 md:py-10">
           <div>
             <p>삼성사</p>
-            <p>사업자 등록번호 101-35-689112 I 대표자 이준영 </p>
+            <p>사업자 등록번호 101-35-68912 I 대표자 이준영 </p>
             <p>서울특별시 종로구 종로 154-1, 1층 8호(종로3가)</p>
             <br />
             <p>Copyright © 삼성사 - All Rights Reserved</p>
