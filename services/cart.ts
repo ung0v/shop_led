@@ -33,23 +33,22 @@ export const addToCart = async (data: {
   }
   console.log("check product in cart or not")
   // check product in cart or not
-  const isExistProduct = (
-    await prisma.cartItem.findUnique({
-      where: {
-        sessionId,
-        productId: data.productId,
-      },
-    })
-  )?.id
+  const oldCart = await prisma.cartItem.findFirst({
+    where: {
+      sessionId,
+      productId: data.productId,
+    },
+  })
 
   console.log("if true then only update the quantity")
   // if true then only update the quantity
-  if (isExistProduct) {
+  if (oldCart?.id) {
     await prisma.cartItem.update({
       data: {
-        quantity: data.quantity,
+        quantity: oldCart.quantity + data.quantity,
       },
       where: {
+        id: oldCart.id,
         sessionId,
         productId: data.productId,
       },
