@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useLayoutEffect, useState } from "react"
+import { useEffect, useLayoutEffect, useMemo, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
 import { useRouter, useSearchParams } from "next/navigation"
@@ -8,7 +8,7 @@ import { getCart } from "@/services"
 import { CheckedState } from "@radix-ui/react-checkbox"
 import { useSession } from "next-auth/react"
 
-import { numberWithCommas } from "@/lib/utils"
+import { cn, numberWithCommas } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Separator } from "@/components/ui/separator"
@@ -33,6 +33,7 @@ export default function Cart() {
   const [cartTotal, setCartTotal] = useState<number>(0)
   const [isCheckedAll, setIsCheckedAll] = useState<boolean>(false)
   const [isSubmit, setIsSubmit] = useState<boolean>(false)
+  const [isSuccess, setIsSuccess] = useState<boolean>(false)
 
   const handleCheckAll = () => {
     setCheckedList(cartList.map((item) => item.id))
@@ -105,25 +106,44 @@ export default function Cart() {
     }
   }, [searchParams, cartList])
 
+  const amount = useMemo(() => {
+    return cartList.reduce((prev, acc) => prev + acc.quantity || 0, 0)
+  }, [cartList])
+
   return (
     <div className="container mt-5">
       <div className="py-5">
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-bold">장바구니</h2>
           <div className="flex items-center">
-            <span className="text-sm">
+            <span
+              className={cn(
+                "text-sm",
+                isSubmit || isSubmit ? "text-gray-300" : ""
+              )}
+            >
               <b>01</b> 장바구니
             </span>
             <span className="px-3">
               <Icons.ChevronRight />
             </span>
-            <span className="text-sm text-gray-300">
+            <span
+              className={cn(
+                "text-sm text-gray-300",
+                isSubmit ? "text-black" : ""
+              )}
+            >
               <b>02</b> 주문서작성/결제
             </span>
             <span className="px-3">
               <Icons.ChevronRight />
             </span>
-            <span className="text-sm text-gray-300">
+            <span
+              className={cn(
+                "text-sm text-gray-300",
+                isSuccess ? "text-black" : ""
+              )}
+            >
               <b>03</b> 주문완료
             </span>
           </div>
@@ -279,7 +299,15 @@ export default function Cart() {
               </div>
             </div>
           </div>
-          <div className="mt-10">{isSubmit && <OrderForm />}</div>
+          <div className="mt-10">
+            {isSubmit && (
+              <OrderForm
+                cartList={cartList}
+                total={cartTotal}
+                amount={amount}
+              />
+            )}
+          </div>
         </div>
       </div>
     </div>

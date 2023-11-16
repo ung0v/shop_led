@@ -2,8 +2,10 @@
 
 import { NextResponse } from "next/server"
 import { Prisma } from "@prisma/client"
+import { getServerSession } from "next-auth"
 
 import prisma from "@/lib/prisma"
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
 export const createUser = async (body: any) => {
   const { username, name, email, password, address, phoneNumber } = body
@@ -38,4 +40,15 @@ export const createUser = async (body: any) => {
     }
     throw error
   }
+}
+
+export const getCurrentUser = async () => {
+  const userSession: any = await getServerSession(authOptions)
+  if (userSession.user) {
+    const user = prisma.user.findUnique({ where: { id: userSession.user.id } })
+    if (user) {
+      return user
+    }
+  }
+  throw "No user found"
 }

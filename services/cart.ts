@@ -1,5 +1,6 @@
 "use server"
 
+import { OrderDetails } from "@prisma/client"
 import { getServerSession } from "next-auth"
 
 import prisma from "@/lib/prisma"
@@ -90,7 +91,6 @@ export const getCart = async () => {
       where: { userId: userSession.user.id },
     })
     if (session) {
-      // TODO
       let cartItem: any = await prisma.cartItem.findMany({
         where: { sessionId: session.id },
       })
@@ -109,4 +109,20 @@ export const getCart = async () => {
   }
 
   return null
+}
+
+export const createOrder = async (data: { userId: string } & OrderDetails) => {
+  const order = await prisma.orderDetails.create({
+    data: data,
+  })
+  return order.id
+}
+export const createOrderItem = async (orderId: number, cartList: any[]) => {
+  return Promise.all([
+    cartList.map((cart) =>
+      prisma.orderItem.create({
+        data: { productId: cart.productId, quantity: cart.quantity, orderId },
+      })
+    ),
+  ])
 }

@@ -28,7 +28,7 @@ model User {
   accounts         Account[]
   role             Role             @relation(fields: [roleId], references: [id])
   shoppingSession  ShoppingSession?
-  order            OrderDetails?
+  order            OrderDetails[]
 }
 
 model Account {
@@ -59,7 +59,7 @@ model Role {
 }
 
 model Product {
-  id          Int        @id @default(autoincrement())
+  id          Int         @id @default(autoincrement())
   name        String
   shortDesc   String?
   desc        String?
@@ -67,19 +67,19 @@ model Product {
   SKU         String?
   price       Decimal
   categoryId  Int
-  inventoryId Int        @unique
-  discountId  Int?       @unique
+  inventoryId Int         @unique
+  discountId  Int?        @unique
   images      String[]
   attributes  Json?
-  isPublish   Boolean?   @default(true)
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-  deletedAt   DateTime   @updatedAt
-  category    Category   @relation(fields: [categoryId], references: [id])
-  inventory   Inventory  @relation(fields: [inventoryId], references: [id])
-  discount    Discount?  @relation(fields: [discountId], references: [id])
+  isPublish   Boolean?    @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+  deletedAt   DateTime    @updatedAt
+  category    Category    @relation(fields: [categoryId], references: [id])
+  inventory   Inventory   @relation(fields: [inventoryId], references: [id])
+  discount    Discount?   @relation(fields: [discountId], references: [id])
   cartItem    CartItem[]
-  orderItem   OrderItem?
+  orderItem   OrderItem[]
 }
 
 model Discount {
@@ -136,8 +136,8 @@ model CartItem {
 
 model OrderItem {
   id           Int          @id @default(autoincrement())
-  orderId      Int          @unique
-  productId    Int          @unique
+  orderId      Int
+  productId    Int
   quantity     Int
   createdAt    DateTime     @default(now())
   updatedAt    DateTime     @updatedAt
@@ -146,24 +146,34 @@ model OrderItem {
 }
 
 model OrderDetails {
-  id        Int             @id @default(autoincrement())
-  userId    String          @unique
-  total     Decimal
-  paymentId Int
-  createdAt DateTime        @default(now())
-  updatedAt DateTime        @updatedAt
-  user      User            @relation(fields: [userId], references: [id])
-  order     OrderItem[]
-  payment   PaymentDetails?
+  id              Int         @id @default(autoincrement())
+  userId          String
+  total           Decimal
+  amount          Int
+  name            String
+  address         String
+  phoneNumber     String
+  email           String
+  shippingType    String
+  recipient       String
+  shippingAddress String
+  shippingPhone   String
+  shippingNote    String
+  paymentType     String
+  depositName     String?
+  status          String
+  createdAt       DateTime    @default(now())
+  updatedAt       DateTime    @updatedAt
+  user            User        @relation(fields: [userId], references: [id])
+  order           OrderItem[]
 }
 
 model PaymentDetails {
-  id        Int          @id @default(autoincrement())
-  orderId   Int          @unique
+  id        Int      @id @default(autoincrement())
+  orderId   Int      @unique
   amount    Int
   provider  String
   status    String
-  createdAt DateTime     @default(now())
-  updatedAt DateTime     @updatedAt
-  order     OrderDetails @relation(fields: [orderId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

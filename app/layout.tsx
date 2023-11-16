@@ -1,19 +1,12 @@
 import "@/styles/globals.css"
 import { Metadata } from "next"
-import Image from "next/image"
-import Link from "next/link"
-import NextAuthProvider from "@/contexts/SessionProvider"
 
 import { siteConfig } from "@/config/site"
 import { fontNanumGothic } from "@/lib/fonts"
 import { cn } from "@/lib/utils"
-import { Separator } from "@/components/ui/separator"
 import { Toaster } from "@/components/ui/toaster"
-import { Categories } from "@/components/categories"
-import InputSearch from "@/components/input-search"
 import { SiteHeader } from "@/components/site-header"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
-import { ThemeProvider } from "@/components/theme-provider"
 
 import WrapperProvider from "./provider"
 
