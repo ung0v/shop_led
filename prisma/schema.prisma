@@ -11,24 +11,26 @@ datasource db {
 }
 
 model User {
-  id               String           @id @default(uuid())
+  id               String   @id @default(uuid())
   roleId           Int
-  username         String           @unique @db.VarChar(20)
-  password         String           @db.VarChar(50)
+  username         String   @unique @db.VarChar(20)
+  password         String   @db.VarChar(50)
   name             String
-  email            String           @unique
+  email            String   @unique
   phoneNumber      String
   address          String
   address2         String?
   address3         String?
-  isSubcribedEmail Boolean          @default(false)
-  isSubcribedPhone Boolean          @default(false)
-  createdAt        DateTime         @default(now())
-  updatedAt        DateTime         @updatedAt
-  accounts         Account[]
-  role             Role             @relation(fields: [roleId], references: [id])
-  shoppingSession  ShoppingSession?
-  order            OrderDetails[]
+  isSubcribedEmail Boolean  @default(false)
+  isSubcribedPhone Boolean  @default(false)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  deleted          Boolean  @default(false)
+
+  accounts        Account[]
+  role            Role             @relation(fields: [roleId], references: [id])
+  shoppingSession ShoppingSession?
+  order           OrderDetails[]
 }
 
 model Account {
@@ -59,7 +61,7 @@ model Role {
 }
 
 model Product {
-  id          Int         @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   shortDesc   String?
   desc        String?
@@ -67,19 +69,20 @@ model Product {
   SKU         String?
   price       Decimal
   categoryId  Int
-  inventoryId Int         @unique
-  discountId  Int?        @unique
+  inventoryId Int      @unique
+  discountId  Int?     @unique
   images      String[]
   attributes  Json?
-  isPublish   Boolean?    @default(true)
-  createdAt   DateTime    @default(now())
-  updatedAt   DateTime    @updatedAt
-  deletedAt   DateTime    @updatedAt
-  category    Category    @relation(fields: [categoryId], references: [id])
-  inventory   Inventory   @relation(fields: [inventoryId], references: [id])
-  discount    Discount?   @relation(fields: [discountId], references: [id])
-  cartItem    CartItem[]
-  orderItem   OrderItem[]
+  isPublish   Boolean? @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  deleted     Boolean  @default(false)
+
+  category  Category    @relation(fields: [categoryId], references: [id])
+  inventory Inventory   @relation(fields: [inventoryId], references: [id])
+  discount  Discount?   @relation(fields: [discountId], references: [id])
+  cartItem  CartItem[]
+  orderItem OrderItem[]
 }
 
 model Discount {
@@ -91,7 +94,9 @@ model Discount {
   isActive  Boolean
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  product   Product?
+  deleted   Boolean  @default(false)
+
+  product Product?
 }
 
 model Category {
@@ -101,7 +106,7 @@ model Category {
   products    Product[]
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  deletedAt   DateTime  @updatedAt
+  deleted     Boolean   @default(false)
 }
 
 model Inventory {
@@ -110,7 +115,7 @@ model Inventory {
   product   Product?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  deletedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
 }
 
 model ShoppingSession {
@@ -135,12 +140,14 @@ model CartItem {
 }
 
 model OrderItem {
-  id           Int          @id @default(autoincrement())
-  orderId      Int
-  productId    Int
-  quantity     Int
-  createdAt    DateTime     @default(now())
-  updatedAt    DateTime     @updatedAt
+  id        Int      @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  deleted   Boolean  @default(false)
+
   product      Product      @relation(fields: [productId], references: [id])
   orderDetails OrderDetails @relation(fields: [orderId], references: [id])
 }

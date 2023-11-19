@@ -7,6 +7,9 @@ export const getAllCategory = async () => {
     orderBy: {
       createdAt: "asc",
     },
+    where: {
+      deleted: false,
+    },
   })
   return item
 }

@@ -1,7 +1,12 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useMemo, useRef } from "react"
 import { useRouter } from "next/navigation"
 import Script from "next/script"
-import { createOrder, createOrderItem } from "@/services"
+import {
+  createOrder,
+  createOrderItem,
+  deleteCartItem,
+  updateTotalShoppingSession,
+} from "@/services"
 import { useUser } from "@/stores"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { isEmpty } from "lodash"
@@ -37,12 +42,11 @@ const PAYMENT_TYPE = {
 } as const
 
 type OrderFormProps = {
-  total: number
-  amount: number
   cartList: any[]
+  checkedList: any[]
 }
 
-export default function OrderForm({ cartList, total, amount }: OrderFormProps) {
+export default function OrderForm({ cartList, checkedList }: OrderFormProps) {
   const router = useRouter()
   const addressRef = useRef<HTMLInputElement>(null)
   const user = useUser((state) => state.user)
@@ -50,7 +54,6 @@ export default function OrderForm({ cartList, total, amount }: OrderFormProps) {
   const handleValidateAddress = () => {
     methods.clearErrors("shippingAddress")
     const address = addressRef.current?.value
-    console.log(address)
     if (address) {
       return address
     } else {
@@ -167,6 +170,32 @@ export default function OrderForm({ cartList, total, amount }: OrderFormProps) {
     },
   ]
 
+  const orderInfo = useMemo(() => {
+    let total,
+      amount = 0
+    let cart = []
+    if (cartList.length) {
+      total = cartList.reduce((prev, acc) => {
+        if (checkedList.includes(acc.id)) {
+          return acc.subtotal + prev
+        }
+        return prev
+      }, 0)
+      amount = cartList.reduce((prev, acc) => {
+        if (checkedList.includes(acc.id)) {
+          return acc.quantity + prev
+        }
+        return prev
+      }, 0)
+      cart = cartList.filter((item) => checkedList.includes(item.id))
+    }
+    return {
+      cart,
+      total,
+      amount,
+    }
+  }, [cartList, checkedList])
+
   const methods = useForm<OrderType>({
     defaultValues: DEFAULT_VALUES_ORDER,
     resolver: zodResolver(OrderSchema),
@@ -182,11 +211,13 @@ export default function OrderForm({ cartList, total, amount }: OrderFormProps) {
       ...formValue,
       shippingAddress,
       userId: user.id,
-      total,
-      amount,
+      total: orderInfo.total,
+      amount: orderInfo.amount,
       status: "PROGRESS",
     } as any)
-    await createOrderItem(orderId, cartList)
+    await createOrderItem(orderId, orderInfo.cart)
+    await deleteCartItem(orderInfo.cart)
+    await updateTotalShoppingSession()
     router.push("/cart/order-success")
   }
 
@@ -337,7 +368,7 @@ export default function OrderForm({ cartList, total, amount }: OrderFormProps) {
                     상품 합계 금액
                   </TableCell>
                   <TableCell className=" border text-xs text-gray-600">
-                    <b>{numberWithCommas(total)}원</b>
+                    <b>{numberWithCommas(orderInfo.total)}원</b>
                   </TableCell>
                 </TableRow>
                 <TableRow className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs [&>td>*]:max-w-[80%]">
@@ -359,7 +390,7 @@ export default function OrderForm({ cartList, total, amount }: OrderFormProps) {
                     최종 결제 금액
                   </TableCell>
                   <TableCell className=" border text-xs text-gray-600">
-                    <b>{numberWithCommas(total)}원</b>
+                    <b>{numberWithCommas(orderInfo.total)}원</b>
                   </TableCell>
                 </TableRow>
               </TableBody>
@@ -454,7 +485,7 @@ export default function OrderForm({ cartList, total, amount }: OrderFormProps) {
 
           <div className="mt-8 flex flex-col gap-8">
             <div className="p-8 flex gap-2 justify-end text-xl border">
-              최종 결제 금액 <b>{numberWithCommas(total)}원</b>
+              최종 결제 금액 <b>{numberWithCommas(orderInfo.total)}원</b>
             </div>
             <div className="flex gap-2 items-center justify-center text-sm">
               <FormField

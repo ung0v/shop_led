@@ -43,8 +43,8 @@ export const createUser = async (body: any) => {
 }
 
 export const getCurrentUser = async () => {
-  const userSession: any = await getServerSession(authOptions)
-  if (userSession.user) {
+  const userSession = await getServerSession(authOptions)
+  if (userSession?.user) {
     const user = prisma.user.findUnique({ where: { id: userSession.user.id } })
     if (user) {
       return user

@@ -6,6 +6,34 @@ import { getServerSession } from "next-auth"
 import prisma from "@/lib/prisma"
 import { authOptions } from "@/app/api/auth/[...nextauth]/route"
 
+export const updateTotalShoppingSession = async (sessionId?: string) => {
+  if (!sessionId) {
+    const userSession = await getServerSession(authOptions)
+    sessionId = (
+      await prisma.shoppingSession.findFirst({
+        where: {
+          userId: userSession?.user.id,
+        },
+      })
+    )?.id
+  }
+  // handle sum total
+  const carts = await prisma.cartItem.findMany({ where: { sessionId } })
+  let total = 0
+  for (const item of carts) {
+    const price =
+      (await prisma.product.findUnique({ where: { id: item.productId } }))
+        ?.price ?? 0
+    total += (price as number) * item.quantity
+  }
+  return await prisma.shoppingSession.update({
+    data: {
+      total,
+    },
+    where: { id: sessionId },
+  })
+}
+
 export const addToCart = async (data: {
   userId: string
   productId: number
@@ -65,23 +93,8 @@ export const addToCart = async (data: {
       },
     })
   }
-
   console.log("handle sum total")
-  // handle sum total
-  const carts = await prisma.cartItem.findMany({ where: { sessionId } })
-  let total = 0
-  for (const item of carts) {
-    const price =
-      (await prisma.product.findUnique({ where: { id: item.productId } }))
-        ?.price ?? 0
-    total += (price as number) * item.quantity
-  }
-  return await prisma.shoppingSession.update({
-    data: {
-      total,
-    },
-    where: { id: sessionId },
-  })
+  updateTotalShoppingSession(sessionId)
 }
 
 export const getCart = async () => {
@@ -118,10 +131,19 @@ export const createOrder = async (data: { userId: string } & OrderDetails) => {
   return order.id
 }
 export const createOrderItem = async (orderId: number, cartList: any[]) => {
-  return Promise.all([
+  return Promise.allSettled([
     cartList.map((cart) =>
       prisma.orderItem.create({
         data: { productId: cart.productId, quantity: cart.quantity, orderId },
+      })
+    ),
+  ])
+}
+export const deleteCartItem = async (cartList: any[]) => {
+  return Promise.allSettled([
+    cartList.map((cart) =>
+      prisma.cartItem.delete({
+        where: { id: cart.id },
       })
     ),
   ])

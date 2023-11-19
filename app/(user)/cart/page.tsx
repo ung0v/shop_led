@@ -301,11 +301,7 @@ export default function Cart() {
           </div>
           <div className="mt-10">
             {isSubmit && (
-              <OrderForm
-                cartList={cartList}
-                total={cartTotal}
-                amount={amount}
-              />
+              <OrderForm checkedList={checkedList} cartList={cartList} />
             )}
           </div>
         </div>

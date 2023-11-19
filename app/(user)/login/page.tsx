@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useUser } from "@/stores"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { signIn, useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
@@ -21,6 +22,7 @@ import { Separator } from "@/components/ui/separator"
 export default function IndexPage() {
   const router = useRouter()
   const { status, data } = useSession()
+  const userStore = useUser()
 
   const methods = useForm<LoginSchemaType>({
     resolver: zodResolver(LoginSchema),
@@ -37,6 +39,7 @@ export default function IndexPage() {
           message: "아이디 혹은 비밀번호를 확인해주세요.",
         })
       }
+      userStore.setIsLogin(true)
     } catch (error) {
       console.log(error)
     } finally {

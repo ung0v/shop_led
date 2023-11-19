@@ -5,7 +5,11 @@ import { DateRange } from "react-day-picker"
 import prisma from "@/lib/prisma"
 
 export const getAllProduct = async () => {
-  return await prisma.product.findMany()
+  return await prisma.product.findMany({
+    where: {
+      deleted: false,
+    },
+  })
 }
 
 export const getProductByDate = async ({ from, to }: DateRange) => {
@@ -15,6 +19,7 @@ export const getProductByDate = async ({ from, to }: DateRange) => {
         lte: to,
         gte: from,
       },
+      deleted: false,
     },
   })
 }
@@ -34,6 +39,7 @@ export const getProductByName = async (name: string | null) => {
         contains: name ?? "",
         mode: "insensitive",
       },
+      deleted: false,
     },
   })
 }

@@ -1,8 +1,11 @@
 import { z } from "zod"
 
 export const LoginSchema = z.object({
-  username: z.string().nonempty().max(20, "Please input below 20 characters."),
-  password: z.string().nonempty().max(50, "Please input below 50 characters."),
+  username: z.string().nonempty("빈칸을 입력해주세요."),
+  password: z
+    .string()
+    .nonempty("빈칸을 입력해주세요.")
+    .max(50, "Please input below 50 characters."),
 })
 
 export type LoginSchemaType = z.infer<typeof LoginSchema>
