@@ -52,3 +52,20 @@ export const getCurrentUser = async () => {
   }
   throw "No user found"
 }
+
+export const mutateChangePassword = async (
+  oldPassword: string,
+  newPassword: string
+) => {
+  const user = await getCurrentUser()
+  if (user?.id) {
+    if (user.password !== oldPassword) {
+      throw "Wrong old password!"
+    }
+    return await prisma.user.update({
+      where: { id: user.id },
+      data: { password: newPassword },
+    })
+  }
+  throw "No user found"
+}

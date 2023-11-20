@@ -123,22 +123,6 @@ export const getCart = async () => {
 
   return null
 }
-
-export const createOrder = async (data: { userId: string } & OrderDetails) => {
-  const order = await prisma.orderDetails.create({
-    data: data,
-  })
-  return order.id
-}
-export const createOrderItem = async (orderId: number, cartList: any[]) => {
-  return Promise.allSettled([
-    cartList.map((cart) =>
-      prisma.orderItem.create({
-        data: { productId: cart.productId, quantity: cart.quantity, orderId },
-      })
-    ),
-  ])
-}
 export const deleteCartItem = async (cartList: any[]) => {
   return Promise.allSettled([
     cartList.map((cart) =>

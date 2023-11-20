@@ -27,10 +27,10 @@ export const siteConfig = {
       href: "/cart",
     },
 
-    // {
-    //   title: "마이페이지",
-    //   href: "/my-page",
-    // },
+    {
+      title: "마이페이지",
+      href: "/my-page",
+    },
   ],
   adminNav: [
     {
