@@ -65,7 +65,7 @@ export default function Products({
       )}
     >
       {data.map((product) => (
-        <ProductItem item={product} />
+        <ProductItem key={product.id} item={product} />
       ))}
     </div>
   )
