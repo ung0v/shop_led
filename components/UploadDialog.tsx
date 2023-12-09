@@ -18,7 +18,8 @@ import {
 } from "react-hook-form"
 
 import { formatBytes } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
+
+import { Button } from "./ui/button"
 import {
   Dialog,
   DialogContent,
@@ -26,12 +27,12 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { toast } from "@/components/ui/use-toast"
+} from "./ui/dialog"
+import { toast } from "./ui/use-toast"
 
 const MAX_FILE_SIZE = 4 * 1024 * 1024
 
-export type FileDialogProps<
+export type UploadDialogProps<
   TFieldValues extends FieldValues = FieldValues,
   TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>
 > = {
@@ -44,7 +45,7 @@ export type FileDialogProps<
   maxSize?: number
 }
 
-export default function FileDialog<TFieldValues extends FieldValues>({
+export default function UploadDialog<TFieldValues extends FieldValues>({
   name,
   accept = {
     "image/*": [],
@@ -53,7 +54,7 @@ export default function FileDialog<TFieldValues extends FieldValues>({
   setFiles,
   maxFiles = 3,
   maxSize = MAX_FILE_SIZE,
-}: FileDialogProps<TFieldValues>) {
+}: UploadDialogProps<TFieldValues>) {
   const onDrop = useCallback(
     (acceptedFiles: FileWithPath[], rejectedFiles: FileRejection[]) => {
       acceptedFiles.forEach((file) => {
@@ -106,7 +107,7 @@ export default function FileDialog<TFieldValues extends FieldValues>({
     <Dialog>
       <DialogTrigger asChild>
         <Button variant="outline" className="w-full h-8">
-          메인 사진 등록
+          Upload
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] lg:max-w-[560px]">
@@ -167,7 +168,7 @@ export default function FileDialog<TFieldValues extends FieldValues>({
                   objectFit="contain"
                 />
               </div>
-              <div className="flex-1 text-sm">{`Product Image ${idx + 1}`}</div>
+              <div className="flex-1 text-sm">{`Image ${idx + 1}`}</div>
               <Button
                 variant="outline"
                 className="flex items-center gap-1 h-7 w-7 p-0"

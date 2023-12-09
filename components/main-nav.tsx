@@ -1,14 +1,10 @@
-import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { NavItem } from "@/types"
 import { signOut } from "next-auth/react"
 
-import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
-import { Icons } from "@/components/icons"
 
-import { Button } from "./ui/button"
 import { Separator } from "./ui/separator"
 
 interface MainNavProps {

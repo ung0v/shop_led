@@ -28,10 +28,10 @@ export default async function UserLayout({ children }: PropsWithChildren) {
                 </div>
               </div>
               <div className="absolute w-full z-0 left-0 flex justify-center">
-                <Link href="/" className="w-[300px] h-[120px] relative">
+                <Link href="/" className="w-[240px] h-[120px] relative">
                   <Image
                     alt="logo"
-                    src={require("public/images/logo.svg")}
+                    src={require("public/images/new_logo.svg")}
                     fill
                     objectFit="cover"
                   />

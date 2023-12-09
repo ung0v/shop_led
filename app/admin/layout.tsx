@@ -27,6 +27,10 @@ const sidebarNavItems = [
     title: "Order",
     href: "/admin/order",
   },
+  {
+    title: "Setting",
+    href: "/admin/setting",
+  },
 ]
 
 interface SettingsLayoutProps {

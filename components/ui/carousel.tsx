@@ -3,13 +3,11 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 
-import { cn } from "@/lib/utils"
-
 import { Icons } from "../icons"
 
 export default function Carousel({
   autoSlide = false,
-  autoSlideInterval = 3000,
+  autoSlideInterval = 5000,
   slides,
   imgHeight,
 }: {
