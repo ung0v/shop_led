@@ -50,6 +50,7 @@ export default function Carousel({
               src={img}
               alt="banner"
               objectFit="cover"
+              priority
             />
           </div>
         ))}
