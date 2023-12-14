@@ -7,6 +7,14 @@ export interface NavItem {
   external?: boolean
 }
 
+export interface NavItemWithChildren extends NavItem {
+  items: NavItemWithChildren[]
+}
+
+export interface NavItemWithOptionalChildren extends NavItem {
+  items?: NavItemWithChildren[]
+}
+
 export interface Option {
   label: string
   value: string
@@ -16,3 +24,7 @@ export interface Option {
 export type FileWithPreview = FileWithPath & {
   preview: string
 }
+
+export type MainNavItem = NavItemWithOptionalChildren
+
+export type SidebarNavItem = NavItemWithChildren

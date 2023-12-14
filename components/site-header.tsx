@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react"
 import { siteConfig } from "@/config/site"
 import { MainNav } from "@/components/main-nav"
 
+import { MobileNav } from "./mobile-nav"
 import { UserNav } from "./user-nav"
 
 export function SiteHeader() {
@@ -29,18 +30,18 @@ export function SiteHeader() {
     handleGetCurrentUser()
   }, [userStore])
 
+  const navItems =
+    status === "authenticated"
+      ? data.user.roleId === 2
+        ? siteConfig.adminNav
+        : siteConfig.privateNav
+      : siteConfig.publicNav
+
   return (
     <header className="bg-background sticky top-0 z-40 w-full border-b">
       <div className="container flex h-10 items-center space-x-4 sm:justify-between sm:space-x-0">
-        <MainNav
-          items={
-            status === "authenticated"
-              ? data.user.roleId === 2
-                ? siteConfig.adminNav
-                : siteConfig.privateNav
-              : siteConfig.publicNav
-          }
-        />
+        <MainNav items={navItems} />
+        <MobileNav sidebarNavItems={navItems} />
         {/* <MainNav items={siteConfig.rightNav} /> */}
         {status === "authenticated" && (
           <div className="flex flex-1 items-center justify-end space-x-4">

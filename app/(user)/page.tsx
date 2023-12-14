@@ -9,7 +9,7 @@ export default async function IndexPage() {
 
   return (
     <div className="flex w-full flex-col">
-      <div className="w-full h-[595px] relative">
+      <div className="w-full h-[595px] relative hidden md:block">
         <Carousel slides={images} imgHeight={595} autoSlide />
       </div>
       <div className="container mt-[50px]">

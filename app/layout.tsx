@@ -58,13 +58,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
             <div className="relative flex min-h-screen flex-col">
               <SiteHeader />
               <div className="flex-1">
-                <main>
-                  {/* <div className="self-start sticky top-10 bg-black z-50">
-                      {" "}
-                      test estick
-                    </div> */}
-                  {children}
-                </main>
+                <main>{children}</main>
               </div>
             </div>
             <Toaster />
