@@ -143,8 +143,8 @@ export default function ProductPage({
   return (
     <div className="container mt-5">
       <div className="">
-        <div className="flex gap-20 h-[500px]">
-          <div className="h-full w-[500px] relative">
+        <div className="flex flex-wrap md:gap-20 md:h-[500px]">
+          <div className="h-[250px] w-full md:h-full md:w-[500px] relative">
             <Image
               alt=""
               fill
@@ -175,11 +175,11 @@ export default function ProductPage({
               <Separator />
               <div className="mt-4">
                 <div className="flex flex-col">
-                  <div className="flex py-4 items-center gap-4">
-                    <h3 className="basis-[60%] text-sm font-bold">
+                  <div className="flex py-4 items-center gap-2 md:gap-4">
+                    <h3 className="basis-1/2 md:basis-3/5 text-sm font-bold">
                       {product?.name}
                     </h3>
-                    <span className="basis-[16%] flex">
+                    <span className="basis-[20%] md:basis-[16%] flex">
                       <Input
                         value={quantity}
                         onChange={handleInputQuantity}
@@ -202,18 +202,18 @@ export default function ProductPage({
                         </Button>
                       </span>
                     </span>
-                    <span className="basis-[20%] text-right">
+                    <span className="basis-1/3 md:basis-1/5 text-right">
                       {numberWithCommas((+product?.price || 0) * quantity)}원
                     </span>
                   </div>
                   <Separator className="bg-black" />
 
-                  <div className="flex py-4 items-center gap-4">
-                    <h3 className="basis-[60%] text-sm font-bold"></h3>
-                    <span className="basis-[20%] text-right text-base font-bold">
+                  <div className="flex py-4 items-center gap-2 md:gap-4">
+                    <h3></h3>
+                    <span className="flex-1 text-right text-base font-bold">
                       총 상품금액{" "}
                     </span>
-                    <span className="basis-[20%] text-right text-lg font-bold">
+                    <span className="basis-1/3 md:basis-1/5 text-right text-lg font-bold">
                       {numberWithCommas((+product?.price || 0) * quantity)}원
                     </span>
                   </div>

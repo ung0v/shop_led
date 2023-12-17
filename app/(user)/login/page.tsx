@@ -63,16 +63,16 @@ export default function IndexPage() {
     <Form {...methods}>
       <div className="container">
         <div className="p-5">
-          <div className="mt-5 mb-10 ml-auto mr-auto min-w-[600px] w-[50%]">
+          <div className="mt-5 mb-10 ml-auto mr-auto w-full md:min-w-[600px] md:w-[50%]">
             <div className="flex flex-col">
               <h2 className="text-2xl font-bold mb-5">로그인</h2>
-              <div className="p-16 border">
+              <div className="p-4 md:p-16 border">
                 <h3 className="text-lg">회원 로그인</h3>
                 <form
                   onSubmit={methods.handleSubmit(handleLogin, handleError)}
-                  className="flex gap-4"
+                  className="flex flex-col flex-wrap gap-4 md:flex-row"
                 >
-                  <div className="flex flex-col mt-4 gap-4 basis-[74%]">
+                  <div className="flex flex-col mt-4 gap-4 basis-[74%] order-1">
                     <FormField
                       name="username"
                       render={({ field }) => (
@@ -102,7 +102,7 @@ export default function IndexPage() {
                     />
                   </div>
 
-                  <div className="pt-4 flex-1">
+                  <div className="md:pt-4 flex-1 order-3">
                     <Button
                       type="submit"
                       className="rounded-none h-full w-full font-bold bg-stone-800 text-base max-h-24"
@@ -111,18 +111,19 @@ export default function IndexPage() {
                       로그인
                     </Button>
                   </div>
+                  <div className="mt-3 flex items-center gap-2 w-full order-2 md:order-4">
+                    <Checkbox id="terms" />
+                    <label
+                      htmlFor="terms"
+                      className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                    >
+                      아이디 저장
+                    </label>
+                  </div>
                 </form>
-                <div className="mt-3 flex items-center gap-2">
-                  <Checkbox id="terms" />
-                  <label
-                    htmlFor="terms"
-                    className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
-                  >
-                    아이디 저장
-                  </label>
-                </div>
-                <Separator className="mt-12 mb-5" />
-                <div className="flex gap-4">
+
+                <Separator className="mt-4 mb-4 md:mt-12 md:mb-5" />
+                <div className="flex flex-col gap-4 md:flex-row">
                   <Button
                     className="flex-1 h-[45px] rounded-none bg-stone-600 font-bold"
                     asChild

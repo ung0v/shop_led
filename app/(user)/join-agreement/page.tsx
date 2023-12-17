@@ -41,7 +41,7 @@ export default function JoinAgreement() {
       label: "비밀번호",
       name: "password",
       render: (props: ControllerRenderProps) => (
-        <Input type="password" className="w-[200px]" {...props} />
+        <Input type="password" className="w-full md:w-[200px]" {...props} />
       ),
       required: true,
     },
@@ -49,7 +49,7 @@ export default function JoinAgreement() {
       label: "비밀번호 확인",
       name: "confirmPassword",
       render: (props: ControllerRenderProps) => (
-        <Input type="password" className="w-[200px]" {...props} />
+        <Input type="password" className="w-full md:w-[200px]" {...props} />
       ),
       required: true,
     },
@@ -65,7 +65,7 @@ export default function JoinAgreement() {
       render: (props: ControllerRenderProps) => (
         <div className="flex flex-col">
           <div className="flex items-center gap-4">
-            <Input className="basis-[70%]" {...props} />
+            <Input className="md:basis-[70%]" {...props} />
           </div>
         </div>
       ),
@@ -78,7 +78,7 @@ export default function JoinAgreement() {
         <div className="flex flex-col">
           <div className="flex items-center gap-4">
             <Input
-              className="basis-[190px]"
+              className="md:basis-[190px]"
               placeholder="- 없이 입력하세요."
               {...props}
             />
@@ -186,7 +186,7 @@ export default function JoinAgreement() {
 
       <div className="container mt-5">
         <div className="py-5">
-          <div className="flex justify-between items-center">
+          <div className="flex flex-wrap gap-4 justify-between items-center">
             <h2 className="text-2xl font-bold">회원가입</h2>
             <div className="flex items-center">
               <span className="text-sm text-gray-300">
@@ -207,10 +207,10 @@ export default function JoinAgreement() {
             </div>
           </div>
           <Separator className="my-4 bg-stone-600" />
-          <div className="py-16 px-14 text-sm">
+          <div className="p-4 md:py-16 md:px-14 text-sm">
             <h3 className="text-lg mb-4">회원종류</h3>
             <Separator className="bg-stone-600" />
-            <div className="p-10 mb-5 flex items-center justify-center">
+            <div className="p-4 md:p-10 md:mb-5 flex items-center justify-center">
               <RadioGroup defaultValue="1" className="flex flex-row my-[10px]">
                 <div className="flex items-center space-x-2">
                   <RadioGroupItem value="1" id="findByEmail" />
@@ -221,7 +221,7 @@ export default function JoinAgreement() {
               </RadioGroup>
             </div>
             <div className="">
-              <div className="flex justify-between">
+              <div className="flex flex-wrap gap-1 mb-2 md:mb-0 justify-between">
                 <h3 className="text-lg">기본정보</h3>
                 <span className="flex items-center gap-2 text-xs">
                   <Icons.Aterisk size={12} /> 기본정보표시는 반드시 입력하셔야
@@ -237,18 +237,18 @@ export default function JoinAgreement() {
                     {fields.map((field) => (
                       <TableRow
                         key={field.label}
-                        className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs [&>td>*]:max-w-[80%]"
+                        className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs md:[&>td>*]:max-w-[80%]"
                       >
                         <TableCell
                           width="20%"
-                          className="bg-gray-100 text-xs font-bold border"
+                          className="w-[30%] md:w-1/5] p-2 md:-4 bg-gray-100 text-xs font-bold border"
                         >
                           <div className="flex items-center gap-1">
                             {field.required && <Icons.Aterisk size={12} />}
                             {field.label}
                           </div>
                         </TableCell>
-                        <TableCell className=" border text-xs text-gray-600">
+                        <TableCell className="border text-xs text-gray-600">
                           <FormField
                             name={field.name}
                             render={({ field: input }) => (
@@ -261,7 +261,7 @@ export default function JoinAgreement() {
                         </TableCell>
                       </TableRow>
                     ))}
-                    <TableRow className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs [&>td>*]:max-w-[80%]">
+                    <TableRow className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs md:[&>td>*]:max-w-[80%]">
                       <TableCell
                         width="20%"
                         className="bg-gray-100 text-xs font-bold border"
@@ -278,9 +278,9 @@ export default function JoinAgreement() {
                             render={({ field: input }) => (
                               <FormItem>
                                 <FormControl>
-                                  <div className="flex gap-1">
+                                  <div className="flex flex-wrap gap-4 md:gap-1">
                                     <Input
-                                      className="basis-[190px]"
+                                      className="md:basis-[190px]"
                                       id="address"
                                       ref={addressRef}
                                     />
@@ -315,7 +315,7 @@ export default function JoinAgreement() {
                     </TableRow>
                   </TableBody>
                 </Table>
-                <div className="mt-9 flex gap-2 justify-center [&>button]:w-[150px] [&>button]:h-[45px]">
+                <div className="mt-4 md:mt-9 flex flex-col md:flex-row gap-4 md:gap-2 justify-center md:[&>button]:w-[150px] md:[&>button]:h-[45px]">
                   <Button
                     type="button"
                     variant="outline"

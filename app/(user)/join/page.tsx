@@ -67,8 +67,8 @@ export default function Join() {
 
   return (
     <div className="container mt-5">
-      <div className="py-5">
-        <div className="flex justify-between items-center">
+      <div className="py-0 md:py-5">
+        <div className="flex flex-wrap gap-4 justify-between items-center">
           <h2 className="text-2xl font-bold">회원가입</h2>
           <div className="flex items-center">
             <span className="text-sm">
@@ -89,11 +89,11 @@ export default function Join() {
           </div>
         </div>
         <Separator className="my-4 bg-stone-600" />
-        <div className="py-16 px-14 text-sm">
+        <div className="p-4 md:py-16 md:px-14 text-sm">
           <h3 className="text-lg mb-4">약관동의</h3>
           <Separator className="bg-stone-600" />
-          <div className="py-8">
-            <div className="flex items-center space-x-2 mb-8">
+          <div className="py-4 md:py-8">
+            <div className="flex items-center space-x-2">
               <Checkbox
                 id="terms"
                 checked={term && term1 && term2}
@@ -109,7 +109,7 @@ export default function Join() {
                 </span>
               </label>
             </div>
-            <div className="flex items-center space-x-2">
+            <div className="mt-4 md:mt-8 flex items-center space-x-2">
               <Checkbox
                 id="terms2"
                 checked={term1}
@@ -132,7 +132,7 @@ export default function Join() {
             <ScrollArea className="h-[130px] border mt-4 p-5 pb-0 text-xs border-t-stone-600">
               <div dangerouslySetInnerHTML={{ __html: JOIN_TERM_1 }} />
             </ScrollArea>
-            <div className="mt-8 flex items-center space-x-2">
+            <div className="mt-4 md:mt-8 flex items-center space-x-2">
               <Checkbox
                 id="terms3"
                 checked={term2}
@@ -167,7 +167,7 @@ export default function Join() {
             )}
             <div className="flex justify-center">
               <Button
-                className="text-sm font-bold mt-16 rounded-none w-[150px] h-[45px] mx-auto text-center bg-stone-800"
+                className="text-sm font-bold mt-4 md:mt-16 rounded-none w-full md:w-[150px] h-[45px] mx-auto text-center bg-stone-800"
                 onClick={handleGoNext}
               >
                 다음단계

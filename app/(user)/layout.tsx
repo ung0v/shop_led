@@ -18,7 +18,7 @@ export default async function UserLayout({ children }: PropsWithChildren) {
         src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"
         strategy="beforeInteractive"
       />
-      <section className="grid items-center md:pb-8 md:pt-6 md:py-10">
+      <section className="grid items-center md:pt-6 md:py-10 pb-8 md:pb-4">
         <div className="w-full flex-col hidden md:flex">
           <div className="container flex flex-col">
             <div className="flex relative h-[120px]">

@@ -11,7 +11,7 @@ export default async function CategoryPage({
   const products: any = await getProductByCategoryId(+params.categoryId)
   return (
     <div className="flex w-full flex-col">
-      <div className="container mt-[50px]">
+      <div className="container mt-4 md:mt-[50px]">
         <Products data={products} />
       </div>
     </div>

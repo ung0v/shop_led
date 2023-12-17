@@ -58,12 +58,7 @@ export default function Products({
   }
 
   return (
-    <div
-      className={cn(
-        "grid grid-cols-4 gap-x-8 gap-y-4",
-        itemsPerRow ? `grid-cols-5` : ""
-      )}
-    >
+    <div className={cn("grid grid-cols-2 gap-x-8 gap-y-4")}>
       {data.map((product) => (
         <ProductItem key={product.id} item={product} />
       ))}
@@ -94,7 +89,7 @@ const ProductItem = ({ item }: { item: Product }) => (
     </div>
     <h3 className="cursor-pointer text-xs">{item.name}</h3>
 
-    <p className="font-bold text-xs">
+    <p className="font-bold text-xs mt-auto">
       {item.price?.toNumber().toLocaleString()}원
     </p>
   </div>
