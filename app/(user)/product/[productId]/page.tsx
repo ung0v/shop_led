@@ -179,7 +179,7 @@ export default function ProductPage({
                     <h3 className="basis-1/2 md:basis-3/5 text-sm font-bold">
                       {product?.name}
                     </h3>
-                    <span className="basis-[20%] md:basis-[16%] flex">
+                    <span className="basis-[16%] flex">
                       <Input
                         value={quantity}
                         onChange={handleInputQuantity}
@@ -249,7 +249,7 @@ export default function ProductPage({
             
           </div> */}
           <div
-            className="ql-editor"
+            className="ql-editor !p-0"
             dangerouslySetInnerHTML={{ __html: product?.desc || "" }}
           />
           <div className="flex flex-col">

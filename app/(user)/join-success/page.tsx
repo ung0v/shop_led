@@ -5,9 +5,9 @@ import { Icons } from "@/components/icons"
 
 export default function Join() {
   return (
-    <div className="container mt-5">
+    <div className="container md:mt-5">
       <div className="py-5">
-        <div className="flex justify-between items-center">
+        <div className="flex flex-wrap gap-4 justify-between items-center">
           <h2 className="text-2xl font-bold">회원가입</h2>
           <div className="flex items-center">
             <span className="text-sm text-gray-300">
@@ -28,8 +28,8 @@ export default function Join() {
           </div>
         </div>
         <Separator className="my-4 bg-stone-600" />
-        <div className="py-16 px-14">
-          <div className="flex justify-center items-center">
+        <div className="p-4 md:py-16 md:px-14">
+          <div className="flex flex-col gap-2 md:flex-row md:gap-0 justify-center items-center">
             <Icons.CheckCircle color="green" />
             <div className="ml-2">
               가입 완료되었습니다.&nbsp;

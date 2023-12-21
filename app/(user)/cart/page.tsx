@@ -112,10 +112,10 @@ export default function Cart() {
 
   return (
     <div className="container mt-5">
-      <div className="py-5">
-        <div className="flex justify-between items-center">
+      <div className="md:py-5">
+        <div className="flex flex-wrap gap-y-2 justify-between items-center">
           <h2 className="text-2xl font-bold">장바구니</h2>
-          <div className="flex items-center">
+          <div className="flex flex-wrap items-center">
             <span
               className={cn(
                 "text-sm",
@@ -124,7 +124,7 @@ export default function Cart() {
             >
               <b>01</b> 장바구니
             </span>
-            <span className="px-3">
+            <span className="px-1 md:px-3">
               <Icons.ChevronRight />
             </span>
             <span
@@ -135,7 +135,7 @@ export default function Cart() {
             >
               <b>02</b> 주문서작성/결제
             </span>
-            <span className="px-3">
+            <span className="px-1 md:px-3">
               <Icons.ChevronRight />
             </span>
             <span
@@ -149,7 +149,7 @@ export default function Cart() {
           </div>
         </div>
         <Separator className="my-4" />
-        <div className="py-4 text-sm">
+        <div className="md:py-4 text-sm">
           <Table className="border-t-[1px] border-t-stone-600 border-b">
             <TableHeader>
               <TableRow className="hover:bg-gray-100 bg-gray-100 [&>th]:text-black">
@@ -168,16 +168,16 @@ export default function Cart() {
                 <TableHead className="text-center text-xs font-bold">
                   상품/옵션 정보
                 </TableHead>
-                <TableHead className="text-center text-xs font-bold">
+                <TableHead className="hidden md:table-cell text-center text-xs font-bold">
                   수량
                 </TableHead>
-                <TableHead className="text-center text-xs font-bold">
+                <TableHead className="hidden md:table-cell text-center text-xs font-bold">
                   상품금
                 </TableHead>
-                <TableHead className="text-center text-xs font-bold">
+                <TableHead className="hidden md:table-cell text-center text-xs font-bold">
                   합계금액
                 </TableHead>
-                <TableHead className="text-center text-xs font-bold">
+                <TableHead className="hidden md:table-cell text-center text-xs font-bold">
                   배송비
                 </TableHead>
               </TableRow>
@@ -185,7 +185,7 @@ export default function Cart() {
             <TableBody className="text-center">
               {cartList.map((product) => (
                 <TableRow key={product.id} className="hover:bg-white">
-                  <TableCell align="left">
+                  <TableCell align="left" className="w-1/12 md:w-auto">
                     <Checkbox
                       id="terms"
                       onClick={() => handleCheck(product.id)}
@@ -193,15 +193,47 @@ export default function Cart() {
                     />
                   </TableCell>
                   <TableCell width="40%" className="">
-                    <div className="flex items-center gap-2">
-                      <div className="h-10 w-10 relative">
-                        <Image src={product.image} alt="product" fill />
+                    <div className="flex items-center gap-2 md:gap-4">
+                      <div className="h-20 w-20 relative max-sm:flex-1">
+                        <Image
+                          src={product.image}
+                          alt="product"
+                          fill
+                          objectFit="contain"
+                        />
                       </div>
-                      <span className="text-xs font-bold">{product.name}</span>
+                      <div className="flex flex-col items-start max-sm:flex-2 max-sm:text-left">
+                        <span className="text-xs font-bold">
+                          {product.name}
+                        </span>
+                        <div className="md:hidden mt-1 flex flex-col gap-1 items-start">
+                          <p className="text-xs">
+                            수량:{" "}
+                            <span className="font-bold">
+                              {product.quantity} 개
+                            </span>
+                          </p>
+                          <p className="text-xs">
+                            상품금:{" "}
+                            <span className="font-bold">
+                              {numberWithCommas(product.price)} 원
+                            </span>
+                          </p>
+                          <p className="text-xs">
+                            합계금액:{" "}
+                            <span className="font-bold">
+                              {numberWithCommas(product.subtotal)} 원
+                            </span>
+                          </p>
+                          <p className="text-xs">
+                            배송비: <span className="font-bold">-</span>
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </TableCell>
 
-                  <TableCell className="text-center text-xs font-bold border-x">
+                  <TableCell className="hidden md:table-cell text-center text-xs font-bold border-x">
                     {product.quantity} 개
                     {/* <Button
                       variant="outline"
@@ -210,13 +242,13 @@ export default function Cart() {
                       옵션/수량변경
                     </Button> */}
                   </TableCell>
-                  <TableCell className="text-center text-xs font-bold border-x">
+                  <TableCell className="hidden md:table-cell text-center text-xs font-bold border-x">
                     {numberWithCommas(product.price)} 원
                   </TableCell>
-                  <TableCell className="text-center text-xs font-bold border-x">
+                  <TableCell className="hidden md:table-cell text-center text-xs font-bold border-x">
                     {numberWithCommas(product.subtotal)} 원
                   </TableCell>
-                  <TableCell className="text-center text-xs text-gray-500">
+                  <TableCell className="hidden md:table-cell text-center text-xs text-gray-500">
                     -
                   </TableCell>
                 </TableRow>
@@ -236,62 +268,55 @@ export default function Cart() {
               {`< 쇼핑 계속하기`}
             </Link>
           </div>
-          <div className="mt-4 p-8 border">
-            <div className="flex justify-end gap-4 text-sm">
+          <div className="px-2 py-4 mt-4 md:p-8 border">
+            <div className="text-xs flex justify-evenly md:justify-end gap-4 md:text-sm">
               <div className="flex flex-col">
                 <span>총 {cartList.length} 개의 상품금액</span>
-                <span className="text-base">
+                <span className="text-sm md:text-base">
                   <b>{numberWithCommas(cartTotal)}</b>원
                 </span>
               </div>
-              {/* <div>
-                <Icons.MinusCircle />
-              </div>
-              <div className="flex flex-col text-right">
-                <span>상품할인</span>
-                <span className="text-base">
-                  <b>439,000</b>원
-                </span>
-              </div> */}
-              <div>
+
+              <div className="flex gap-4 text-right">
                 <Icons.PlusCircle />
+                <div className="flex flex-col">
+                  <span>배송비</span>
+                  <span className="text-sm md:text-base">
+                    <b>0</b>원
+                  </span>
+                </div>
               </div>
-              <div className="flex flex-col text-right">
-                <span>배송비</span>
-                <span className="text-base">
-                  <b>0</b>원
-                </span>
-              </div>
-              <div>
+
+              <div className="flex gap-4 text-right">
                 <Icons.EqualCircle />
-              </div>
-              <div className="flex flex-col text-right">
-                <span>합계</span>
-                <span className="text-base">
-                  <b>{numberWithCommas(cartTotal)}</b>원
-                </span>
+                <div className="flex flex-col">
+                  <span>합계</span>
+                  <span className="text-sm md:text-base">
+                    <b>{numberWithCommas(cartTotal)}</b>원
+                  </span>
+                </div>
               </div>
             </div>
           </div>
           <div className="mt-4">
-            <div className="flex justify-between">
+            <div className="flex flex-wrap justify-between">
               <Button
                 variant="outline"
-                className="rounded-none text-xs h-8"
+                className="rounded-none text-xs h-8 max-sm:w-full"
                 onClick={handleDeleteCart}
               >
                 선택 상품 삭제
               </Button>
-              <div className="flex gap-4">
+              <div className="mt-4 md:mt-0 flex flex-wrap gap-4 max-sm:w-full">
                 <Button
                   variant="outline"
-                  className="rounded-none text-xs font-bold h-[45px] w-[190px]"
+                  className="rounded-none text-xs font-bold h-[45px] max-sm:w-full w-[190px]"
                   onClick={handleSubmit}
                 >
                   선택 상품 주문
                 </Button>
                 <Button
-                  className="rounded-none text-xs font-bold h-[45px] w-[190px]"
+                  className="rounded-none text-xs font-bold h-[45px] max-sm:w-full w-[190px]"
                   onClick={handleSubmit}
                 >
                   전체 상품 주문

@@ -24,6 +24,10 @@ export default function ScrollTop() {
     }
     btnRef.current?.addEventListener("click", backToTop)
     window.addEventListener("scroll", handleScroll)
+    return () => {
+      btnRef.current?.removeEventListener("click", backToTop)
+      window?.removeEventListener("scroll", handleScroll)
+    }
   }, [])
 
   return (
@@ -31,7 +35,7 @@ export default function ScrollTop() {
       ref={btnRef}
       variant="outline"
       size="icon"
-      className="fixed right-20 bottom-12 rounded-full bg-white"
+      className="fixed right-10 bottom-6 md:right-20 md:bottom-12 rounded-full bg-white"
     >
       <Icons.ChevronUp />
     </Button>

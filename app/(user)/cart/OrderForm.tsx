@@ -132,9 +132,9 @@ export default function OrderForm({ cartList, checkedList }: OrderFormProps) {
       label: "받으실 곳",
       name: "shippingAddress",
       render: (field) => (
-        <div className="flex gap-2">
+        <div className="flex flex-wrap gap-2">
           <Input
-            className="basis-[240px]"
+            className="md:basis-[240px]"
             id="shippingAddress"
             ref={addressRef}
             onBlur={(event) => {
@@ -272,15 +272,12 @@ export default function OrderForm({ cartList, checkedList }: OrderFormProps) {
                 {orderFields.map((field) => (
                   <TableRow
                     key={field.label}
-                    className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs [&>td>*]:max-w-[80%]"
+                    className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs md:[&>td>*]:max-w-[80%]"
                   >
-                    <TableCell
-                      width="20%"
-                      className="bg-gray-100 text-xs font-bold border"
-                    >
+                    <TableCell className="bg-gray-100 text-xs font-bold border md:w-1/5">
                       <div className="flex items-center gap-1">
                         {field.required && <Icons.Aterisk size={12} />}
-                        {field.label}
+                        <span>{field.label}</span>
                       </div>
                     </TableCell>
                     <TableCell className="border text-xs text-gray-600">
@@ -319,12 +316,9 @@ export default function OrderForm({ cartList, checkedList }: OrderFormProps) {
                 {shippingFields.map((field) => (
                   <TableRow
                     key={field.label}
-                    className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs [&>td>*]:max-w-[80%]"
+                    className="hover:bg-white max-h-16 [&>td_input]:h-8 [&>td_input]:placeholder:text-xs md:[&>td>*]:max-w-[80%]"
                   >
-                    <TableCell
-                      width="20%"
-                      className="bg-gray-100 text-xs font-bold border"
-                    >
+                    <TableCell className="bg-gray-100 text-xs font-bold border md:w-1/5">
                       <div className="flex items-center gap-1">
                         {field.required && <Icons.Aterisk size={12} />}
                         {field.label}

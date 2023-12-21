@@ -20,6 +20,8 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 import { Icons } from "@/components/icons"
 
+import InputSearch from "./input-search"
+
 interface MobileNavProps {
   mainNavItems?: MainNavItem[]
   sidebarNavItems: SidebarNavItem[]
@@ -74,6 +76,9 @@ export function MobileNav({ mainNavItems, sidebarNavItems }: MobileNavProps) {
             <span className="font-bold">{siteConfig.name}</span>
             <span className="sr-only">Home</span>
           </Link>
+        </div>
+        <div className="mt-4 pl-6 pr-7">
+          <InputSearch onAfterSubmit={() => setIsOpen(false)} />
         </div>
         <ScrollArea className="my-4 h-[calc(100vh-8rem)] pb-10 pl-6">
           <div className="pl-1 pr-7">

@@ -79,7 +79,7 @@ export function Categories({ data }: { data: Category[] }) {
             <NavigationMenuItem key={category.name}>
               <NavigationMenuTrigger className="p-0">
                 <NavigationMenuLink
-                  className="text-sm font-bold px-4 py-2"
+                  className="text-base font-bold px-4 py-2"
                   asChild
                 >
                   <Link href={`/category/${category.id}`}>{category.name}</Link>

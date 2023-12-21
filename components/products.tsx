@@ -58,7 +58,11 @@ export default function Products({
   }
 
   return (
-    <div className={cn("grid grid-cols-2 gap-x-8 gap-y-4")}>
+    <div
+      className={cn(
+        "grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-x-8 md:gap-y-4"
+      )}
+    >
       {data.map((product) => (
         <ProductItem key={product.id} item={product} />
       ))}

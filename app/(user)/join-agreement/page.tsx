@@ -184,7 +184,7 @@ export default function JoinAgreement() {
      `}
       </Script>
 
-      <div className="container mt-5">
+      <div className="container md:mt-5">
         <div className="py-5">
           <div className="flex flex-wrap gap-4 justify-between items-center">
             <h2 className="text-2xl font-bold">회원가입</h2>

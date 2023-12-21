@@ -88,6 +88,10 @@
   .zoom-image [data-rmiz-modal-img] {
     @apply rounded-md lg:rounded-2xl;
   }
+  .container {
+    max-width: 100%;
+    overflow: hidden;
+  }
 }
 
 .ql-editor {

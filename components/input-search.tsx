@@ -7,7 +7,11 @@ import { Icons } from "./icons"
 import { Button } from "./ui/button"
 import { Input } from "./ui/input"
 
-export default function InputSearch() {
+type InputSearchProps = {
+  onAfterSubmit?: () => void
+}
+
+export default function InputSearch({ onAfterSubmit }: InputSearchProps) {
   const router = useRouter()
   const pathname = usePathname()
   const query = useSearchParams()
@@ -21,6 +25,7 @@ export default function InputSearch() {
     if (newPathname) {
       router.push(newPathname)
     }
+    onAfterSubmit?.()
   }
 
   const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -36,7 +41,7 @@ export default function InputSearch() {
   }, [query])
 
   return (
-    <div className="relative min-w-[250px] max-w-[300px] hidden lg:block">
+    <div className="relative w-full md:min-w-[250px] md:max-w-[300px]">
       <Input
         type="search"
         ref={inputRef}
