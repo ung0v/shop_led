@@ -36,6 +36,7 @@ export const metadata: Metadata = {
     description: siteConfig.description,
     images: process.env.LOGO_URL,
   },
+  keywords: siteConfig.keywords,
 }
 
 interface RootLayoutProps {
