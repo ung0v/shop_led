@@ -2,7 +2,7 @@ export type SiteConfig = typeof siteConfig
 
 export const siteConfig = {
   name: "LED모아",
-  description: "Shop LED by Mr Lee va Vuong",
+  description: "LED 및 캠핑 등산 용품을 판매합니다.",
   publicNav: [
     {
       title: "로그인",

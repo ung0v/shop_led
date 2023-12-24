@@ -25,6 +25,17 @@ export const metadata: Metadata = {
     shortcut: "/favicon-16x16.png",
     apple: "/apple-touch-icon.png",
   },
+  openGraph: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    url: process.env.SITE_URL,
+    images: process.env.LOGO_URL,
+  },
+  twitter: {
+    title: siteConfig.name,
+    description: siteConfig.description,
+    images: process.env.LOGO_URL,
+  },
 }
 
 interface RootLayoutProps {
