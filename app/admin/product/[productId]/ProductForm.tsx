@@ -309,6 +309,44 @@ export function ProductForm({
               </FormItem>
             )}
           />
+
+          {fields.map((attribute, index) => (
+            <div key={attribute.id} className="flex space-x-4">
+              <FormField
+                control={form.control}
+                name={`attributes.${index}.attributeName`}
+                render={({ field }) => (
+                  <FormItem>
+                    <FormControl>
+                      <Input placeholder="상세정보 입력" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name={`attributes.${index}.attributeValue`}
+                render={({ field }) => (
+                  <FormItem className="w-3/5">
+                    <FormControl>
+                      <Input placeholder="빈칸을 입력해주세요." {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <Button
+                type="button"
+                variant="outline"
+                className="w-[80px] h-8 self-end space-x-1 px-2"
+                onClick={() => remove(index)}
+              >
+                <Cross1Icon />
+                <span>삭제</span>
+              </Button>
+            </div>
+          ))}
         </div>
 
         <div className="mt-8">

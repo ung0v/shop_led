@@ -73,6 +73,7 @@ model Product {
   discountId  Int?     @unique
   images      String[]
   attributes  Json?
+  options     Json?
   isPublish   Boolean? @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt

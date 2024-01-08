@@ -3,7 +3,7 @@ import { z } from "zod"
 export const productSchema = z.object({
   categoryId: z.number(),
   name: z.string().nonempty("빈칸을 입력해주세요."),
-  shortDesc: z.string().nonempty("빈칸을 입력해주세요."),
+  shortDesc: z.string(),
   desc: z.string().nonempty("빈칸을 입력해주세요."),
   brand: z.string().nonempty("빈칸을 입력해주세요."),
   // SKU: z.string().nonempty("빈칸을 입력해주세요."),
@@ -13,6 +13,12 @@ export const productSchema = z.object({
     z.object({
       attributeName: z.string().nonempty("빈칸을 입력해주세요."),
       attributeValue: z.string().nonempty("빈칸을 입력해주세요."),
+    })
+  ),
+  options: z.array(
+    z.object({
+      optionName: z.string().nonempty("빈칸을 입력해주세요."),
+      optionValue: z.string().nonempty("빈칸을 입력해주세요."),
     })
   ),
   images: z.any().array(),
@@ -31,6 +37,7 @@ export const DEFAULT_VALUES_PRODUCT: ProductType = {
   price: 0,
   quantity: 100,
   attributes: [],
+  options: [],
   images: [],
   isPublish: true,
 }
