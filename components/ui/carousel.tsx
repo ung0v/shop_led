@@ -3,18 +3,20 @@
 import { useEffect, useState } from "react"
 import Image from "next/image"
 
+import { cn } from "@/lib/utils"
+
 import { Icons } from "../icons"
 
 export default function Carousel({
   autoSlide = false,
   autoSlideInterval = 5000,
   slides,
-  imgHeight,
+  imgCls,
 }: {
   autoSlide?: boolean
   autoSlideInterval?: number
   slides: string[]
-  imgHeight: number | string
+  imgCls: string
 }) {
   const [curr, setCurr] = useState(0)
 
@@ -39,17 +41,12 @@ export default function Carousel({
         }}
       >
         {slides.map((img) => (
-          <div
-            key={img}
-            style={{ height: imgHeight }}
-            className="basis-[100%] w-full relative"
-          >
+          <div key={img} className={cn("basis-[100%] w-full relative", imgCls)}>
             <Image
               className="relative w-full"
               fill
               src={img}
               alt="banner"
-              objectFit="cover"
               priority
             />
           </div>

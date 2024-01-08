@@ -290,25 +290,6 @@ export function ProductForm({
               </FormItem>
             )}
           />
-
-          <FormField
-            control={form.control}
-            name="quantity"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Quantity</FormLabel>
-                <FormControl>
-                  <Input
-                    type="number"
-                    placeholder="Your quantity"
-                    {...field}
-                    onBlur={(event) => field.onChange(+event.target.value)}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
         </div>
 
         <div className="mt-8">
