@@ -1,11 +1,25 @@
-import { getAllProduct, getBannerUrl } from "@/services"
+import { PAGINATION_LIMIT } from "@/constants"
+import {
+  getAllProduct,
+  getBannerUrl,
+  getProductByPage,
+  getTotalProduct,
+} from "@/services"
 
 import Carousel from "@/components/ui/carousel"
 import Products from "@/components/products"
 
-export default async function IndexPage() {
-  const products: any = await getAllProduct()
+import { Pagination } from "./components/Pagination"
+
+type PageProps = {
+  params: { slug: string }
+  searchParams?: { page: string | undefined }
+}
+
+export default async function IndexPage({ searchParams }: PageProps) {
+  const products: any = await getProductByPage(searchParams?.page || "1")
   const images: any = await getBannerUrl()
+  const totalProduct = await getTotalProduct()
 
   return (
     <div className="flex w-full flex-col">
@@ -14,6 +28,12 @@ export default async function IndexPage() {
       </div>
       <div className="container mt-4 md:mt-[50px]">
         <Products size={3} data={products} />
+        <div className="my-8">
+          <Pagination
+            totalPages={totalProduct / PAGINATION_LIMIT}
+            totalRecords={totalProduct}
+          />
+        </div>
       </div>
     </div>
   )

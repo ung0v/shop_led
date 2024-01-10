@@ -256,3 +256,5 @@ export const DEFAULT_KEY_NAME_PRODUCT_ATTRIBUTES = [
 export const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/
 export const NUMBER_REGEX = /^[0-9]$/
 export const EMAIL_REGEX = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/
+
+export const PAGINATION_LIMIT = 10

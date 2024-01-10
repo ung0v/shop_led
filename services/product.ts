@@ -12,6 +12,24 @@ export const getAllProduct = async () => {
   })
 }
 
+export const getTotalProduct = async () => {
+  return await prisma.product.count({
+    where: {
+      deleted: false,
+    },
+  })
+}
+
+export const getProductByPage = async (page: string) => {
+  return await prisma.product.findMany({
+    where: {
+      deleted: false,
+    },
+    skip: (+page - 1) * 10,
+    take: 10,
+  })
+}
+
 export const getProductByDate = async ({ from, to }: DateRange) => {
   return await prisma.product.findMany({
     where: {
