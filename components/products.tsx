@@ -74,7 +74,7 @@ const ProductItem = ({ item }: { item: Product }) => (
   <div className="flex flex-col items-center gap-2">
     <div className="group relative w-full h-[247px] overflow-hidden">
       <Link href={`/product/${item.id}`}>
-        <Badge className="bg-slate-400 hover:bg-slate-400 relative z-[1] cursor-pointer">
+        <Badge className="hover:bg-pink-500 relative z-[1] cursor-pointer bg-pink-500">
           {item.shortDesc}
         </Badge>
         <Image
