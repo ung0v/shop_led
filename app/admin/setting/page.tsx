@@ -83,31 +83,7 @@ export default function Setting() {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit, onError)}>
         <div className="space-y-2">
-          <h3 className="text-base font-bold">1. Banner Desktop</h3>
-          <div className="flex gap-3">
-            {files?.map((file, i) => (
-              <Zoom key={i}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  loading="lazy"
-                  src={file.preview || (files as any)}
-                  alt={`H ome ${i + 1}`}
-                  className="h-20 w-20 shrink-0 rounded-md object-cover object-center"
-                  width={80}
-                  height={80}
-                />
-              </Zoom>
-            ))}
-          </div>
-          <UploadDialog
-            name="bannerUrls"
-            setValue={form.setValue}
-            files={files}
-            setFiles={setFiles}
-          />
-        </div>
-        <div className="mt-4 space-y-2">
-          <h3 className="text-base font-bold">2. Banner Mobile</h3>
+          <h3 className="">1. Banner Url</h3>
           <div className="flex gap-3">
             {files?.map((file, i) => (
               <Zoom key={i}>
