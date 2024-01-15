@@ -14,7 +14,8 @@
     "format:write": "prettier --write \"**/*.{ts,tsx,mdx}\" --cache",
     "format:check": "prettier --check \"**/*.{ts,tsx,mdx}\" --cache",
     "postinstall": "prisma generate",
-    "postbuild": "next-sitemap && npx prisma db push && npx prisma generate"
+    "prebuild": "npx prisma generate",
+    "postbuild": "next-sitemap"
   },
   "prisma": {
     "seed": "ts-node --compiler-options {\"module\":\"CommonJS\"} prisma/seed.ts"
