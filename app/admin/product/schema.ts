@@ -5,7 +5,7 @@ export const productSchema = z.object({
   name: z.string().nonempty("빈칸을 입력해주세요."),
   shortDesc: z.string(),
   desc: z.string().nonempty("빈칸을 입력해주세요."),
-  brand: z.string().nonempty("빈칸을 입력해주세요."),
+  brand: z.string().optional(),
   // SKU: z.string().nonempty("빈칸을 입력해주세요."),
   price: z.number(),
   quantity: z.number(),

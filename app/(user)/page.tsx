@@ -12,7 +12,7 @@ export default async function IndexPage() {
       <div className="w-full h-[300px] md:h-[595px] relative">
         <Carousel slides={images} imgCls="h-[300px] md:h-[595px]" autoSlide />
       </div>
-      <div className="container mt-10 md:mt-[50px] max-w-5xl px-10 md:px-20">
+      <div className="container mt-10 md:mt-[50px] max-sm:px-10">
         <Products size={3} data={products} />
       </div>
     </div>

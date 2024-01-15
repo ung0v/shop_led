@@ -8,6 +8,7 @@ export const getAllProduct = async () => {
   return await prisma.product.findMany({
     where: {
       deleted: false,
+      isPublish: true,
     },
   })
 }
@@ -20,6 +21,7 @@ export const getProductByDate = async ({ from, to }: DateRange) => {
         gte: from,
       },
       deleted: false,
+      isPublish: true,
     },
   })
 }
@@ -28,6 +30,8 @@ export const getProductByCategoryId = async (categoryId: number) => {
   return await prisma.product.findMany({
     where: {
       categoryId,
+      deleted: false,
+      isPublish: true,
     },
   })
 }
@@ -40,6 +44,7 @@ export const getProductByName = async (name: string | null) => {
         mode: "insensitive",
       },
       deleted: false,
+      isPublish: true,
     },
   })
 }

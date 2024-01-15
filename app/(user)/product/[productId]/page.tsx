@@ -2,8 +2,10 @@
 
 import { ChangeEvent, useEffect, useState } from "react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { addToCart, getProductById } from "@/services"
 import { Product } from "@prisma/client"
+import { useSession } from "next-auth/react"
 
 import { numberWithCommas } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -14,74 +16,14 @@ import ScrollTop from "@/components/ScrollTop"
 import { Icons } from "@/components/icons"
 
 import "quill/dist/quill.snow.css"
-import Link from "next/link"
-import { useRouter } from "next/navigation"
-import { useSession } from "next-auth/react"
-
-const productDetailsData = [
-  {
-    propName: "제품 소재",
-    propValue: "BRASS",
-  },
-  {
-    propName: "색상",
-    propValue: "상품상세 설명 참고",
-  },
-  {
-    propName: "치수",
-    propValue: "39(가로) x 57(높이) X 13(폭) mm ",
-  },
-  {
-    propName: "제조사(수입자/병행수입)",
-    propValue: "제조 : ZIPPO / 수입 : 신명글로빅스",
-  },
-  {
-    propName: "제조국",
-    propValue: "미국",
-  },
-  {
-    propName: "취급시 주의사항",
-    propValue:
-      "화재 위험(스파크, 불꽃, 기타열원 등), 화상 위험(라이터 오일 피부 접촉시 화상의 위험 취급 주의), 사용전 사용 설명서 숙지",
-  },
-  {
-    propName: "품질보증기준",
-    propValue:
-      "품목별 소비자 분쟁해결 기준(공정거래위원회 고시)에 따라 처리합니다.",
-  },
-  {
-    propName: "A/S 책임자와 전화번호",
-    propValue: "신명글로빅스 A/S센터 ☎ 1588-5687",
-  },
-  {
-    propName: "사용연령",
-    propValue: "상세페이지참고",
-  },
-  {
-    propName: "수입여부",
-    propValue: "제조 : ZIPPO / 수입 : 신명글로빅스",
-  },
-  {
-    propName: "종류",
-    propValue: "오일라이터",
-  },
-  {
-    propName: "제조연월",
-    propValue: "2022.08",
-  },
-  {
-    propName: "KC안전인증 대상 유무",
-    propValue: "해당사항 없음",
-  },
-  {
-    propName: "상품무게",
-    propValue: "75g",
-  },
-  {
-    propName: "상품 가로_세로_높이",
-    propValue: "39(가로) x 57(높이) X 13(폭) mm",
-  },
-]
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select"
 
 export default function ProductPage({
   params,
@@ -170,6 +112,24 @@ export default function ProductPage({
                 <h3 className="">브랜드</h3>
                 <p>{product?.brand}</p>
               </div>
+              <div className="pt-20">
+                {!!product?.optionValues?.length && (
+                  <Select>
+                    <SelectTrigger className="rounded-none text-xs">
+                      <SelectValue placeholder={product?.optionName} />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectGroup>
+                        {product?.optionValues.map((value, idx) => (
+                          <SelectItem key={idx} value={value}>
+                            {value}
+                          </SelectItem>
+                        ))}
+                      </SelectGroup>
+                    </SelectContent>
+                  </Select>
+                )}
+              </div>
             </div>
             <div className="mt-auto">
               <Separator />
@@ -249,7 +209,7 @@ export default function ProductPage({
             
           </div> */}
           <div
-            className="ql-editor !p-0"
+            className="ql-editor !p-0 [&_img]:mx-auto [&_video]:mx-auto"
             dangerouslySetInnerHTML={{ __html: product?.desc || "" }}
           />
           <div className="flex flex-col">

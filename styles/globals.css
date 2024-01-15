@@ -89,7 +89,8 @@
     @apply rounded-md lg:rounded-2xl;
   }
   .container {
-    max-width: 100%;
+    max-width: 1366px;
+    margin: 0 auto;
     overflow: hidden;
   }
 }

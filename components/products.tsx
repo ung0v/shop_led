@@ -72,11 +72,13 @@ export default function Products({
 
 const ProductItem = ({ item }: { item: Product }) => (
   <div className="flex flex-col items-center gap-2">
-    <div className="group relative w-full h-[120px] md:h-[180px] xl:h-[240px] overflow-hidden">
+    <div className="group relative w-full h-[120px] md:h-[240px] 2xl:h-[240px] overflow-hidden">
       <Link href={`/product/${item.id}`}>
-        <Badge className="hover:bg-pink-500 relative z-[1] cursor-pointer bg-pink-500">
-          {item.shortDesc}
-        </Badge>
+        {item.shortDesc && item.shortDesc !== "-" && (
+          <Badge className="hover:bg-pink-500 relative z-[1] cursor-pointer bg-pink-500">
+            {item.shortDesc}
+          </Badge>
+        )}
         <Image
           className="scale-1 cursor-pointer transition-all duration-300 hover:scale-105"
           src={item.images?.[0]}
@@ -93,9 +95,9 @@ const ProductItem = ({ item }: { item: Product }) => (
         </button>
       </div>
     </div>
-    <h3 className="cursor-pointer text-xs">{item.name}</h3>
+    <h3 className="cursor-pointer text-base">{item.name}</h3>
 
-    <p className="font-bold text-xs mt-auto">
+    <p className="font-bold text-sm mt-auto">
       {item.price?.toNumber().toLocaleString()}원
     </p>
   </div>
