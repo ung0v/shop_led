@@ -61,22 +61,24 @@ model Role {
 }
 
 model Product {
-  id          Int      @id @default(autoincrement())
-  name        String
-  shortDesc   String?
-  desc        String?
-  brand       String?
-  SKU         String?
-  price       Decimal
-  categoryId  Int
-  inventoryId Int      @unique
-  discountId  Int?     @unique
-  images      String[]
-  attributes  Json?
-  isPublish   Boolean? @default(true)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-  deleted     Boolean  @default(false)
+  id           Int      @id @default(autoincrement())
+  name         String
+  shortDesc    String?
+  desc         String?
+  brand        String?
+  SKU          String?
+  price        Decimal
+  categoryId   Int
+  inventoryId  Int      @unique
+  discountId   Int?     @unique
+  images       String[]
+  attributes   Json?
+  optionName   String?
+  optionValues String[]
+  isPublish    Boolean? @default(true)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  deleted      Boolean  @default(false)
 
   category  Category    @relation(fields: [categoryId], references: [id])
   inventory Inventory   @relation(fields: [inventoryId], references: [id])

@@ -72,17 +72,16 @@ export default function Products({
 
 const ProductItem = ({ item }: { item: Product }) => (
   <div className="flex flex-col items-center gap-2">
-    <div className="group relative w-full h-[247px] overflow-hidden">
+    <div className="group relative w-full h-[120px] md:h-[180px] xl:h-[240px] overflow-hidden">
       <Link href={`/product/${item.id}`}>
         <Badge className="hover:bg-pink-500 relative z-[1] cursor-pointer bg-pink-500">
           {item.shortDesc}
         </Badge>
         <Image
-          className="scale-1 cursor-pointer transition-all duration-300 hover:scale-110"
+          className="scale-1 cursor-pointer transition-all duration-300 hover:scale-105"
           src={item.images?.[0]}
           alt={item.name}
           fill
-          objectFit="cover"
         />
       </Link>
       <div className="0 absolute bottom-[-24px] left-0 hidden w-full justify-center transition-all duration-300 group-hover:bottom-0 group-hover:flex">

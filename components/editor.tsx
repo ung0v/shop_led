@@ -1,7 +1,7 @@
 "use client"
 
 import "quill/dist/quill.snow.css"
-import { useMemo, useRef } from "react"
+import { forwardRef, useMemo, useRef } from "react"
 import ReactQuill, { Quill } from "react-quill"
 
 import { getFiles } from "@/lib/utils"
@@ -33,27 +33,40 @@ icons["redo"] = ICONS_EDITOR.FormatArrowRedo
 
 const toolbarOptions = ["14px", "16px", "18px", "20px"]
 
-const Editor = ({ name, ...props }: IEditor) => {
+const Editor = forwardRef(({ name, ...props }: IEditor, ref) => {
   const quillRef = useRef<any>()
 
   const imageHandler = async () => {
-    const file = await getFiles()
+    const files = ((await getFiles(undefined, true)) as File[]) || []
     const formData = new FormData()
     const quillObj = quillRef.current?.getEditor()
     const range = quillObj?.getSelection()
-    if (file) {
-      formData.append("file", file as File)
-      formData.append("upload_preset", "vuong_preset")
-      const res = await fetch(
-        "https://api.cloudinary.com/v1_1/decerwuo3/upload",
-        {
-          method: "POST",
-          body: formData,
-        }
-      )
-      const data = await res.json()
-      quillObj?.insertEmbed(range?.index || 0, "image", data.url)
-      quillObj?.setSelection(quillObj.getLength(), 0)
+    const filesPromise = files.map(
+      (file) =>
+        new Promise(async (resolve, reject) => {
+          try {
+            formData.append("file", file as File)
+            formData.append("upload_preset", "vuong_preset")
+            const res = await fetch(
+              "https://api.cloudinary.com/v1_1/decerwuo3/upload",
+              {
+                method: "POST",
+                body: formData,
+              }
+            )
+            const data = await res.json()
+            resolve(data.url)
+          } catch (error) {
+            reject("Something went wrong! Please contact to the admin.")
+          }
+        })
+    )
+    const images = (await Promise.all(filesPromise)) || []
+    for (const image of images.reverse()) {
+      if (image) {
+        quillObj?.insertEmbed(range?.index || 0, "image", image)
+        quillObj?.setSelection(quillObj.getLength(), 0)
+      }
     }
   }
 
@@ -98,6 +111,8 @@ const Editor = ({ name, ...props }: IEditor) => {
       {...props}
     />
   )
-}
+})
+
+Editor.displayName = "Editor"
 
 export default Editor

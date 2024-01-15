@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   description: "",
 }
 
-export default async function TaskPage({ searchParams }) {
+export default async function TaskPage({ searchParams }: any) {
   let products: any = await getProductByDate(searchParams || {})
 
   return (

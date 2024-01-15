@@ -56,45 +56,62 @@ export function ProductForm({
     name: "attributes",
   })
 
+  const {
+    fields: optionFields,
+    append: appendOption,
+    remove: removeOption,
+  } = useFieldArray({
+    control: form.control,
+    name: "optionValues",
+  })
+
   const onSubmit = async (formValues: ProductType) => {
     setIsLoading(true)
-    let images: string[] = []
-    if (files.length) {
-      const formData = new FormData()
-      for (const image of files) {
-        if (image.path) {
-          formData.append("file", image)
-          formData.append("upload_preset", "vuong_preset")
-          const res = await fetch(
-            "https://api.cloudinary.com/v1_1/decerwuo3/upload",
-            {
-              method: "POST",
-              body: formData,
+    try {
+      let images: string[] = []
+      if (files.length) {
+        const formData = new FormData()
+        for (const image of files) {
+          if (image.path) {
+            formData.append("file", image)
+            formData.append("upload_preset", "vuong_preset")
+            const res = await fetch(
+              "https://api.cloudinary.com/v1_1/decerwuo3/upload",
+              {
+                method: "POST",
+                body: formData,
+              }
+            )
+            const data = await res.json()
+            if (data.url) {
+              images.push(data.url)
             }
-          )
-          const data = await res.json()
-          if (data.url) {
-            images.push(data.url)
+          } else {
+            images.push(image.preview)
           }
-        } else {
-          images.push(image.preview)
         }
+        formValues.images = images
       }
-      formValues.images = images
+
+      ;(formValues as any).optionValues =
+        formValues?.optionValues?.map((item) => item.value) || []
+      if (!data?.id) {
+        await createProduct(formValues)
+      } else {
+        await updateProduct({
+          ...formValues,
+          id: data.id,
+          inventoryId: data?.inventoryId,
+        })
+      }
+      toast({ description: "SUCCESS" })
+      router.refresh()
+      router.back()
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
     }
-    if (!data?.id) {
-      await createProduct(formValues)
-    } else {
-      await updateProduct({
-        ...formValues,
-        id: data.id,
-        inventoryId: data?.inventoryId,
-      })
-    }
-    setIsLoading(false)
-    toast({ description: "SUCCESS" })
-    router.refresh()
-    router.back()
   }
 
   const onError = (err: any) => {
@@ -290,6 +307,60 @@ export function ProductForm({
               </FormItem>
             )}
           />
+
+          <div className="mt-8 space-y-2">
+            <FormItem>
+              <FormLabel className="font-bold text-xl">Option</FormLabel>
+            </FormItem>
+
+            <FormField
+              control={form.control}
+              name="optionName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>옵션 이름</FormLabel>
+                  <FormControl>
+                    <Input placeholder="Option Name" {...field} />
+                  </FormControl>
+
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            {optionFields.map((option, index) => (
+              <div key={option.id} className="flex space-x-4">
+                <FormField
+                  control={form.control}
+                  name={`optionValues.${index}.value`}
+                  render={({ field }) => (
+                    <FormItem className="w-3/5">
+                      <FormControl>
+                        <Input placeholder="상세정보 입력" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="w-[80px] h-8 self-end space-x-1 px-2"
+                  onClick={() => removeOption(index)}
+                >
+                  <Cross1Icon />
+                  <span>삭제</span>
+                </Button>
+              </div>
+            ))}
+            <Button
+              type="button"
+              variant="outline"
+              className="!mt-4 h-8"
+              onClick={() => appendOption({ value: "" })}
+            >
+              추가
+            </Button>
+          </div>
         </div>
 
         <div className="mt-8">

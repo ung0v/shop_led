@@ -21,6 +21,9 @@ export default async function EditCategory({
     product = await getProductById(+params.productId)
     product.price = +product.price
     product.attributes = JSON.parse(product.attributes ?? [])
+    product.optionValues = product.optionValues.map((value: string) => ({
+      value,
+    }))
     // product.categoryId = product.categoryId.toString()
   }
 

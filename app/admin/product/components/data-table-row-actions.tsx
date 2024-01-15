@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { useRouter } from "next/navigation"
+import { useAlert, useConfirm, usePrompt } from "@/contexts/AlertDialogProvider"
 import { deleteCategory, deleteProduct } from "@/services"
 import { DotsHorizontalIcon } from "@radix-ui/react-icons"
 import { Row } from "@tanstack/react-table"
@@ -23,8 +24,9 @@ export function DataTableRowActions<TData>({
   row,
 }: DataTableRowActionsProps<TData>) {
   const router = useRouter()
+  const confirm = useConfirm()
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
@@ -39,9 +41,15 @@ export function DataTableRowActions<TData>({
           <Link href={`/admin/product/${row.original.id}`}>Edit</Link>
         </DropdownMenuItem>
         <DropdownMenuItem
-          onClick={() => {
-            deleteProduct({ id: row.original.id })
-            router.refresh()
+          onClick={async () => {
+            const confirmed = await confirm({
+              title: "Are you absolutely sure?",
+              body: "This action cannot be undone. This will permanently delete your product and remove your data from our servers.",
+            })
+            if (confirmed) {
+              deleteProduct({ id: row.original.id })
+              router.refresh()
+            }
           }}
         >
           Delete
