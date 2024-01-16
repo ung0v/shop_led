@@ -134,7 +134,7 @@ export function AlertDialogProvider({
           <form
             onSubmit={(event) => {
               event.preventDefault()
-              confirm(event.currentTarget.prompt?.value)
+              confirm(event.currentTarget?.prompt?.value)
             }}
           >
             <AlertDialogHeader>
@@ -155,9 +155,7 @@ export function AlertDialogProvider({
                 {state.cancelButton}
               </AlertDialogCancel>
               {state.type === "alert" ? null : (
-                <AlertDialogAction type="submit">
-                  {state.actionButton}
-                </AlertDialogAction>
+                <Button type="submit">{state.actionButton}</Button>
               )}
             </AlertDialogFooter>
           </form>
