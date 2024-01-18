@@ -5,8 +5,10 @@ services:
     image: nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./ssl:/etc/nginx/ssl
     depends_on:
       - frontend
 
@@ -17,11 +19,11 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    
+
     # do port mapping so that we can access the app from the browser
     ports:
       - 3000:3000
-    
+
     # use docker compose to watch for changes and rebuild the container
     # develop:
     #   watch:
@@ -34,7 +36,7 @@ services:
     #     - path: .
     #       target: /app
     #       action: sync
-    
+
     # define the environment variables
     environment:
       NODE_ENV: production
@@ -43,7 +45,6 @@ services:
       NEXTAUTH_URL: http://localhost:3000
       SITE_URL: https://ledmoa.co.kr
       LOGO_URL: https://res.cloudinary.com/decerwuo3/image/upload/v1703406804/logo_light.jpg
-
   # we're using MongoDB atlas so we don't need to run a local instance of MongoDB
   # but if you want to run a local instance, you can do it this way
   # db:
@@ -55,6 +56,6 @@ services:
   #     - MONGO_INITDB_ROOT_PASSWORD=rnZzJjIDr3bIDymV
   #   volumes:
   #     - tasked:/data/db
-    
-# volumes:
-#   tasked:
+
+volumes:
+  ssl:
