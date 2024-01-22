@@ -29,7 +29,7 @@ services:
     # define the environment variables
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgresql://postgres:CtRul6m7aqn8is8m@db.shzynrsihyefhjljcfhk.supabase.co:5432/postgres
+      DATABASE_URL: postgresql://postgres:postgres@35.197.155.15:5432/ledmoa
       NEXTAUTH_SECRET: vuongdeptrai
       NEXTAUTH_URL: http://localhost:3000
       SITE_URL: https://ledmoa.co.kr
