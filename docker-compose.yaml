@@ -1,32 +1,12 @@
-version: '3.8'
+version: "3.8"
 
 services:
   frontend:
-    # uncomment the following line if you want to run a local instance of MongoDB
-    # depends_on:
-    #   - db
     build:
       context: .
       dockerfile: Dockerfile
-    
-    # do port mapping so that we can access the app from the browser
     ports:
       - 3000:3000
-    
-    # use docker compose to watch for changes and rebuild the container
-    develop:
-      watch:
-        - path: ./package.json
-          action: rebuild
-        - path: ./next.config.mjs
-          action: rebuild
-        - path: ./package-lock.json
-          action: rebuild
-        - path: .
-          target: /app
-          action: sync
-    
-    # define the environment variables
     environment:
       NODE_ENV: production
       DATABASE_URL: postgresql://postgres:postgres@35.197.155.15:5432/ledmoa
@@ -34,18 +14,3 @@ services:
       NEXTAUTH_URL: http://localhost:3000
       SITE_URL: https://ledmoa.co.kr
       LOGO_URL: https://res.cloudinary.com/decerwuo3/image/upload/v1703406804/logo_light.jpg
-
-  # we're using MongoDB atlas so we don't need to run a local instance of MongoDB
-  # but if you want to run a local instance, you can do it this way
-  # db:
-  #   image: mongo
-  #   ports:
-  #     - 27017:27017
-  #   environment:
-  #     - MONGO_INITDB_ROOT_USERNAME=sujata
-  #     - MONGO_INITDB_ROOT_PASSWORD=rnZzJjIDr3bIDymV
-  #   volumes:
-  #     - tasked:/data/db
-    
-# volumes:
-#   tasked:
