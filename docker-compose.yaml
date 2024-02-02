@@ -16,7 +16,9 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
-    
+    # define the environment variables
+    env_file:
+      - .env
     # use docker compose to watch for changes and rebuild the container
     # develop:
     #   watch:
@@ -29,12 +31,3 @@ services:
     #     - path: .
     #       target: /app
     #       action: sync
-    
-    # define the environment variables
-    environment:
-      NODE_ENV: production
-      DATABASE_URL: postgresql://postgres:postgres@35.197.155.15:5432/ledmoa
-      NEXTAUTH_SECRET: vuongdeptrai
-      NEXTAUTH_URL: http://localhost:3000
-      SITE_URL: https://ledmoa.co.kr
-      LOGO_URL: https://res.cloudinary.com/decerwuo3/image/upload/v1703406804/logo_light.jpg
