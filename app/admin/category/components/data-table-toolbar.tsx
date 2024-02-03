@@ -7,6 +7,7 @@ import { Table } from "@tanstack/react-table"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 
+import { SortableDialog } from "./Sortable"
 import { DataTableViewOptions } from "./data-table-view-options"
 
 interface DataTableToolbarProps<TData> {
@@ -42,6 +43,7 @@ export function DataTableToolbar<TData>({
       </div>
 
       <div className="flex space-x-2">
+        <SortableDialog />
         <Button
           variant="outline"
           size="sm"

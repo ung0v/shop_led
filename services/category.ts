@@ -1,11 +1,13 @@
 "use server"
 
+import { Category } from "@prisma/client"
+
 import prisma from "@/lib/prisma"
 
 export const getAllCategory = async () => {
   const item = await prisma.category.findMany({
     orderBy: {
-      createdAt: "asc",
+      order: "asc",
     },
     where: {
       deleted: false,
@@ -51,6 +53,19 @@ export const updateCategory = async (data: {
     },
   })
   return item
+}
+
+export const updateOrderCategory = async (data: Category[]) => {
+  for (const item of data) {
+    await prisma.category.update({
+      data: {
+        order: item.order,
+      },
+      where: {
+        id: item.id,
+      },
+    })
+  }
 }
 
 export const deleteCategory = async (data: { id: number }) => {

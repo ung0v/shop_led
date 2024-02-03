@@ -1,9 +1,5 @@
-import { promises as fs } from "fs"
-import path from "path"
 import { Metadata } from "next"
-import Image from "next/image"
 import { getAllCategory } from "@/services/category"
-import { z } from "zod"
 
 import { columns } from "./components/columns"
 import { DataTable } from "./components/data-table"
@@ -12,8 +8,6 @@ export const metadata: Metadata = {
   title: "Admin(어드민)",
   description: "",
 }
-
-// Simulate a database read for tasks.
 
 export default async function TaskPage() {
   const category: any = await getAllCategory()
